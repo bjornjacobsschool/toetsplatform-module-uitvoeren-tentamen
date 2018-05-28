@@ -18,11 +18,11 @@ CREATE TABLE TENTAMEN (
   CONSTRAINT fk_Student_maakt_tentamen FOREIGN KEY (studentnr) REFERENCES STUDENT (studentnr)
 );
 
-CREATE TABLE VRAAG (
+CREATE TABLE ANTWOORD (
   vraagid         char(36)      NOT NULL,
   tentamenid      char(36)      NOT NULL,
   versie          varchar(10)   NOT NULL,
   gegevenAntwoord varchar(1024) NULL,
-  CONSTRAINT pk_vraag PRIMARY KEY (vraagid, tentamenid),
+  CONSTRAINT pk_antwoord PRIMARY KEY (vraagid, tentamenid),
   CONSTRAINT fk_vraag_van_tentamen FOREIGN KEY (tentamenid) REFERENCES TENTAMEN (tentamenid)
 );
