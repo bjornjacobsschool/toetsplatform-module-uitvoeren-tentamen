@@ -38,7 +38,7 @@ public class TentamenUitvoerenController {
 
     private Toets toets;
     private Plugin plugin;
-    int currentVraagIndex = 0;
+    private int currentVraagIndex = 0;
     private Runnable onExit;
     private CacheDao cacheDao;
 

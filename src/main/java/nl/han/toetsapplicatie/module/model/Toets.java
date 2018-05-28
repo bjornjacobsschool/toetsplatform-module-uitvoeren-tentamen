@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Toets {
 
-    public int id;
-    public String naam;
-    public List<Vraag> vragen;
+    private int id;
+    private String naam;
+    private List<Vraag> vragen;
 
     public List<Vraag> getVragen() {
         return vragen;
