@@ -59,7 +59,7 @@ public class TentamenUitvoerenController {
     public void loadCurrentQuestion(int change) {
         if (plugin != null) {
             String data = plugin.getAntwoordView().getGivenAntwoord();
-            cacheDao.saveQuestion(toets.id, getCurrentVraag().getId(), data);
+            cacheDao.saveQuestion(toets.getId(), getCurrentVraag().getId(), data);
         }
 
         questionsContainer.getChildren().clear();
@@ -72,7 +72,7 @@ public class TentamenUitvoerenController {
 
     public void loadView() {
         try {
-            String vraagData = cacheDao.getAntwoordData(toets.id, getCurrentVraag().getId());
+            String vraagData = cacheDao.getAntwoordData(toets.getId(), getCurrentVraag().getId());
 
             plugin = PluginLoader.getPlugin(getCurrentVraag());
             Node view = plugin.getVraagView().getView();

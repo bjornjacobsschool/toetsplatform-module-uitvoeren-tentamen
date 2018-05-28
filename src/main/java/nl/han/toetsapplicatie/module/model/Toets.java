@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Toets {
 
-    public int id;
+    private int id;
     private String naam;
     private List<Vraag> vragen;
 
