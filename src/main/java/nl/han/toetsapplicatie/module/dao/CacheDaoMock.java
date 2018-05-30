@@ -1,6 +1,4 @@
-package nl.han.toetsapplicatie.module.cache.mock;
-
-import nl.han.toetsapplicatie.module.cache.CacheDao;
+package nl.han.toetsapplicatie.module.dao;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,4 +25,5 @@ public class CacheDaoMock implements CacheDao {
 
         return data.get(toetsId).get(vraagId);
     }
+
 }
