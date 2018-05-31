@@ -50,7 +50,7 @@
 
         <!-- Offline Module Repositories -->
         <dependency>
-            <groupId>nl.han.toetsapplicatie.module</groupId>
+            <groupId>nl.han.toetsplatform.module</groupId>
             <artifactId>toetsplatform-module-shared</artifactId>
             <version>1.0</version>
         </dependency>
