@@ -14,6 +14,7 @@ import nl.han.toetsplatform.module.shared.model.Vraag;
 import nl.han.toetsplatform.module.shared.plugin.Plugin;
 import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.CacheDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.ToetsDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.Toets;
 
 public class TentamenUitvoerenController {
@@ -30,12 +31,15 @@ public class TentamenUitvoerenController {
     @Inject
     private CacheDao cacheDao;
 
+    @Inject
+    private ToetsDao toetsDao;
+
     private Toets toets;
     private Plugin plugin;
     private int currentVraagIndex = 0;
 
-    public void setToets(Toets toets) {
-        this.toets = toets;
+    public void initialize() {
+        this.toets = toetsDao.getLocalToetsen().get(0);
         loadCurrentQuestion(0);
     }
 
