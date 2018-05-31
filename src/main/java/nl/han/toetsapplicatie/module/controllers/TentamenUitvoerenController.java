@@ -1,33 +1,22 @@
 package nl.han.toetsapplicatie.module.controllers;
 
+import com.google.inject.Inject;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import nl.han.toetsapplicatie.module.cache.CacheDao;
-import nl.han.toetsapplicatie.module.cache.mock.CacheDaoMock;
+import nl.han.toetsapplicatie.module.dao.CacheDao;
 import nl.han.toetsapplicatie.module.model.Toets;
 import nl.han.toetsapplicatie.module.model.Vraag;
 import nl.han.toetsapplicatie.module.plugin.Plugin;
 import nl.han.toetsapplicatie.module.plugin.PluginLoader;
 
-import static nl.han.toetsapplicatie.module.util.RunnableUtil.runIfNotNull;
-
 public class TentamenUitvoerenController {
-
-    public VBox loadingIndicator;
-
-    @FXML
-    private Button btnNext;
-
-    @FXML
-    private Button btnPrev;
 
     @FXML
     private Label currentQuestionLbl;
@@ -36,24 +25,22 @@ public class TentamenUitvoerenController {
     private AnchorPane questionsContainer;
     public AnchorPane answersContainer;
 
+    public VBox loadingIndicator;
+
+    @Inject
+    private CacheDao cacheDao;
+
     private Toets toets;
     private Plugin plugin;
     private int currentVraagIndex = 0;
-    private Runnable onExit;
-    private CacheDao cacheDao;
-
-    public Vraag getCurrentVraag() {
-        return toets.getVragen().get(currentVraagIndex);
-    }
 
     public void setToets(Toets toets) {
         this.toets = toets;
-        cacheDao = new CacheDaoMock();
         loadCurrentQuestion(0);
     }
 
-    public void setOnExit(Runnable onExit) {
-        this.onExit = onExit;
+    public Vraag getCurrentVraag() {
+        return toets.getVragen().get(currentVraagIndex);
     }
 
     public void loadCurrentQuestion(int change) {
@@ -67,18 +54,22 @@ public class TentamenUitvoerenController {
         currentVraagIndex += change;
         loadingIndicator.setVisible(true);
         currentQuestionLbl.setText((currentVraagIndex + 1) + "/" + toets.getVragen().size());
+
+        // Load view in new thread
         new Thread(this::loadView).start();
     }
 
     public void loadView() {
         try {
-            String vraagData = cacheDao.getAntwoordData(toets.getId(), getCurrentVraag().getId());
-
             plugin = PluginLoader.getPlugin(getCurrentVraag());
-            Node view = plugin.getVraagView().getView();
-            Node answerView = plugin.getAntwoordView().getView(vraagData);
+
+            String cachedAntwoordData = cacheDao.getAntwoordData(toets.getId(), getCurrentVraag().getId());
+
+            Node questionView = plugin.getVraagView().getView();
+            Node answerView = plugin.getAntwoordView().getView(cachedAntwoordData);
+
             Platform.runLater(() -> {
-                questionsContainer.getChildren().add(view);
+                questionsContainer.getChildren().add(questionView);
                 answersContainer.getChildren().add(answerView);
                 loadingIndicator.setVisible(false);
             });
@@ -106,6 +97,10 @@ public class TentamenUitvoerenController {
 
     @FXML
     public void btnExitPressed(ActionEvent event) {
-        runIfNotNull(onExit);
+        Platform.runLater(() -> {
+            loadingIndicator.setVisible(false);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Exit pressed, code something here!", ButtonType.OK);
+            alert.show();
+        });
     }
 }
