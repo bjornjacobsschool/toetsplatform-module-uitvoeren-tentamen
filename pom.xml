@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>nl.han.toetsapplicatie.module</groupId>
-    <artifactId>uitvoeren-tentamen</artifactId>
+    <artifactId>toetsplatform-module-uitvoeren-tentamen</artifactId>
     <version>1.0</version>
 
-    <name>uitvoeren-tentamen</name>
+    <name>toetsplatform-module-uitvoeren-tentamen</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,11 +41,18 @@
             <version>8.0.0</version>
         </dependency>
 
-        <!-- Module Repositories -->
+        <!-- Online Module Repositories -->
+        <!--<dependency>-->
+            <!--<groupId>com.github.bjornjacobsschool</groupId>-->
+            <!--<artifactId>toetsplatform-module-shared</artifactId>-->
+            <!--<version>develop</version>-->
+        <!--</dependency>-->
+
+        <!-- Offline Module Repositories -->
         <dependency>
-            <groupId>com.github.bjornjacobsschool</groupId>
-            <artifactId>toetsplatform-module-pluginsupport</artifactId>
-            <version>develop</version>
+            <groupId>nl.han.toetsapplicatie.module</groupId>
+            <artifactId>toetsplatform-module-shared</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 
