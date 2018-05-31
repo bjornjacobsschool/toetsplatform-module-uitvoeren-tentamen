@@ -1,4 +1,4 @@
-package nl.han.toetsapplicatie.module.cache;
+package nl.han.toetsapplicatie.module.dao;
 
 public interface CacheDao {
 
