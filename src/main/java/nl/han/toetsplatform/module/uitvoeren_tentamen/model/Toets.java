@@ -1,4 +1,6 @@
-package nl.han.toetsapplicatie.module.model;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.model;
+
+import nl.han.toetsplatform.module.shared.model.Vraag;
 
 import java.util.List;
 

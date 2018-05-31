@@ -1,4 +1,4 @@
-package nl.han.toetsapplicatie.module.controllers;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.controllers;
 
 import com.google.inject.Inject;
 import javafx.application.Platform;
@@ -10,11 +10,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import nl.han.toetsapplicatie.module.dao.CacheDao;
-import nl.han.toetsapplicatie.module.model.Toets;
-import nl.han.toetsapplicatie.module.model.Vraag;
-import nl.han.toetsapplicatie.module.plugin.Plugin;
-import nl.han.toetsapplicatie.module.plugin.PluginLoader;
+import nl.han.toetsplatform.module.shared.model.Vraag;
+import nl.han.toetsplatform.module.shared.plugin.Plugin;
+import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.CacheDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.model.Toets;
 
 public class TentamenUitvoerenController {
 

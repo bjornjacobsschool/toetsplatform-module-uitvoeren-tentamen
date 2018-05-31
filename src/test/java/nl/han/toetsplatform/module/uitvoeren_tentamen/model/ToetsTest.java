@@ -1,4 +1,4 @@
-package nl.han.toetsapplicatie.module.model;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.model;
 
 import org.junit.Test;
 

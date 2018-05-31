@@ -1,4 +1,4 @@
-package nl.han.toetsapplicatie.module.dao;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.dao;
 
 public interface CacheDao {
 

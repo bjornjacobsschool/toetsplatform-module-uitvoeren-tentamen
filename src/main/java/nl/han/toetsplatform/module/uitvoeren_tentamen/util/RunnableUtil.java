@@ -1,4 +1,4 @@
-package nl.han.toetsapplicatie.module.util;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
 
 import java.util.function.Consumer;
 
