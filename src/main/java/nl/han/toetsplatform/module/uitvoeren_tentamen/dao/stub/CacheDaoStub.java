@@ -1,9 +1,11 @@
-package nl.han.toetsplatform.module.uitvoeren_tentamen.dao;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.stub;
+
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.CacheDao;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CacheDaoMock implements CacheDao {
+public class CacheDaoStub implements CacheDao {
 
     private Map<Integer, Map<Integer, String>> data = new HashMap<>();
 
