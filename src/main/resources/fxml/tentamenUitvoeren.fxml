@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-<AnchorPane fx:id="mainPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="nl.han.toetsapplicatie.module.controllers.TentamenUitvoerenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0"
+            prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="nl.han.toetsplatform.module.uitvoeren_tentamen.controllers.TentamenUitvoerenController">
     <children>
-        <Label fx:id="currentQuestionLbl" text="0/0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0"/>
-        <Button fx:id="exitButton" onAction="#btnExitPressed" text="Exit" AnchorPane.rightAnchor="5.0"
-                AnchorPane.topAnchor="5.0"/>
-        <GridPane AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-                  AnchorPane.topAnchor="40.0">
-            <AnchorPane fx:id="questionsContainer" GridPane.rowIndex="0"/>
-            <AnchorPane fx:id="answersContainer" GridPane.rowIndex="1"/>
+        <GridPane layoutY="43.0" prefHeight="278.0" prefWidth="590.0" AnchorPane.bottomAnchor="119.0"
+                  AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="43.0">
+            <AnchorPane fx:id="questionPane" prefHeight="5.0" prefWidth="590.0" GridPane.rowIndex="0"/>
+            <AnchorPane fx:id="answerPane" GridPane.rowIndex="1"/>
 
             <columnConstraints>
                 <ColumnConstraints percentWidth="100.0"/>
@@ -22,23 +20,10 @@
                 <RowConstraints percentHeight="50.0"/>
             </rowConstraints>
         </GridPane>
-        <Button fx:id="prevButton" mnemonicParsing="false" onAction="#btnPrevPressed" text="Prev"
-                AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0"/>
-        <Button fx:id="nextButton" mnemonicParsing="false" onAction="#btnNextPressed" text="Next"
-                AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0"/>
 
-        <VBox fx:id="loadingIndicator" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" spacing="8.0" AnchorPane.bottomAnchor="0.0"
-              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
-              xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-            <children>
-                <ProgressIndicator prefWidth="200.0"/>
-            </children>
-            <padding>
-                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-            </padding>
-        </VBox>
-
+        <Button fx:id="btnPreviousQuestion" onAction="#btnPreviousQuestionPressed" layoutX="14.0" layoutY="439.0" mnemonicParsing="false" text="Vorige"/>
+        <Button fx:id="btnNextQuestion" onAction="#btnNextQuestionPressed" layoutX="549.0" layoutY="439.0" mnemonicParsing="false" text="Volgende"/>
+        <Label fx:id="lblCurrentQuestionNo" alignment="CENTER" layoutX="234.0" layoutY="444.0" prefHeight="17.0"
+               prefWidth="173.0" text="0/0" textAlignment="CENTER"/>
     </children>
 </AnchorPane>
-
