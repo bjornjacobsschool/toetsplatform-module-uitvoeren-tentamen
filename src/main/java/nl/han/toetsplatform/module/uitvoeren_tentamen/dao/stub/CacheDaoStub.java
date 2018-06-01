@@ -1,6 +1,6 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.stub;
 
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.CacheDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.cache.CacheDao;
 
 import java.util.HashMap;
 import java.util.Map;

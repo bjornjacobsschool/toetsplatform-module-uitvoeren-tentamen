@@ -1,4 +1,4 @@
-package nl.han.toetsplatform.module.uitvoeren_tentamen.dao;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.toets;
 
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 
