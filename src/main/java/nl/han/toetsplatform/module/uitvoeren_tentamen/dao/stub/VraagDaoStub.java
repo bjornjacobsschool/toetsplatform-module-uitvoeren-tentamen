@@ -1,14 +1,14 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.stub;
 
-import nl.han.toetsplatform.module.shared.model.Vraag;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.VraagDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class VraagDaoStub implements VraagDao {
 
-    private static List<Vraag> vragen;
+    private static List<Antwoord> vragen;
 
     public VraagDaoStub() {
         if (vragen != null)
@@ -16,8 +16,9 @@ public class VraagDaoStub implements VraagDao {
 
         vragen = new ArrayList<>();
 
+        /*
         // Vraag 1
-        Vraag vraag1 = new Vraag();
+        Antwoord vraag1 = new Antwoord();
         vraag1.setPlugin("nl.han.toetsapplicatie.plugin.GraphPlugin");
         vraag1.setId(1);
         vraag1.setName("Vraag 1");
@@ -32,19 +33,21 @@ public class VraagDaoStub implements VraagDao {
 
         // Adding all the questions to the list
         vragen.add(vraag1);
-        vragen.add(vraag2);
+        vragen.add(vraag2);*/
     }
 
     @Override
-    public List<Vraag> getVragen() {
+    public List<Antwoord> getAntwoorden() {
         return vragen;
     }
 
     @Override
-    public Vraag getVraag(int id) {
+    public Antwoord getAntwoord(String id) {
+
+        /*
         for (Vraag v : vragen)
             if (v.getId() == id)
-                return v;
+                return v;*/
 
         return null;
     }
