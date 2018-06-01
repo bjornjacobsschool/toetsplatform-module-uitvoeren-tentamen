@@ -9,23 +9,28 @@ import java.sql.SQLException;
 public class StorageSqlite implements StorageDao {
 
     @Override
-    public void setup(String s, String[] strings) throws SQLException {
+    public void setup(String ddlScript, String[] tables) throws SQLException {
 
     }
 
     @Override
-    public ResultSet executeQuery(String s) throws SQLException {
+    public ResultSet executeQuery(String sqlStatement) throws SQLException {
         return null;
     }
 
     @Override
-    public boolean executeUpdate(String s) throws SQLException {
+    public boolean executeUpdate(String sqlStatement) throws SQLException {
         return false;
     }
 
     @Override
     public Connection getConnection() {
         return null;
+    }
+    
+    @Override
+    public void closeConnection() {
+
     }
 
 }
