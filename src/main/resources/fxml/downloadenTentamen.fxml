@@ -31,9 +31,9 @@
                 <RowConstraints percentHeight="50.0" />
             </rowConstraints>
 
-            <Button text="Download" onAction="#downloadPressed" AnchorPane.rightAnchor="5.0" AnchorPane.bottomAnchor="100" />
-
         </GridPane>
+
+    <Button fx:id="btnDownload" onAction="#downloadPressed" text="Download" AnchorPane.bottomAnchor="218" AnchorPane.rightAnchor="5.0" />
 
         <VBox fx:id="loadingIndicator" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
             <ProgressIndicator prefWidth="200.0" />

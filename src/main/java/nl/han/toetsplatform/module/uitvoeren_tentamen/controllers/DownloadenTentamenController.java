@@ -2,6 +2,7 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.controllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,6 +23,7 @@ public class DownloadenTentamenController extends Controller {
     public TableColumn nameColumn;
     public TableColumn descriptionColumn;
     public TableColumn dateColumn;
+    public Button btnDownload;
 
     private IDownloadenTentamenDAO dManager;
     private List<Tentamen> tentamens = null;
@@ -34,6 +36,7 @@ public class DownloadenTentamenController extends Controller {
 
     public void loadView() {
         tblViewTentamens.setVisible(false);
+        btnDownload.setVisible(false);
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<Tentamen,String>("naam"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Tentamen,String>("beschrijving"));
@@ -54,6 +57,7 @@ public class DownloadenTentamenController extends Controller {
              }
 
              tblViewTentamens.setVisible(true);
+             btnDownload.setVisible(true);
              loadingIndicator.setVisible(false);
         }).start();
     }
@@ -61,6 +65,10 @@ public class DownloadenTentamenController extends Controller {
     @FXML
     public void downloadPressed() {
         int tentamenIndex = tblViewTentamens.getSelectionModel().getSelectedIndex();
+        if (tentamenIndex == -1 || tentamenIndex > tentamens.size()-1) {
+            return;
+        }
+
         System.out.println(tentamens.get(tentamenIndex));
     }
 
