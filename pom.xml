@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>nl.han.toetsapplicatie.module</groupId>
-    <artifactId>uitvoeren-tentamen</artifactId>
+    <groupId>nl.han.toetsplatform.module</groupId>
+    <artifactId>toetsplatform-module-uitvoeren-tentamen</artifactId>
     <version>1.0</version>
 
-    <name>uitvoeren-tentamen</name>
+    <name>toetsplatform-module-uitvoeren-tentamen</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,13 +40,26 @@
             <artifactId>fx-guice</artifactId>
             <version>8.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>2.18.0</version>
+            <scope>test</scope>
+        </dependency>
 
-        <!-- Module Repositories -->
+        <!-- Online Module Repositories -->
         <dependency>
             <groupId>com.github.bjornjacobsschool</groupId>
-            <artifactId>toetsplatform-module-pluginsupport</artifactId>
-            <version>develop</version>
+            <artifactId>toetsplatform-module-shared</artifactId>
+            <version>develop-SNAPSHOT</version>
         </dependency>
+
+        <!-- Offline Module Repositories -->
+        <!--<dependency>-->
+            <!--<groupId>nl.han.toetsplatform.module</groupId>-->
+            <!--<artifactId>toetsplatform-module-shared</artifactId>-->
+            <!--<version>1.0</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
