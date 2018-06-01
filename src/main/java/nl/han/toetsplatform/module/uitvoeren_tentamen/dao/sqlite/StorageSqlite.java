@@ -27,7 +27,7 @@ public class StorageSqlite implements StorageDao {
     public Connection getConnection() {
         return null;
     }
-    
+
     @Override
     public void closeConnection() {
 
