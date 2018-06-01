@@ -2,7 +2,7 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite;
 
 import com.google.inject.Inject;
 import nl.han.toetsplatform.module.shared.storage.StorageDao;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.ToetsDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.toets.ToetsDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 
 import java.sql.ResultSet;
@@ -27,7 +27,7 @@ public class ToetsDaoSqlite implements ToetsDao {
             Tentamen tentamen = new Tentamen();
             tentamen.setTentamenId(resultSet.getString("tentamenid"));
             tentamen.setStudentNr(resultSet.getInt("studentnr"));
-            tentamen.setVersieNummer(resultSet.getString("versieNummer"));
+//            tentamen.setVersieNummer(resultSet.getString("versieNummer"));
             tentamen.setNaam(resultSet.getString("naam"));
             tentamen.setHash(resultSet.getString("hash"));
 
