@@ -51,7 +51,7 @@
         <dependency>
             <groupId>com.github.bjornjacobsschool</groupId>
             <artifactId>toetsplatform-module-shared</artifactId>
-            <version>develop</version>
+            <version>develop-SNAPSHOT</version>
         </dependency>
 
         <!-- Offline Module Repositories -->
