@@ -2,11 +2,11 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen;
 
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.JSONReader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
+import java.io.*;
+import java.net.URL;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.*;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

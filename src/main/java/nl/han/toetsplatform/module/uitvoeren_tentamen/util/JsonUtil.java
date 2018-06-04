@@ -6,6 +6,8 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Class that converts Java objects to JSON and vice versa
@@ -16,6 +18,8 @@ public class JsonUtil {
     private static ObjectMapper mapper;
     static {
         mapper = new ObjectMapper();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
+        mapper.setDateFormat(df);
     }
 
     // Dit moet aangepast worden...

@@ -3,15 +3,22 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
+import org.codehaus.jackson.map.annotate.JsonFilter;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 @JsonPropertyOrder(value={
         "tentamenId",
         "studentNr",
-        "versieNummer",
         "naam",
         "hash",
-        "antwoorden"
+        "antwoorden",
+        "beschrijving",
+        "startDatum",
+        "strStartDatum",
+        "versie"
 })
 public class Tentamen {
 
@@ -21,6 +28,7 @@ public class Tentamen {
     private String hash;
     private List<Antwoord> antwoorden;
     private String beschrijving;
+    @JsonIgnore
     private Date startDatum;
     private String strStartDatum;
     private Versie versie;
@@ -83,9 +91,7 @@ public class Tentamen {
 
     public void setStartDatum(Date startDatum) {
         this.startDatum = startDatum;
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-
         this.strStartDatum = sdf.format(startDatum);
     }
 
