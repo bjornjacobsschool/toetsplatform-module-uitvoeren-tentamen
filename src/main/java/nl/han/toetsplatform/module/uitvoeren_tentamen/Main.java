@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.config.ConfigTentamenUitvoerenModule;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.controllers.DownloadenTentamenController;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.controllers.TentamenUitvoerenController;
 
 import java.io.IOException;
@@ -41,8 +42,9 @@ public class Main extends GuiceApplication {
         primaryStage.setTitle("Standalone Module - Uitvoeren Tentamen");
         primaryStage.show();
 
-        // Tentamen uitvoeren scherm weergeven
-        tentamenUitvoeren();
+//        // Tentamen uitvoeren scherm weergeven
+//        tentamenUitvoeren();
+        downloadTentamen();
     }
 
     private void tentamenUitvoeren() {
@@ -55,6 +57,19 @@ public class Main extends GuiceApplication {
             primaryStage.getScene().setRoot(result.getRoot());
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage());
+        }
+    }
+
+    private void downloadTentamen() {
+        try {
+            GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLDownloadenTentamen(), null);
+
+            DownloadenTentamenController controller = result.getController();
+
+            primaryStage.getScene().setRoot(result.getRoot());
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, e.getMessage());
+            e.printStackTrace();
         }
     }
 

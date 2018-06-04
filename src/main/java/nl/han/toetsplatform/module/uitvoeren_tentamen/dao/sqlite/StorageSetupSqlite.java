@@ -2,11 +2,8 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite;
 
 import com.google.inject.Inject;
 import nl.han.toetsplatform.module.shared.storage.StorageDao;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.StorageSetupDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 
