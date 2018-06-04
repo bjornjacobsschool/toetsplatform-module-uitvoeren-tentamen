@@ -1,6 +1,6 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.stub;
 
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.VraagDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.vraag.VraagDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
 
 import java.util.ArrayList;

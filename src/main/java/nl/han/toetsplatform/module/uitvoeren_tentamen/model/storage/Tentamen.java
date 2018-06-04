@@ -1,5 +1,7 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
@@ -15,10 +17,13 @@ public class Tentamen {
 
     private String tentamenId;
     private int studentNr;
-    private String versieNummer;
     private String naam;
     private String hash;
     private List<Antwoord> antwoorden;
+    private String beschrijving;
+    private Date startDatum;
+    private String strStartDatum;
+    private Versie versie;
 
     public Tentamen() {
 
@@ -38,14 +43,6 @@ public class Tentamen {
 
     public void setStudentNr(int studentNr) {
         this.studentNr = studentNr;
-    }
-
-    public String getVersieNummer() {
-        return versieNummer;
-    }
-
-    public void setVersieNummer(String versieNummer) {
-        this.versieNummer = versieNummer;
     }
 
     public String getNaam() {
@@ -70,5 +67,37 @@ public class Tentamen {
 
     public void setAntwoorden(List<Antwoord> antwoorden) {
         this.antwoorden = antwoorden;
+    }
+
+    public String getBeschrijving() {
+        return beschrijving;
+    }
+
+    public void setBeschrijving(String beschrijving) {
+        this.beschrijving = beschrijving;
+    }
+
+    public Date getStartDatum() {
+        return startDatum;
+    }
+
+    public void setStartDatum(Date startDatum) {
+        this.startDatum = startDatum;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
+        this.strStartDatum = sdf.format(startDatum);
+    }
+
+    public Versie getVersie() {
+        return versie;
+    }
+
+    public void setVersie(Versie versie) {
+        this.versie = versie;
+    }
+
+    public String getStrStartDatum() {
+        return strStartDatum;
     }
 }

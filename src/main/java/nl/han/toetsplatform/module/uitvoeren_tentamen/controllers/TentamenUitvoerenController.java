@@ -4,23 +4,20 @@ import com.google.inject.Inject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import nl.han.toetsplatform.module.shared.model.Toets;
 import nl.han.toetsplatform.module.shared.model.Vraag;
 import nl.han.toetsplatform.module.shared.plugin.Plugin;
 import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.StorageSetupDao;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.util.JsonUtil;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TentamenUitvoerenController {
+public class TentamenUitvoerenController extends Controller {
 
     @FXML
     private Pane questionPane;
@@ -96,8 +93,7 @@ public class TentamenUitvoerenController {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
 
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load question view (ClassNotFoundException)", ButtonType.OK);
-            alert.show();
+            AlertError("Could not load question view (ClassNotFoundException)");
         }
     }
 
@@ -108,8 +104,7 @@ public class TentamenUitvoerenController {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
 
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load answer view (ClassNotFoundException)", ButtonType.OK);
-            alert.show();
+            AlertError("Could not load question view (ClassNotFoundException)");
         }
     }
 
@@ -122,8 +117,7 @@ public class TentamenUitvoerenController {
             currentQuestionIndex -= 1;
             showExercise();
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Er zijn geen vragen meer om hiervoor in te laden.", ButtonType.OK);
-            alert.show();
+            AlertInfo("Er zijn geen vragen meer om hiervoor in te laden.");
         }
     }
 
@@ -132,22 +126,8 @@ public class TentamenUitvoerenController {
             currentQuestionIndex += 1;
             showExercise();
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Laatste vraag bereikt.", ButtonType.OK);
-            alert.show();
+            AlertInfo("Laatste vraag bereikt.");
         }
-    }
-
-    /**
-     * wordt aangeroepen als er op opslaan wordt gedrukt
-     * @param event JavaFX ActionEvent
-     */
-    public void btnSavePressed(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Opgeslagen?", ButtonType.OK);
-        alert.show();
-    }
-
-    private void packageTentamen() {
-
     }
 
 }
