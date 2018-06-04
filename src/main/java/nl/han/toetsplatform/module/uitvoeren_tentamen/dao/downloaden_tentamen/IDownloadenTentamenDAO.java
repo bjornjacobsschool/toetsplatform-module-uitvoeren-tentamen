@@ -8,6 +8,6 @@ import java.text.ParseException;
 import java.util.List;
 
 public interface IDownloadenTentamenDAO {
-    public boolean downloadTentamen(String tentamenId) throws IOException, JSONException;
-    public List<Tentamen> getKlaargezetteTentamens() throws IOException, ParseException, JSONException;
+    boolean downloadTentamen(String tentamenId) throws IOException, JSONException;
+    List<Tentamen> getKlaargezetteTentamens() throws IOException, ParseException, JSONException;
 }
