@@ -5,7 +5,6 @@ import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
@@ -15,14 +14,18 @@ import java.util.List;
 
 public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
 
+    private JSONReader reader;
+    public DownloadenTentamenDAO(JSONReader reader) {
+        this.reader = reader;
+    }
+
     @Override
     public boolean downloadTentamen(String tentamenId) throws IOException, JSONException {
 
         // TODO: Replace with real URL
-        JSONObject jTentamen = JSONReader.JSONObjectFromURL("https://www.focusws.nl/exam1.json");
+        JSONObject jTentamen = this.reader.JSONObjectFromURL("https://www.focusws.nl/exam1.json");
 
-        Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("exam1.json"), StandardCharsets.UTF_8));
-        System.out.println(jTentamen.toString());
+        Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("exam_" + tentamenId + ".json"), StandardCharsets.UTF_8));
         writer.write(jTentamen.toString());
         writer.close();
 
@@ -34,7 +37,7 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
         List<Tentamen> tentamens = new ArrayList<>();
 
         // TODO: Replace with real URL
-        JSONArray jTentamens = JSONReader.JSONArrayFromURL("https://www.focusws.nl/exam.json");
+        JSONArray jTentamens = this.reader.JSONArrayFromURL("https://www.focusws.nl/exam.json");
 
         for (int i = 0; i < jTentamens.length(); i++) {
             JSONObject o = jTentamens.getJSONObject(i);

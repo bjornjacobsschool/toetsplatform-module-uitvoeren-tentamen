@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 public class JSONReader {
 
-    private static String readAll(Reader rd) throws IOException {
+    private String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int cp;
         while ((cp = rd.read()) != -1) {
@@ -23,25 +23,19 @@ public class JSONReader {
         return sb.toString();
     }
 
-    public static JSONArray JSONArrayFromURL(String url) throws IOException, JSONException {
-        InputStream is = new URL(url).openStream();
-        try {
+    public JSONArray JSONArrayFromURL(String url) throws IOException, JSONException {
+        try (InputStream is = new URL(url).openStream()) {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-            String jsonText = readAll(rd);
+            String jsonText = this.readAll(rd);
             return new JSONArray(jsonText);
-        } finally {
-            is.close();
         }
     }
 
-    public static JSONObject JSONObjectFromURL(String url) throws IOException, JSONException {
-        InputStream is = new URL(url).openStream();
-        try {
+    public JSONObject JSONObjectFromURL(String url) throws IOException, JSONException {
+        try (InputStream is = new URL(url).openStream()) {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-            String jsonText = readAll(rd);
+            String jsonText = this.readAll(rd);
             return new JSONObject(jsonText);
-        } finally {
-            is.close();
         }
     }
 }
