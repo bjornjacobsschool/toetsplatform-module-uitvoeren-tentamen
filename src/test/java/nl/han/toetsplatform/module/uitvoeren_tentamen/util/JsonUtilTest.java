@@ -4,7 +4,6 @@ import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
 
@@ -54,9 +53,20 @@ public class JsonUtilTest {
 
     @Test
     public void testConvertToJava() {
-        Antwoord result = JsonUtil.ConvertJsonToJava(correct,Antwoord.class);
+        Antwoord result = JsonUtil.convertJsonToJava(correct,Antwoord.class);
         Assert.assertEquals(result.getVraagId(),vraagId);
         Assert.assertEquals(result.getTentamenId(),tentamenId);
         Assert.assertEquals(result.getGegevenAntwoord(),gegevenAntwoord);
+    }
+
+    @Test
+    public void testJsonReadWrite() {
+        JsonUtil.writeTentamen(tentamen);
+        Tentamen test = JsonUtil.readTentamen("496798.JSON");
+        Assert.assertEquals(test.getTentamenId(), tentamenId);
+        Assert.assertEquals(test.getStudentNr(), 496798);
+        Assert.assertEquals(test.getNaam(), "Kars");
+        Assert.assertEquals(test.getVersieNummer(), "1");
+        Assert.assertEquals(test.getHash(), "hash");
     }
 }

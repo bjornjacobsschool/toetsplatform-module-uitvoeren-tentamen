@@ -5,9 +5,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Class that converts Java objects to JSON and vice versa
@@ -21,7 +19,7 @@ public class JsonUtil {
     }
 
     // Dit moet aangepast worden...
-    private static final String DIRECTORY = "C:\\Users\\Kars\\Dropbox\\ASD\\Project\\Code\\JsonUtilTest\\";
+    private static final String DIRECTORY = "C:\\Users\\Kars\\Dropbox\\ASD\\Project\\Repo\\toetsplatform-module-uitvoeren-tentamen\\json";
 
     /**
      * Sla een tentamen op als JSON bestand
@@ -42,10 +40,16 @@ public class JsonUtil {
 
     }
 
-    //TODO
-    public static Tentamen readTentamen() {
-        Tentamen readTentamen = new Tentamen();
-        return readTentamen;
+    /**
+     * Maak Tentamen object van JSON bestand op schijf
+     * @param filename bestandsnaam (eindigt op .JSON)
+     * @return Tentamen object opgesteld uit de data uit het bestand
+     */
+    public static Tentamen readTentamen(String filename) {
+        String file = DIRECTORY + filename;
+        System.out.println("Trying to read from: "+ file);
+        Tentamen t  = convertJsonToJava(readFileToString(file), Tentamen.class);
+        return t;
     }
 
     /**
@@ -77,7 +81,7 @@ public class JsonUtil {
      * @param <T> Generic representation of a class
      * @return A java object (cls) with the properties derived from the JSON string (if possible)
      */
-    public static <T> T ConvertJsonToJava(String jsonString, Class<T> cls) {
+    public static <T> T convertJsonToJava(String jsonString, Class<T> cls) {
         T result = null;
         try {
             result = mapper.readValue(jsonString, cls);
@@ -89,5 +93,26 @@ public class JsonUtil {
             e.printStackTrace();
         }
         return result;
+    }
+
+    /**
+     * Converts the content of a file to a string
+     * @param filePath the direct location of the file
+     * @return String representation of content of file
+     */
+    private static String readFileToString(String filePath)
+    {
+        StringBuilder contentBuilder = new StringBuilder();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
+            String sCurrentLine;
+            while ((sCurrentLine = br.readLine()) != null) {
+                contentBuilder.append(sCurrentLine).append("\n");
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return contentBuilder.toString();
     }
 }
