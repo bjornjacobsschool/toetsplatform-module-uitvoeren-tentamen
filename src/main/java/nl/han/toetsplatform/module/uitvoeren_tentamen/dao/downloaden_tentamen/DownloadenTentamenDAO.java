@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.*;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +24,7 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
     public boolean downloadTentamen(String tentamenId) throws IOException, JSONException {
 
         // TODO: Replace with real URL
-        JSONObject jTentamen = this.reader.JSONObjectFromURL("https://www.focusws.nl/exam1.json");
+        JSONObject jTentamen = this.reader.JSONObjectFromURL(new URL("https://www.focusws.nl/exam1.json"));
 
         Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("exam_" + tentamenId + ".json"), StandardCharsets.UTF_8));
         writer.write(jTentamen.toString());
@@ -37,7 +38,7 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
         List<Tentamen> tentamens = new ArrayList<>();
 
         // TODO: Replace with real URL
-        JSONArray jTentamens = this.reader.JSONArrayFromURL("https://www.focusws.nl/exam.json");
+        JSONArray jTentamens = this.reader.JSONArrayFromURL(new URL("https://www.focusws.nl/exam.json"));
 
         for (int i = 0; i < jTentamens.length(); i++) {
             JSONObject o = jTentamens.getJSONObject(i);
