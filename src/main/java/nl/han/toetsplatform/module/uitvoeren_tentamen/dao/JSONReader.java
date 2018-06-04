@@ -23,16 +23,16 @@ public class JSONReader {
         return sb.toString();
     }
 
-    public JSONArray JSONArrayFromURL(String url) throws IOException, JSONException {
-        try (InputStream is = new URL(url).openStream()) {
+    public JSONArray JSONArrayFromURL(URL url) throws IOException, JSONException {
+        try (InputStream is = url.openStream()) {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
             String jsonText = this.readAll(rd);
             return new JSONArray(jsonText);
         }
     }
 
-    public JSONObject JSONObjectFromURL(String url) throws IOException, JSONException {
-        try (InputStream is = new URL(url).openStream()) {
+    public JSONObject JSONObjectFromURL(URL url) throws IOException, JSONException {
+        try (InputStream is = url.openStream()) {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
             String jsonText = this.readAll(rd);
             return new JSONObject(jsonText);

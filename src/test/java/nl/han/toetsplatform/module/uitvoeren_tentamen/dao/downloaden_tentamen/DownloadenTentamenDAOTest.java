@@ -16,6 +16,8 @@ import java.text.ParseException;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -40,7 +42,7 @@ public class DownloadenTentamenDAOTest {
         t1.put("beschrijving", "ASD");
         t1.put("startdatum", "24-06-2018 12:15:00");
 
-        when(JSONReaderMock.JSONObjectFromURL(anyString())).thenReturn(t1);
+        when(JSONReaderMock.JSONObjectFromURL(any())).thenReturn(t1);
 
         boolean res = dt.downloadTentamen("asd123");
         assertTrue(res);
@@ -48,7 +50,7 @@ public class DownloadenTentamenDAOTest {
         File file = new File("exam_asd123.json");
         assertTrue(file.exists());
 
-        String content = new String ( Files.readAllBytes( Paths.get("exam_asd123.json") ) );
+        String content = new String (Files.readAllBytes( Paths.get("exam_asd123.json")));
         assertEquals(content, "{\"beschrijving\":\"ASD\",\"startdatum\":\"24-06-2018 12:15:00\",\"id\":\"t1-asd123\",\"naam\":\"t1\"}");
 
         assertTrue(file.delete());
@@ -73,7 +75,7 @@ public class DownloadenTentamenDAOTest {
         jsonArray.put(t1);
         jsonArray.put(t2);
 
-        when(JSONReaderMock.JSONArrayFromURL(anyString())).thenReturn(jsonArray);
+        when(JSONReaderMock.JSONArrayFromURL(any())).thenReturn(jsonArray);
 
         List<Tentamen> result = dt.getKlaargezetteTentamens();
 
