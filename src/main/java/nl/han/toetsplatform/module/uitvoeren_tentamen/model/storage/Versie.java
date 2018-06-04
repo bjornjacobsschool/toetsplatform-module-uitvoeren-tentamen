@@ -3,6 +3,7 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage;
 import java.util.Date;
 
 public class Versie {
+
     private Date datum;
     private String nummer;
     private String omschrijving;
