@@ -4,7 +4,6 @@ import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.JSONReader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,10 +14,9 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyObject;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
