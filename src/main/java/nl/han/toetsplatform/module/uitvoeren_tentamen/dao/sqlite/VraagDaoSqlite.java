@@ -2,7 +2,7 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite;
 
 import com.google.inject.Inject;
 import nl.han.toetsplatform.module.shared.storage.StorageDao;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.VraagDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.vraag.VraagDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
 
 import java.sql.ResultSet;

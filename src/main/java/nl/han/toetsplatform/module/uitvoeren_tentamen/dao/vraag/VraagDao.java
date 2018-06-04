@@ -1,4 +1,4 @@
-package nl.han.toetsplatform.module.uitvoeren_tentamen.dao;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.vraag;
 
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
 
