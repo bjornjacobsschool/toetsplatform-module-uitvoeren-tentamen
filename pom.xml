@@ -46,20 +46,31 @@
             <version>2.18.0</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- Online Module Repositories -->
         <dependency>
-            <groupId>com.github.bjornjacobsschool</groupId>
-            <artifactId>toetsplatform-module-shared</artifactId>
-            <version>develop-SNAPSHOT</version>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
         </dependency>
 
-        <!-- Offline Module Repositories -->
+
+        <!-- Online Module Repositories -->
         <!--<dependency>-->
-            <!--<groupId>nl.han.toetsplatform.module</groupId>-->
+            <!--<groupId>com.github.bjornjacobsschool</groupId>-->
             <!--<artifactId>toetsplatform-module-shared</artifactId>-->
-            <!--<version>1.0</version>-->
+            <!--<version>develop-SNAPSHOT</version>-->
         <!--</dependency>-->
+
+        <!-- Offline Module Repositories -->
+        <dependency>
+            <groupId>nl.han.toetsplatform.module</groupId>
+            <artifactId>toetsplatform-module-shared</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

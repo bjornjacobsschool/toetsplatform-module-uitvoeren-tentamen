@@ -1,7 +1,16 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage;
 
 import java.util.List;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
+@JsonPropertyOrder(value={
+        "tentamenId",
+        "studentNr",
+        "versieNummer",
+        "naam",
+        "hash",
+        "antwoorden"
+})
 public class Tentamen {
 
     private String tentamenId;

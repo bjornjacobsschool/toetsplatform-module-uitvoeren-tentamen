@@ -13,6 +13,7 @@ import nl.han.toetsplatform.module.shared.model.Vraag;
 import nl.han.toetsplatform.module.shared.plugin.Plugin;
 import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.StorageSetupDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.JsonUtil;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -134,6 +135,19 @@ public class TentamenUitvoerenController {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Laatste vraag bereikt.", ButtonType.OK);
             alert.show();
         }
+    }
+
+    /**
+     * wordt aangeroepen als er op opslaan wordt gedrukt
+     * @param event JavaFX ActionEvent
+     */
+    public void btnSavePressed(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Opgeslagen?", ButtonType.OK);
+        alert.show();
+    }
+
+    private void packageTentamen() {
+
     }
 
 }
