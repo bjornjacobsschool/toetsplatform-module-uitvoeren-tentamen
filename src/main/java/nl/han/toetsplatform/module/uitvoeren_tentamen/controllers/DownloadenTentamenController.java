@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.DownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.IDownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -45,7 +46,7 @@ public class DownloadenTentamenController extends Controller {
          new Thread(() -> {
              try {
                  tentamens = dManager.getKlaargezetteTentamens();
-             } catch (IOException | ParseException e) {
+             } catch (IOException | ParseException | JSONException e) {
                  e.printStackTrace();
                  AlertError("Er is iets fout gegaan, probeer opnieuw.");
              }
@@ -69,7 +70,20 @@ public class DownloadenTentamenController extends Controller {
             return;
         }
 
-        System.out.println(tentamens.get(tentamenIndex));
+        boolean result = false;
+        try {
+            result = dManager.downloadTentamen(tentamens.get(tentamenIndex).getTentamenId());
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+            AlertError("Er is iets fout gegaan, probeer opnieuw.");
+        }
+
+        if (result) {
+            AlertInfo("Het tentamen is succesvol lokaal opgeslagen.");
+        } else {
+            AlertError("Er is iets fout gegaan, probeer opnieuw.");
+        }
+
     }
 
 
