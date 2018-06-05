@@ -1,6 +1,7 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen;
 
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.JSONReader;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.Utils;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,7 +21,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
 public class DownloadenTentamenDAOTest {
 
     private DownloadenTentamenDAO dt;
@@ -33,7 +33,7 @@ public class DownloadenTentamenDAOTest {
     }
 
     @Test
-    public void downloadTentamen() throws IOException {
+    public void downloadTentamen() throws Exception {
         JSONObject t1 = new JSONObject();
         t1.put("naam", "t1");
         t1.put("id", "t1-asd123");
@@ -45,10 +45,10 @@ public class DownloadenTentamenDAOTest {
         boolean res = dt.downloadTentamen("asd123");
         assertTrue(res);
 
-        File file = new File("exam_asd123.json");
+        File file = new File(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS) + "exam_asd123.json");
         assertTrue(file.exists());
 
-        String content = new String (Files.readAllBytes( Paths.get("exam_asd123.json")));
+        String content = new String(Files.readAllBytes(Paths.get(file.getPath())));
         assertEquals(content, "{\"beschrijving\":\"ASD\",\"startdatum\":\"24-06-2018 12:15:00\",\"id\":\"t1-asd123\",\"naam\":\"t1\"}");
 
         assertTrue(file.delete());

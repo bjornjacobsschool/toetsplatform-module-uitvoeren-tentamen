@@ -8,8 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.config.ConfigTentamenUitvoerenModule;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.controllers.DownloadenTentamenController;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.controllers.TentamenUitvoerenController;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.controllers.DownloadenUitvoerenTabPaneController;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,29 +41,27 @@ public class Main extends GuiceApplication {
         primaryStage.setTitle("Standalone Module - Uitvoeren Tentamen");
         primaryStage.show();
 
-//        // Tentamen uitvoeren scherm weergeven
-//        tentamenUitvoeren();
-        downloadTentamen();
+        initializePage();
     }
 
-    private void tentamenUitvoeren() {
+    //    private void tentamenUitvoeren() {
+//        try {
+//            GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLTentamenUitvoeren(), null);
+//
+//            TentamenUitvoerenController controller = result.getController();
+//            controller.setUp();
+//
+//            primaryStage.getScene().setRoot(result.getRoot());
+//        } catch (IOException e) {
+//            logger.log(Level.SEVERE, e.getMessage());
+//        }
+//    }
+//
+    private void initializePage() {
         try {
-            GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLTentamenUitvoeren(), null);
+            GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLDownloadenUitvoerenTabPaneController(), null);
 
-            TentamenUitvoerenController controller = result.getController();
-            controller.setUp();
-
-            primaryStage.getScene().setRoot(result.getRoot());
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage());
-        }
-    }
-
-    private void downloadTentamen() {
-        try {
-            GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLDownloadenTentamen(), null);
-
-            DownloadenTentamenController controller = result.getController();
+            DownloadenUitvoerenTabPaneController controller = result.getController();
 
             primaryStage.getScene().setRoot(result.getRoot());
         } catch (IOException e) {

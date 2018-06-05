@@ -14,6 +14,10 @@ public class ConfigTentamenUitvoerenModule {
         return ConfigTentamenUitvoerenModule.class.getResource("/fxml/downloadenTentamen.fxml");
     }
 
+    public static URL getFXMLDownloadenUitvoerenTabPaneController() {
+        return ConfigTentamenUitvoerenModule.class.getResource("/fxml/downloadenUitvoerenTabPaneController.fxml");
+    }
+
     public static AbstractModule getAbstractModule() {
         return new GuiceModule();
     }

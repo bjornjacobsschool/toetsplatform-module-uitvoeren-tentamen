@@ -17,7 +17,6 @@ public class Tentamen {
     private Versie versie;
 
     public Tentamen() {
-
     }
 
     public String getTentamenId() {
