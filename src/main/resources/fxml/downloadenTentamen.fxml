@@ -13,6 +13,7 @@
 
 <AnchorPane minWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.han.toetsplatform.module.uitvoeren_tentamen.controllers.DownloadenTentamenController">
         <Button onAction="#btnExitPressed" text="Exit" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+        <Button onAction="#btnStartPressed" text="Start" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
         <GridPane AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0">
 
                <TableView fx:id="tblViewTentamens" prefHeight="200.0" prefWidth="600.0">
