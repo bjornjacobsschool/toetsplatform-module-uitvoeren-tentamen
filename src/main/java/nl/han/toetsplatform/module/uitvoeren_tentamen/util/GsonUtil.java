@@ -11,6 +11,11 @@ public class GsonUtil {
         gson = new Gson();
     }
 
+    /**
+     * Laad een tentamen in uit JSON bestand van de schijf
+     * @param dir file path + name
+     * @return Tentamen object aangemaakt uit het bestand
+     */
     public Tentamen loadTentamen(String dir) {
         Tentamen t = new Tentamen();
         try {
@@ -21,6 +26,11 @@ public class GsonUtil {
         return t;
     }
 
+    /**
+     * Schrijf een Tentamen object weg naar schijf in de vorm van JSON bestand
+     * @param obj Het Tentamen object
+     * @param dir de directory + file name
+     */
     public void writeTentamen(Tentamen obj, String dir) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(dir));

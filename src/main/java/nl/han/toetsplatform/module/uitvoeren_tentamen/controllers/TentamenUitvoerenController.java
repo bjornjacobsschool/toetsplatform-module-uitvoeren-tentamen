@@ -6,12 +6,16 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.stage.DirectoryChooser;
 import nl.han.toetsplatform.module.shared.model.Toets;
 import nl.han.toetsplatform.module.shared.model.Vraag;
 import nl.han.toetsplatform.module.shared.plugin.Plugin;
 import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,8 +35,9 @@ public class TentamenUitvoerenController extends Controller {
     @Inject
     private StorageSetupDao storageSetupDao;
 
-    private Toets currentToets;
+    private Tentamen currentToets;
     private int currentQuestionIndex = 0;
+    private GsonUtil gsu;
 
     public void setUp() {
         // Setup SQLite
@@ -45,6 +50,8 @@ public class TentamenUitvoerenController extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        gsu = new GsonUtil();
 
         // Build dummy toets met vragen
         Vraag vraag1 = new Vraag();
@@ -63,8 +70,8 @@ public class TentamenUitvoerenController extends Controller {
         vragen.add(vraag1);
         vragen.add(vraag2);
 
-        Toets toets = new Toets();
-        toets.setId(1);
+        Tentamen toets = new Tentamen();
+        toets.setTentamenId("1");
         toets.setNaam("Toets 1");
         toets.setVragen(vragen);
 
@@ -128,6 +135,14 @@ public class TentamenUitvoerenController extends Controller {
         } else {
             AlertInfo("Laatste vraag bereikt.");
         }
+    }
+
+    public void btnLoadPressed(ActionEvent event) {
+        //DirectoryChooser directoryChooser = new DirectoryChooser();
+        //File selectedDirectory = directoryChooser.showDialog();
+        //currentToets = gsu.loadTentamen("%appdata%\\Toetsapplicatie\\TestTentamen.json");
+        //showExercise();
+        AlertInfo("Test");
     }
 
 }
