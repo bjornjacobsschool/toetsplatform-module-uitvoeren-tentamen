@@ -1,10 +1,12 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen;
 
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.JSONReader;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.Utils;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +18,7 @@ import java.util.List;
 public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
 
     private JSONReader reader;
+
     public DownloadenTentamenDAO(JSONReader reader) {
         this.reader = reader;
     }
@@ -26,7 +29,7 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
         // TODO: Replace with real URL
         JSONObject jTentamen = this.reader.JSONObjectFromURL(new URL("https://www.focusws.nl/exam1.json"));
 
-        Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("exam_" + tentamenId + ".json"), StandardCharsets.UTF_8));
+        Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS) + "exam_" + tentamenId + ".json"), StandardCharsets.UTF_8));
         writer.write(jTentamen.toString());
         writer.close();
 
@@ -40,6 +43,23 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
         // TODO: Replace with real URL
         JSONArray jTentamens = this.reader.JSONArrayFromURL(new URL("https://www.focusws.nl/exam.json"));
 
+        parseTentamenModel(tentamens, jTentamens);
+
+        return tentamens;
+    }
+
+    @Override
+    public List<Tentamen> getDownloadedTentamens() throws IOException, ParseException, JSONException {
+        List<Tentamen> tentamens = new ArrayList<>();
+
+        JSONArray jTentamens = this.reader.JSONArrayFromFolder(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS));
+
+        parseTentamenModel(tentamens, jTentamens);
+
+        return tentamens;
+    }
+
+    private void parseTentamenModel(List<Tentamen> tentamens, JSONArray jTentamens) throws ParseException {
         for (int i = 0; i < jTentamens.length(); i++) {
             JSONObject o = jTentamens.getJSONObject(i);
             Tentamen t = new Tentamen();
@@ -55,7 +75,5 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
 
             tentamens.add(t);
         }
-
-        return tentamens;
     }
 }

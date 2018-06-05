@@ -1,16 +1,12 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.dao;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
-import java.nio.charset.Charset;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.*;
+import java.net.URL;
+import java.nio.charset.Charset;
 
 public class JSONReader {
 
@@ -29,6 +25,26 @@ public class JSONReader {
             String jsonText = this.readAll(rd);
             return new JSONArray(jsonText);
         }
+    }
+
+    public JSONArray JSONArrayFromFolder(String pathname) throws IOException, JSONException {
+
+        File folder = new File(pathname);
+        File[] listOfFiles = folder.listFiles();
+
+        JSONArray files = new JSONArray();
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {
+                try (InputStream is = new FileInputStream(file)) {
+                    BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+                    String jsonText = this.readAll(rd);
+
+                    files.put(new JSONObject(jsonText));
+                }
+            }
+        }
+
+        return files;
     }
 
     public JSONObject JSONObjectFromURL(URL url) throws IOException, JSONException {

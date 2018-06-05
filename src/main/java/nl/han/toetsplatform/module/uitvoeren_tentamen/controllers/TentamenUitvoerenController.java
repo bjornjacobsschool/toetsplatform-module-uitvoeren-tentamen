@@ -109,7 +109,7 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public Plugin getPluginForCurrentQuestion() throws ClassNotFoundException {
-        return PluginLoader.getPlugin(currentToets.getVragen().get(currentQuestionIndex));
+        return PluginLoader.getPlugin(currentToets.getVragen().get(currentQuestionIndex).getVraagType(), currentToets.getVragen().get(currentQuestionIndex).getData());
     }
 
     public void btnPreviousQuestionPressed(ActionEvent event) {
