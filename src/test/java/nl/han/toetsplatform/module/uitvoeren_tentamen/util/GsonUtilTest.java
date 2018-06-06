@@ -54,6 +54,7 @@ public class GsonUtilTest {
         tentamen.setStartDatum(date);
         tentamen.setVersie(versie);
         gsu = new GsonUtil();
+        //TODO dit dynamisch maken
         dir = "C:\\Users\\Kars\\Desktop\\File.json";
         expected = "{\"tentamenId\":\"1\",\"studentNr\":496798,\"naam\":\"Kars\",\"hash\":\"hash\",\"antwoorden\"" +
                 ":[{\"vraagId\":\"1\",\"tentamenId\":\"1\",\"gegevenAntwoord\":\"Het antwoord is 5\"},{\"vraagId\":\"2\"" +
