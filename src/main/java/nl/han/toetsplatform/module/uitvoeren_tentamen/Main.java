@@ -8,15 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.config.ConfigTentamenUitvoerenModule;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.Utils;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main extends GuiceApplication {
-
-    private static Logger logger = Logger.getLogger("toetsplatform-module-uitvoeren-tentamen");
 
     @Inject
     private GuiceFXMLLoader fxmlLoader;
@@ -49,7 +47,7 @@ public class Main extends GuiceApplication {
 
             primaryStage.getScene().setRoot(result.getRoot());
         } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            Utils.logger.log(Level.SEVERE, e.getMessage());
         }
     }
 

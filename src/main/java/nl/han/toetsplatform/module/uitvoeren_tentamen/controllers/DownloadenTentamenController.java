@@ -16,6 +16,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
 
 public class DownloadenTentamenController extends Controller {
 
@@ -33,6 +34,7 @@ public class DownloadenTentamenController extends Controller {
 
     private IDownloadenTentamenDAO dManager;
     private List<Tentamen> tentamens = null;
+
 
     public void initialize() {
         dManager = new DownloadenTentamenDAO(new JSONReader());
@@ -74,7 +76,7 @@ public class DownloadenTentamenController extends Controller {
             try {
                 tentamens = dManager.getKlaargezetteTentamens();
             } catch (IOException | ParseException | JSONException e) {
-                e.printStackTrace();
+                Utils.logger.log(Level.SEVERE, e.getMessage());
                 AlertError("Er is iets fout gegaan, probeer opnieuw.");
             }
 
@@ -106,6 +108,7 @@ public class DownloadenTentamenController extends Controller {
             result = dManager.downloadTentamen(tentamens.get(tentamenIndex).getTentamenId());
         } catch (IOException | JSONException e) {
             e.printStackTrace();
+            Utils.logger.log(Level.SEVERE, e.getMessage());
             AlertError("Er is iets fout gegaan, probeer opnieuw.");
         }
 
