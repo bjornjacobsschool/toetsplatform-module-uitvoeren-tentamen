@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.config.ConfigTentamenUitvoerenModule;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.controllers.DownloadenUitvoerenTabPaneController;
 
 import java.io.IOException;
 import java.util.List;

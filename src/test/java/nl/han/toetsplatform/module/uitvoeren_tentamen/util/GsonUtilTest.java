@@ -1,10 +1,11 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
+
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Versie;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
 
 import java.util.*;
 
