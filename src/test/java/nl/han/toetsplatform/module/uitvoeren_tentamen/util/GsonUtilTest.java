@@ -63,7 +63,7 @@ public class GsonUtilTest {
     }
 
     @Test
-    public void testGsonReadWrite() {
+    public void testGsonWrite() {
         gsu.writeTentamen(tentamen, dir);
         Tentamen result = gsu.loadTentamen(dir);
         Assert.assertEquals(result.getTentamenId(), tentamenId);
@@ -74,7 +74,20 @@ public class GsonUtilTest {
         Assert.assertEquals(result.getStartDatum(), date);
         Assert.assertEquals(result.getVersie().getDatum(), versie.getDatum());
         Assert.assertEquals(result.getVersie().getNummer(), versie.getNummer());
-        Assert.assertEquals(true, true);
+    }
+
+    @Test
+    public void testGsonLoad() {
+        String resourceDir = "src/test/resources/Test.json";
+        Tentamen result = gsu.loadTentamen(resourceDir);
+        Assert.assertEquals(result.getTentamenId(), tentamenId);
+        Assert.assertEquals(result.getStudentNr(), studentNr);
+        Assert.assertEquals(result.getNaam(), naam);
+        Assert.assertEquals(result.getHash(), hash);
+        Assert.assertEquals(result.getBeschrijving(), beschrijving);
+        Assert.assertEquals(result.getStartDatum(), date);
+        Assert.assertEquals(result.getVersie().getDatum(), versie.getDatum());
+        Assert.assertEquals(result.getVersie().getNummer(), versie.getNummer());
     }
 }
 
