@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.config.ConfigTentamenUitvoerenModule;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.JSONReader;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.Utils;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.DownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.IDownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
@@ -19,6 +20,7 @@ import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
 
 public class GedownloadeTentamensController extends Controller {
 
@@ -60,7 +62,7 @@ public class GedownloadeTentamensController extends Controller {
         try {
             tentamens = dManager.getDownloadedTentamens();
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            Utils.logger.log(Level.SEVERE, e.getMessage());
             AlertError("Er is iets fout gegaan, probeer opnieuw.");
         }
 
@@ -91,7 +93,7 @@ public class GedownloadeTentamensController extends Controller {
             primaryStage.getScene().setRoot(result.getRoot());
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Utils.logger.log(Level.SEVERE, e.getMessage());
         }
     }
 }
