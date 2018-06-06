@@ -37,17 +37,19 @@ public class GsonUtil {
      */
     public void writeTentamen(Tentamen obj, String dir) {
         FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
         try {
             fileWriter = new FileWriter(dir);
+            bufferedWriter = new BufferedWriter(fileWriter);
         } catch (IOException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
         } finally {
-            if (fileWriter != null) {
-                BufferedWriter bw = new BufferedWriter(fileWriter);
+            if (fileWriter != null && bufferedWriter != null) {
+
                 String write = gson.toJson(obj);
                 try {
-                    bw.write(write);
-                    bw.close();
+                    bufferedWriter.write(write);
+                    bufferedWriter.close();
                 } catch (IOException e) {
                     Utils.logger.log(Level.SEVERE, e.getMessage());
                 }
@@ -62,25 +64,28 @@ public class GsonUtil {
      * @return String representation of content of file
      */
     public String readFileToString(String filePath) throws IOException {
+        String returnString = "";
         StringBuilder contentBuilder = new StringBuilder();
         FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
 
         try {
             fileReader = new FileReader(filePath);
+            bufferedReader = new BufferedReader(fileReader);
         } catch (FileNotFoundException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
         } finally {
-            if (fileReader != null) {
-                BufferedReader br = new BufferedReader(fileReader);
+            if (fileReader != null && bufferedReader != null) {
                 String sCurrentLine;
-                while ((sCurrentLine = br.readLine()) != null) {
+
+                while ((sCurrentLine = bufferedReader.readLine()) != null) {
                     contentBuilder.append(sCurrentLine).append("\n");
                 }
 
-                return contentBuilder.toString();
+                returnString = contentBuilder.toString();
             }
         }
 
-        return "";
+        return returnString;
     }
 }
