@@ -1,8 +1,8 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen;
 
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.JSONReader;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.Utils;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -12,10 +12,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.config.ConfigTentamenUitvoerenModule;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.JSONReader;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.Utils;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.DownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.IDownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 
 import java.io.IOException;
 import java.text.ParseException;

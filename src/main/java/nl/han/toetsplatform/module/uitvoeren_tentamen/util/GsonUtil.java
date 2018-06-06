@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 
 import java.io.*;
+import java.util.logging.Level;
 
 public class GsonUtil {
     private static Gson gson;
@@ -19,11 +20,12 @@ public class GsonUtil {
      * @return Tentamen object aangemaakt uit het bestand
      */
     public Tentamen loadTentamen(String dir) {
-        Tentamen t = new Tentamen();
+        Tentamen t = null;
         try {
+            t = new Tentamen();
             t = gson.fromJson(readFileToString(dir), Tentamen.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logger.log(Level.SEVERE, e.getMessage());
         }
         return t;
     }
@@ -41,7 +43,7 @@ public class GsonUtil {
             bw.write(write);
             bw.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Utils.logger.log(Level.SEVERE, e.getMessage());
         }
 
         String jsonInString = gson.toJson(obj);
@@ -54,15 +56,16 @@ public class GsonUtil {
      * @return String representation of content of file
      */
     public String readFileToString(String filePath) {
-        StringBuilder contentBuilder = new StringBuilder();
+        StringBuilder contentBuilder = null;
         try {
+            contentBuilder = new StringBuilder();
             BufferedReader br = new BufferedReader(new FileReader(filePath));
             String sCurrentLine;
             while ((sCurrentLine = br.readLine()) != null) {
                 contentBuilder.append(sCurrentLine).append("\n");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Utils.logger.log(Level.SEVERE, e.getMessage());
         }
         return contentBuilder.toString();
     }
