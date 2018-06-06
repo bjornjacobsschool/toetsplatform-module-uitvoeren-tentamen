@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.*;
 
 public class GsonUtilTest {
@@ -64,7 +65,7 @@ public class GsonUtilTest {
     }
 
     @Test
-    public void testGsonWrite() {
+    public void testGsonWrite() throws IOException {
         gsu.writeTentamen(tentamen, dir);
         Tentamen result = gsu.loadTentamen(dir);
         Assert.assertEquals(result.getTentamenId(), tentamenId);

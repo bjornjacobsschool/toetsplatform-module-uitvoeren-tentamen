@@ -35,7 +35,7 @@ public class GsonUtil {
      * @param obj Het Tentamen object
      * @param dir de directory + file name
      */
-    public void writeTentamen(Tentamen obj, String dir) {
+    public void writeTentamen(Tentamen obj, String dir) throws IOException {
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         try {
@@ -53,6 +53,14 @@ public class GsonUtil {
                 } catch (IOException e) {
                     Utils.logger.log(Level.SEVERE, e.getMessage());
                 }
+            }
+
+            if (bufferedWriter != null) {
+                bufferedWriter.close();
+            }
+
+            if (fileWriter != null) {
+                fileWriter.close();
             }
         }
     }
@@ -83,6 +91,14 @@ public class GsonUtil {
                 }
 
                 returnString = contentBuilder.toString();
+            }
+
+            if (fileReader != null) {
+                fileReader.close();
+            }
+
+            if (bufferedReader != null) {
+                bufferedReader.close();
             }
         }
 
