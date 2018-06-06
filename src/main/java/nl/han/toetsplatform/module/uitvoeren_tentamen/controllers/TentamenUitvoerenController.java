@@ -38,6 +38,7 @@ public class TentamenUitvoerenController extends Controller {
     private StorageSetupDao storageSetupDao;
 
     private Tentamen currentToets;
+    private Vraag currentVraag;
     private int currentQuestionIndex = 0;
     private GsonUtil gsu;
     private Stage primaryStage;
@@ -124,7 +125,8 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public Plugin getPluginForCurrentQuestion() throws ClassNotFoundException {
-        return PluginLoader.getPlugin(currentToets.getVragen().get(currentQuestionIndex));
+        currentVraag = currentToets.getVragen().get(currentQuestionIndex);
+        return PluginLoader.getPlugin(currentVraag.getVraagType(), currentVraag.getData());
     }
 
     public void btnPreviousQuestionPressed(ActionEvent event) {
