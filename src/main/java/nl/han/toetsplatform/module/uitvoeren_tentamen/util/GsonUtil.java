@@ -20,9 +20,8 @@ public class GsonUtil {
      * @return Tentamen object aangemaakt uit het bestand
      */
     public Tentamen loadTentamen(String dir) {
-        Tentamen t = null;
+        Tentamen t = new Tentamen();
         try {
-            t = new Tentamen();
             t = gson.fromJson(readFileToString(dir), Tentamen.class);
         } catch (Exception e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
@@ -37,16 +36,23 @@ public class GsonUtil {
      * @param dir de directory + file name
      */
     public void writeTentamen(Tentamen obj, String dir) {
+        FileWriter fileWriter = null;
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(dir));
-            String write = gson.toJson(obj);
-            bw.write(write);
-            bw.close();
+            fileWriter = new FileWriter(dir);
         } catch (IOException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
+        } finally {
+            if (fileWriter != null) {
+                BufferedWriter bw = new BufferedWriter(fileWriter);
+                String write = gson.toJson(obj);
+                try {
+                    bw.write(write);
+                    bw.close();
+                } catch (IOException e) {
+                    Utils.logger.log(Level.SEVERE, e.getMessage());
+                }
+            }
         }
-
-        String jsonInString = gson.toJson(obj);
     }
 
     /**
@@ -55,18 +61,26 @@ public class GsonUtil {
      * @param filePath the direct location of the file
      * @return String representation of content of file
      */
-    public String readFileToString(String filePath) {
-        StringBuilder contentBuilder = null;
+    public String readFileToString(String filePath) throws IOException {
+        StringBuilder contentBuilder = new StringBuilder();
+        FileReader fileReader = null;
+
         try {
-            contentBuilder = new StringBuilder();
-            BufferedReader br = new BufferedReader(new FileReader(filePath));
-            String sCurrentLine;
-            while ((sCurrentLine = br.readLine()) != null) {
-                contentBuilder.append(sCurrentLine).append("\n");
-            }
-        } catch (IOException e) {
+            fileReader = new FileReader(filePath);
+        } catch (FileNotFoundException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
+        } finally {
+            if (fileReader != null) {
+                BufferedReader br = new BufferedReader(fileReader);
+                String sCurrentLine;
+                while ((sCurrentLine = br.readLine()) != null) {
+                    contentBuilder.append(sCurrentLine).append("\n");
+                }
+
+                return contentBuilder.toString();
+            }
         }
-        return contentBuilder.toString();
+
+        return "";
     }
 }

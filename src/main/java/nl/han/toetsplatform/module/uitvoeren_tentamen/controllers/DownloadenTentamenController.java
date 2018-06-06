@@ -107,7 +107,6 @@ public class DownloadenTentamenController extends Controller {
         try {
             result = dManager.downloadTentamen(tentamens.get(tentamenIndex).getTentamenId());
         } catch (IOException | JSONException e) {
-            e.printStackTrace();
             Utils.logger.log(Level.SEVERE, e.getMessage());
             AlertError("Er is iets fout gegaan, probeer opnieuw.");
         }
