@@ -8,18 +8,20 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import nl.han.toetsplatform.module.shared.model.Vraag;
 import nl.han.toetsplatform.module.shared.plugin.Plugin;
 import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Vraag;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class TentamenUitvoerenController extends Controller {
 
@@ -45,12 +47,8 @@ public class TentamenUitvoerenController extends Controller {
         // Setup SQLite
         try {
             storageSetupDao.setup();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException | ClassNotFoundException | IOException e) {
+            Utils.logger.log(Level.SEVERE, e.getMessage());
         }
 
         this.primaryStage = primaryStage;
@@ -105,8 +103,7 @@ public class TentamenUitvoerenController extends Controller {
             Node questionView = getPluginForCurrentQuestion().getVraagView().getView();
             questionPane.getChildren().add(questionView);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
+            Utils.logger.log(Level.SEVERE, e.getMessage());
             AlertError("Could not load question view (ClassNotFoundException)");
         }
     }
@@ -116,8 +113,7 @@ public class TentamenUitvoerenController extends Controller {
             Node answerView = getPluginForCurrentQuestion().getAntwoordView().getView(null);
             answerPane.getChildren().add(answerView);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
+            Utils.logger.log(Level.SEVERE, e.getMessage());
             AlertError("Could not load question view (ClassNotFoundException)");
         }
     }

@@ -168,4 +168,27 @@ public class TentamenTest {
         tentamen.setStartDatum(date);
         assertEquals(tentamen.getStrStartDatum(), "18-01-1970 17:28");
     }
+
+    @Test
+    public void setVragen() {
+        getSetVragen();
+
+    }
+
+    @Test
+    public void getVragen() {
+        getSetVragen();
+    }
+
+    private void getSetVragen() {
+        List<Vraag> vragen = new ArrayList<>();
+        Vraag v1 = new Vraag();
+        Vraag v2 = new Vraag();
+
+        vragen.add(v1);
+        vragen.add(v2);
+
+        tentamen.setVragen(vragen);
+        assertEquals(tentamen.getVragen(), vragen);
+    }
 }
