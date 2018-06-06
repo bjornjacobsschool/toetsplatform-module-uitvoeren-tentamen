@@ -44,29 +44,13 @@ public class Main extends GuiceApplication {
         initializePage();
     }
 
-    //    private void tentamenUitvoeren() {
-//        try {
-//            GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLTentamenUitvoeren(), null);
-//
-//            TentamenUitvoerenController controller = result.getController();
-//            controller.setUp();
-//
-//            primaryStage.getScene().setRoot(result.getRoot());
-//        } catch (IOException e) {
-//            logger.log(Level.SEVERE, e.getMessage());
-//        }
-//    }
-//
     private void initializePage() {
         try {
             GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLDownloadenUitvoerenTabPaneController(), null);
 
-            DownloadenUitvoerenTabPaneController controller = result.getController();
-
             primaryStage.getScene().setRoot(result.getRoot());
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage());
-            e.printStackTrace();
         }
     }
 
