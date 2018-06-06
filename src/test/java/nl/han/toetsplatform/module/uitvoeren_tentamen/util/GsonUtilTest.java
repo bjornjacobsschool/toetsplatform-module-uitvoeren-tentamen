@@ -54,8 +54,7 @@ public class GsonUtilTest {
         tentamen.setStartDatum(date);
         tentamen.setVersie(versie);
         gsu = new GsonUtil();
-        //TODO dit dynamisch maken
-        dir = "C:\\Users\\Kars\\Desktop\\File.json";
+        dir = System.getProperty("java.io.tmpdir") + "File.json";
         expected = "{\"tentamenId\":\"1\",\"studentNr\":496798,\"naam\":\"Kars\",\"hash\":\"hash\",\"antwoorden\"" +
                 ":[{\"vraagId\":\"1\",\"tentamenId\":\"1\",\"gegevenAntwoord\":\"Het antwoord is 5\"},{\"vraagId\":\"2\"" +
                 ",\"tentamenId\":\"1\",\"gegevenAntwoord\":\"Geen idee\"}],\"beschrijving\":\"Dit is een tentamen\",\"" +
@@ -65,16 +64,16 @@ public class GsonUtilTest {
 
     @Test
     public void testGsonReadWrite() {
-        // gsu.write(tentamen, dir);
-//        Tentamen result = gsu.loadTentamen(dir);
-//////        Assert.assertEquals(result.getTentamenId(), tentamenId);
-//////        Assert.assertEquals(result.getStudentNr(), studentNr);
-//////        Assert.assertEquals(result.getNaam(), naam);
-//////        Assert.assertEquals(result.getHash(), hash);
-//////        Assert.assertEquals(result.getBeschrijving(), beschrijving);
-//////        Assert.assertEquals(result.getStartDatum(), date);
-//////        Assert.assertEquals(result.getVersie().getDatum(), versie.getDatum());
-//////        Assert.assertEquals(result.getVersie().getNummer(), versie.getNummer());
+        gsu.writeTentamen(tentamen, dir);
+        Tentamen result = gsu.loadTentamen(dir);
+        Assert.assertEquals(result.getTentamenId(), tentamenId);
+        Assert.assertEquals(result.getStudentNr(), studentNr);
+        Assert.assertEquals(result.getNaam(), naam);
+        Assert.assertEquals(result.getHash(), hash);
+        Assert.assertEquals(result.getBeschrijving(), beschrijving);
+        Assert.assertEquals(result.getStartDatum(), date);
+        Assert.assertEquals(result.getVersie().getDatum(), versie.getDatum());
+        Assert.assertEquals(result.getVersie().getNummer(), versie.getNummer());
         Assert.assertEquals(true, true);
     }
 }
