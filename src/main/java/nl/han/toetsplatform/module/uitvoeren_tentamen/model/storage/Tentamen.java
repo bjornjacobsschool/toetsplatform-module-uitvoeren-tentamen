@@ -1,5 +1,7 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage;
 
+import nl.han.toetsplatform.module.shared.model.Vraag;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -11,12 +13,21 @@ public class Tentamen {
     private String naam;
     private String hash;
     private List<Antwoord> antwoorden;
+    private List<Vraag> vragen;
     private String beschrijving;
     private Date startDatum;
     private String strStartDatum;
     private Versie versie;
 
     public Tentamen() {
+    }
+
+    public List<Vraag> getVragen() {
+        return vragen;
+    }
+
+    public void setVragen(List<Vraag> vragen) {
+        this.vragen = vragen;
     }
 
     public String getTentamenId() {
