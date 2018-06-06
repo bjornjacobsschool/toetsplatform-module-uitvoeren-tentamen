@@ -10,4 +10,6 @@ import java.util.List;
 public interface IDownloadenTentamenDAO {
     boolean downloadTentamen(String tentamenId) throws IOException, JSONException;
     List<Tentamen> getKlaargezetteTentamens() throws IOException, ParseException, JSONException;
+
+    List<Tentamen> getDownloadedTentamens() throws IOException, ParseException, JSONException;
 }

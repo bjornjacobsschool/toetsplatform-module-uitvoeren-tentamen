@@ -8,17 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.config.ConfigTentamenUitvoerenModule;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.controllers.DownloadenTentamenController;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.controllers.TentamenUitvoerenController;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.Utils;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main extends GuiceApplication {
-
-    private static Logger logger = Logger.getLogger("toetsplatform-module-uitvoeren-tentamen");
 
     @Inject
     private GuiceFXMLLoader fxmlLoader;
@@ -42,34 +38,16 @@ public class Main extends GuiceApplication {
         primaryStage.setTitle("Standalone Module - Uitvoeren Tentamen");
         primaryStage.show();
 
-//        // Tentamen uitvoeren scherm weergeven
-//        tentamenUitvoeren();
-        downloadTentamen();
+        initializePage();
     }
 
-    private void tentamenUitvoeren() {
+    private void initializePage() {
         try {
-            GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLTentamenUitvoeren(), null);
-
-            TentamenUitvoerenController controller = result.getController();
-            controller.setUp(primaryStage);
+            GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLDownloadenUitvoerenTabPaneController(), null);
 
             primaryStage.getScene().setRoot(result.getRoot());
         } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage());
-        }
-    }
-
-    private void downloadTentamen() {
-        try {
-            GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLDownloadenTentamen(), null);
-
-            DownloadenTentamenController controller = result.getController();
-
-            primaryStage.getScene().setRoot(result.getRoot());
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage());
-            e.printStackTrace();
+            Utils.logger.log(Level.SEVERE, e.getMessage());
         }
     }
 

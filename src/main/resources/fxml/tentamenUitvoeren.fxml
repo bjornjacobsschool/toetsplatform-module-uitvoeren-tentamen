@@ -23,7 +23,8 @@
 
         <Button fx:id="btnPreviousQuestion" onAction="#btnPreviousQuestionPressed" layoutX="14.0" layoutY="439.0" mnemonicParsing="false" text="Vorige"/>
         <Button fx:id="btnNextQuestion" onAction="#btnNextQuestionPressed" layoutX="549.0" layoutY="439.0" mnemonicParsing="false" text="Volgende"/>
-        <Button fx:id="btnLoad" onAction="#btnLoadPressed" layoutX="400.0" layoutY="439.0" mnemonicParsing="false" text="Laden"/>
+        <Button fx:id="btnLoad" onAction="#btnLoadPressed" layoutX="400.0" layoutY="439.0" mnemonicParsing="false"
+                text="Laden"/>
         <Label fx:id="lblCurrentQuestionNo" alignment="CENTER" layoutX="234.0" layoutY="444.0" prefHeight="17.0"
                prefWidth="173.0" text="0/0" textAlignment="CENTER"/>
     </children>

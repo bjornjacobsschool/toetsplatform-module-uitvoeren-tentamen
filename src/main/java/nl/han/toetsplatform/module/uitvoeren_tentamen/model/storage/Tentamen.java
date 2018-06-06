@@ -19,10 +19,6 @@ public class Tentamen {
     private String strStartDatum;
     private Versie versie;
 
-    public Tentamen() {
-
-    }
-
     public List<Vraag> getVragen() {
         return vragen;
     }
