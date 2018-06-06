@@ -10,7 +10,6 @@ public class ConfigTentamenUitvoerenModule {
         return ConfigTentamenUitvoerenModule.class.getResource("/fxml/tentamenUitvoeren.fxml");
     }
 
-
     public static URL getFXMLDownloadenTentamen() {
         return ConfigTentamenUitvoerenModule.class.getResource("/fxml/downloadenTentamen.fxml");
     }
