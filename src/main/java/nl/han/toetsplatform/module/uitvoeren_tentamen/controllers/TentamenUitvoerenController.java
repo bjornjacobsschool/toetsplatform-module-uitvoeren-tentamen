@@ -7,6 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import nl.han.toetsplatform.module.shared.model.Toets;
 import nl.han.toetsplatform.module.shared.model.Vraag;
 import nl.han.toetsplatform.module.shared.plugin.Plugin;
@@ -38,8 +40,9 @@ public class TentamenUitvoerenController extends Controller {
     private Tentamen currentToets;
     private int currentQuestionIndex = 0;
     private GsonUtil gsu;
+    private Stage primaryStage;
 
-    public void setUp() {
+    public void setUp(Stage primaryStage) {
         // Setup SQLite
         try {
             storageSetupDao.setup();
@@ -51,6 +54,7 @@ public class TentamenUitvoerenController extends Controller {
             e.printStackTrace();
         }
 
+        this.primaryStage = primaryStage;
         gsu = new GsonUtil();
 
         // Build dummy toets met vragen
@@ -80,6 +84,10 @@ public class TentamenUitvoerenController extends Controller {
 
         // Show exercise
         showExercise();
+    }
+
+    public void setPrimaryStage(Stage ps) {
+        this.primaryStage = ps;
     }
 
     public void showExercise() {
@@ -138,10 +146,10 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void btnLoadPressed(ActionEvent event) {
-        //DirectoryChooser directoryChooser = new DirectoryChooser();
-        //File selectedDirectory = directoryChooser.showDialog();
-        //currentToets = gsu.loadTentamen("%appdata%\\Toetsapplicatie\\TestTentamen.json");
-        //showExercise();
+        FileChooser directoryChooser = new FileChooser();
+        File selectedDirectory = directoryChooser.showOpenDialog(primaryStage);
+        currentToets = gsu.loadTentamen(selectedDirectory.toString());
+        showExercise();
         AlertInfo("Test");
     }
 

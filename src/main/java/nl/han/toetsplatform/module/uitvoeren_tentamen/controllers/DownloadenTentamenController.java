@@ -113,7 +113,7 @@ public class DownloadenTentamenController extends Controller {
             GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLTentamenUitvoeren(), null);
 
             TentamenUitvoerenController controller = result.getController();
-            controller.setUp();
+            controller.setUp(primaryStage);
 
             loadingIndicator.setVisible(true);
             primaryStage.getScene().setRoot(result.getRoot());
