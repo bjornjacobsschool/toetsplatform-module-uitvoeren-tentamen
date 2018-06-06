@@ -6,12 +6,18 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import nl.han.toetsplatform.module.shared.model.Toets;
 import nl.han.toetsplatform.module.shared.model.Vraag;
 import nl.han.toetsplatform.module.shared.plugin.Plugin;
 import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,10 +37,13 @@ public class TentamenUitvoerenController extends Controller {
     @Inject
     private StorageSetupDao storageSetupDao;
 
-    private Toets currentToets;
+    private Tentamen currentToets;
+    private Vraag currentVraag;
     private int currentQuestionIndex = 0;
+    private GsonUtil gsu;
+    private Stage primaryStage;
 
-    public void setUp() {
+    public void setUp(Stage primaryStage) {
         // Setup SQLite
         try {
             storageSetupDao.setup();
@@ -45,6 +54,9 @@ public class TentamenUitvoerenController extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        this.primaryStage = primaryStage;
+        gsu = new GsonUtil();
 
         // Build dummy toets met vragen
         Vraag vraag1 = new Vraag();
@@ -63,8 +75,8 @@ public class TentamenUitvoerenController extends Controller {
         vragen.add(vraag1);
         vragen.add(vraag2);
 
-        Toets toets = new Toets();
-        toets.setId(1);
+        Tentamen toets = new Tentamen();
+        toets.setTentamenId("1");
         toets.setNaam("Toets 1");
         toets.setVragen(vragen);
 
@@ -73,6 +85,10 @@ public class TentamenUitvoerenController extends Controller {
 
         // Show exercise
         showExercise();
+    }
+
+    public void setPrimaryStage(Stage ps) {
+        this.primaryStage = ps;
     }
 
     public void showExercise() {
@@ -109,7 +125,8 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public Plugin getPluginForCurrentQuestion() throws ClassNotFoundException {
-        return PluginLoader.getPlugin(currentToets.getVragen().get(currentQuestionIndex));
+        currentVraag = currentToets.getVragen().get(currentQuestionIndex);
+        return PluginLoader.getPlugin(currentVraag.getVraagType(), currentVraag.getData());
     }
 
     public void btnPreviousQuestionPressed(ActionEvent event) {
@@ -128,6 +145,14 @@ public class TentamenUitvoerenController extends Controller {
         } else {
             AlertInfo("Laatste vraag bereikt.");
         }
+    }
+
+    public void btnLoadPressed(ActionEvent event) {
+        FileChooser directoryChooser = new FileChooser();
+        File selectedDirectory = directoryChooser.showOpenDialog(primaryStage);
+        currentToets = gsu.loadTentamen(selectedDirectory.toString());
+        showExercise();
+        AlertInfo("Test");
     }
 
 }
