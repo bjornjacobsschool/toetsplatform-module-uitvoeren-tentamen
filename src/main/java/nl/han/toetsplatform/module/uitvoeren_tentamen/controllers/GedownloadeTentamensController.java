@@ -87,7 +87,7 @@ public class GedownloadeTentamensController extends Controller {
             GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLTentamenUitvoeren(), null);
 
             TentamenUitvoerenController controller = result.getController();
-            controller.setUp();
+            controller.setUp(primaryStage);
             primaryStage.getScene().setRoot(result.getRoot());
 
         } catch (IOException e) {

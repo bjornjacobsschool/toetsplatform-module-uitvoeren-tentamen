@@ -1,4 +1,5 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
+
 import com.google.gson.Gson;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 
@@ -13,6 +14,7 @@ public class GsonUtil {
 
     /**
      * Laad een tentamen in uit JSON bestand van de schijf
+     *
      * @param dir file path + name
      * @return Tentamen object aangemaakt uit het bestand
      */
@@ -28,6 +30,7 @@ public class GsonUtil {
 
     /**
      * Schrijf een Tentamen object weg naar schijf in de vorm van JSON bestand
+     *
      * @param obj Het Tentamen object
      * @param dir de directory + file name
      */
@@ -46,11 +49,11 @@ public class GsonUtil {
 
     /**
      * Converts the content of a file to a string
+     *
      * @param filePath the direct location of the file
      * @return String representation of content of file
      */
-    public String readFileToString(String filePath)
-    {
+    public String readFileToString(String filePath) {
         StringBuilder contentBuilder = new StringBuilder();
         try {
             BufferedReader br = new BufferedReader(new FileReader(filePath));
@@ -58,8 +61,7 @@ public class GsonUtil {
             while ((sCurrentLine = br.readLine()) != null) {
                 contentBuilder.append(sCurrentLine).append("\n");
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return contentBuilder.toString();

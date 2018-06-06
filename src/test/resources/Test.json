@@ -1,1 +1,26 @@
-{"tentamenId":"1","studentNr":496798,"naam":"Kars","hash":"hash","antwoorden":[{"vraagId":"1","tentamenId":"1","gegevenAntwoord":"Het antwoord is 5"},{"vraagId":"2","tentamenId":"1","gegevenAntwoord":"Geen idee"}],"beschrijving":"Dit is een tentamen","startDatum":"Feb 11, 2014 12:00:00 AM","strStartDatum":"11-02-2014 00:00","versie":{"datum":"Feb 11, 2014 12:00:00 AM","nummer":"1","omschrijving":"Versieomschrijving"}}
+{
+  "tentamenId": "1",
+  "studentNr": 496798,
+  "naam": "Kars",
+  "hash": "hash",
+  "antwoorden": [
+    {
+      "vraagId": "1",
+      "tentamenId": "1",
+      "gegevenAntwoord": "Het antwoord is 5"
+    },
+    {
+      "vraagId": "2",
+      "tentamenId": "1",
+      "gegevenAntwoord": "Geen idee"
+    }
+  ],
+  "beschrijving": "Dit is een tentamen",
+  "startDatum": "Feb 11, 2014 12:00:00 AM",
+  "strStartDatum": "11-02-2014 00:00",
+  "versie": {
+    "datum": "Feb 11, 2014 12:00:00 AM",
+    "nummer": "1",
+    "omschrijving": "Versieomschrijving"
+  }
+}
