@@ -1,4 +1,4 @@
-package nl.han.toetsplatform.module.uitvoeren_tentamen.dao;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package nl.han.toetsplatform.module.uitvoeren_tentamen.dao;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 public class JSONReaderTest {
 
-    private JSONReader JSONReader;
+    private nl.han.toetsplatform.module.uitvoeren_tentamen.util.JSONReader JSONReader;
     private String responseArray;
     private String responseObject;
 

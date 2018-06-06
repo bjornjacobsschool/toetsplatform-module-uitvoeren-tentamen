@@ -6,10 +6,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.JSONReader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.DownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.IDownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.JSONReader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 import org.json.JSONException;
 
