@@ -3,16 +3,15 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.controllers;
 import com.google.inject.Inject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import nl.han.toetsplatform.module.shared.model.Vraag;
 import nl.han.toetsplatform.module.shared.plugin.Plugin;
 import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Vraag;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
 
 import java.io.File;
@@ -37,6 +36,8 @@ public class TentamenUitvoerenController extends Controller {
 
     private Tentamen currentToets;
     private Vraag currentVraag;
+    private Plugin currentPlugin;
+
     private int currentQuestionIndex = 0;
     private GsonUtil gsu;
     private Stage primaryStage;
@@ -58,16 +59,16 @@ public class TentamenUitvoerenController extends Controller {
 
         // Build dummy toets met vragen
         Vraag vraag1 = new Vraag();
-        vraag1.setPlugin("nl.han.toetsapplicatie.plugin.GraphPlugin");
+        vraag1.setVraagType("nl.han.toetsapplicatie.plugin.GraphPlugin");
         vraag1.setId(1);
         vraag1.setName("Vraag 1");
-        vraag1.setData("{ \"nodes\": [ { \"name\": \"A\", \"connectedNodes\": [ { \"nodeInfo\": \"B\", \"distance\": 1 }, { \"nodeInfo\": \"C\", \"distance\": 7 } ] }, { \"name\": \"B\", \"connectedNodes\": [ { \"nodeInfo\": \"E\", \"distance\": 4 }, { \"nodeInfo\": \"D\", \"distance\": 2 } ] }, { \"name\": \"C\", \"connectedNodes\": [ { \"nodeInfo\": \"F\", \"distance\": 3 }, { \"nodeInfo\": \"D\", \"distance\": 3 } ] }, { \"name\": \"D\", \"connectedNodes\": [ { \"nodeInfo\": \"F\", \"distance\": 1 } ] }, { \"name\": \"E\", \"connectedNodes\": [ { \"nodeInfo\": \"F\", \"distance\": 1 } ] }, { \"name\": \"F\", \"connectedNodes\": [] } ], \"vraagText\": \"Laat stap voor stap in de onderstaande graaf zien hoe de kortste weg van node A naar alle andere\\nnodes wordt gevonden. Teken voor iedere stap de graaf en geef de lengte van het gevonden pad\\nnaar de vertices aan bij de desbetreffende vertices. Maak daarvoor gebruik van het algoritme van Dijkstra.\" }");
+        vraag1.setData("{ \"nodes\": [ { \"name\": \"A\", \"connectedNodes\": [ { \"nodeInfo\": \"B\", \"distance\": 1 }, { \"nodeInfo\": \"C\", \"distance\": 7 } ] }, { \"name\": \"B\", \"connectedNodes\": [ { \"nodeInfo\": \"E\", \"distance\": 4 }, { \"nodeInfo\": \"D\", \"distance\": 2 } ] }, { \"name\": \"C\", \"connectedNodes\": [ { \"nodeInfo\": \"F\", \"distance\": 3 }, { \"nodeInfo\": \"D\", \"distance\": 3 } ] }, { \"name\": \"D\", \"connectedNodes\": [ { \"nodeInfo\": \"F\", \"distance\": 1 } ] }, { \"name\": \"E\", \"connectedNodes\": [ { \"nodeInfo\": \"F\", \"distance\": 1 } ] }, { \"name\": \"F\", \"connectedNodes\": [] } ], \"startNode\": \"A\", \"vraagText\": \"Laat stap voor stap in de onderstaande graaf zien hoe de kortste weg van node A naar alle andere\\nnodes wordt gevonden. Teken voor iedere stap de graaf en geef de lengte van het gevonden pad\\nnaar de vertices aan bij de desbetreffende vertices. Maak daarvoor gebruik van het algoritme van Dijkstra.\" }");
 
         Vraag vraag2 = new Vraag();
         vraag2.setId(2);
         vraag2.setName("Vraag 2");
-        vraag2.setPlugin("nl.han.toetsapplicatie.plugin.GraphPlugin");
-        vraag2.setData("{ \"nodes\": [ { \"name\": \"1\", \"connectedNodes\": [ { \"nodeInfo\": \"2\" }, { \"nodeInfo\": \"5\" } ] }, { \"name\": \"2\", \"connectedNodes\": [ { \"nodeInfo\": \"3\" }, { \"nodeInfo\": \"5\" } ] }, { \"name\": \"5\", \"connectedNodes\": [] }, { \"name\": \"3\", \"connectedNodes\": [ { \"nodeInfo\": \"4\" } ] }, { \"name\": \"4\", \"connectedNodes\": [ { \"nodeInfo\": \"5\" }, { \"nodeInfo\": \"6\" } ] }, { \"name\": \"6\", \"connectedNodes\": [] } ], \"vraagText\": \"Geef de kortste pad vanuit 1 naar alle andere nodes.\" }");
+        vraag2.setVraagType("nl.han.toetsapplicatie.plugin.GraphPlugin");
+        vraag2.setData("{ \"nodes\": [ { \"name\": \"1\", \"connectedNodes\": [ { \"nodeInfo\": \"2\" }, { \"nodeInfo\": \"5\" } ] }, { \"name\": \"2\", \"connectedNodes\": [ { \"nodeInfo\": \"3\" }, { \"nodeInfo\": \"5\" } ] }, { \"name\": \"5\", \"connectedNodes\": [] }, { \"name\": \"3\", \"connectedNodes\": [ { \"nodeInfo\": \"4\" } ] }, { \"name\": \"4\", \"connectedNodes\": [ { \"nodeInfo\": \"5\" }, { \"nodeInfo\": \"6\" } ] }, { \"name\": \"6\", \"connectedNodes\": [] } ], \"startNode\": \"1\", \"vraagText\": \"Geef de kortste pad vanuit 1 naar alle andere nodes.\" }");
 
         List<Vraag> vragen = new ArrayList<>();
         vragen.add(vraag1);
@@ -96,30 +97,25 @@ public class TentamenUitvoerenController extends Controller {
 
         lblCurrentQuestionNo.setText((currentQuestionIndex + 1) + "/" + currentToets.getVragen().size());
 
+        // Get current plugin and store it in local variable
+        try {
+            currentPlugin = getPluginForCurrentQuestion();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         loadQuestionView();
         loadAnswerView();
     }
 
     public void loadQuestionView() {
-        try {
-            Node questionView = getPluginForCurrentQuestion().getVraagView().getView();
-            questionPane.getChildren().add(questionView);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
-            AlertError("Could not load question view (ClassNotFoundException)");
-        }
+        questionPane.getChildren().add(currentPlugin.getVraagView().getView());
     }
 
     public void loadAnswerView() {
-        try {
-            Node answerView = getPluginForCurrentQuestion().getAntwoordView().getView(null);
-            answerPane.getChildren().add(answerView);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
-            AlertError("Could not load question view (ClassNotFoundException)");
-        }
+        // TODO: De JSON string in de getView() methode onderin is nu fake en moet straks uit de "cache" komen
+        String dummyJSON = "{ \"steps\": [ { \"rows\": [ { \"targetNode\": \"A\", \"distanceToTarget\": 1, \"isDone\": false }, { \"targetNode\": \"B\", \"distanceToTarget\": 2, \"isDone\": false }, { \"targetNode\": \"C\", \"distanceToTarget\": 3, \"isDone\": false }, { \"targetNode\": \"D\", \"distanceToTarget\": 0, \"isDone\": false }, { \"targetNode\": \"E\", \"distanceToTarget\": 0, \"isDone\": false }, { \"targetNode\": \"F\", \"distanceToTarget\": 0, \"isDone\": false } ], \"fromNode\": \"C\", \"totalDistance\": 3, \"isCorrect\": false }, { \"rows\": [ { \"targetNode\": \"F\", \"distanceToTarget\": 1, \"isDone\": false }, { \"targetNode\": \"E\", \"distanceToTarget\": 2, \"isDone\": false }, { \"targetNode\": \"D\", \"distanceToTarget\": 3, \"isDone\": false }, { \"targetNode\": \"C\", \"distanceToTarget\": 0, \"isDone\": false }, { \"targetNode\": \"B\", \"distanceToTarget\": 0, \"isDone\": false }, { \"targetNode\": \"A\", \"distanceToTarget\": 0, \"isDone\": false } ], \"fromNode\": \"F\", \"totalDistance\": 4, \"isCorrect\": false } ] }";
+        answerPane.getChildren().add(currentPlugin.getAntwoordView().getView(dummyJSON));
     }
 
     public Plugin getPluginForCurrentQuestion() throws ClassNotFoundException {
@@ -151,6 +147,15 @@ public class TentamenUitvoerenController extends Controller {
         currentToets = gsu.loadTentamen(selectedDirectory.toString());
         showExercise();
         AlertInfo("Test");
+    }
+
+    public String getGivenAntwoordFromPlugin() {
+        String givenAntwoord = "";
+
+        if (currentPlugin != null)
+            givenAntwoord = currentPlugin.getAntwoordView().getGivenAntwoord();
+
+        return givenAntwoord;
     }
 
 }
