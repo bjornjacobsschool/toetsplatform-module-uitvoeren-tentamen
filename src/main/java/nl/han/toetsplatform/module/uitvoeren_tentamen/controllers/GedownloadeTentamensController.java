@@ -53,10 +53,11 @@ public class GedownloadeTentamensController extends Controller {
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Tentamen, String>("beschrijving"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<Tentamen, String>("strStartDatum"));
 
-        this.reloadView();
+        this.reloadView(primaryStage);
     }
 
-    public void reloadView() {
+    public void reloadView(Stage primaryStage) {
+        this.primaryStage = primaryStage;
         tblViewTentamens.getItems().clear();
 
         try {
@@ -95,5 +96,9 @@ public class GedownloadeTentamensController extends Controller {
         } catch (IOException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
         }
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 }

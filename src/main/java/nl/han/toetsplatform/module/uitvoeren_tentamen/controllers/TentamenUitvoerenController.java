@@ -35,7 +35,6 @@ public class TentamenUitvoerenController extends Controller {
     private StorageSetupDao storageSetupDao;
 
     private Tentamen currentToets;
-    private Vraag currentVraag;
     private Plugin currentPlugin;
 
     private int currentQuestionIndex = 0;
@@ -109,18 +108,18 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void loadQuestionView() {
-        questionPane.getChildren().add(currentPlugin.getVraagView().getView());
+        questionPane.getChildren().add(currentPlugin.getVraagView(currentToets.getVragen().get(currentQuestionIndex).getData()).getView());
     }
 
     public void loadAnswerView() {
         // TODO: De JSON string in de getView() methode onderin is nu fake en moet straks uit de "cache" komen
         String dummyJSON = "{ \"steps\": [ { \"rows\": [ { \"targetNode\": \"A\", \"distanceToTarget\": 1, \"isDone\": false }, { \"targetNode\": \"B\", \"distanceToTarget\": 2, \"isDone\": false }, { \"targetNode\": \"C\", \"distanceToTarget\": 3, \"isDone\": false }, { \"targetNode\": \"D\", \"distanceToTarget\": 0, \"isDone\": false }, { \"targetNode\": \"E\", \"distanceToTarget\": 0, \"isDone\": false }, { \"targetNode\": \"F\", \"distanceToTarget\": 0, \"isDone\": false } ], \"fromNode\": \"C\", \"totalDistance\": 3, \"isCorrect\": false }, { \"rows\": [ { \"targetNode\": \"F\", \"distanceToTarget\": 1, \"isDone\": false }, { \"targetNode\": \"E\", \"distanceToTarget\": 2, \"isDone\": false }, { \"targetNode\": \"D\", \"distanceToTarget\": 3, \"isDone\": false }, { \"targetNode\": \"C\", \"distanceToTarget\": 0, \"isDone\": false }, { \"targetNode\": \"B\", \"distanceToTarget\": 0, \"isDone\": false }, { \"targetNode\": \"A\", \"distanceToTarget\": 0, \"isDone\": false } ], \"fromNode\": \"F\", \"totalDistance\": 4, \"isCorrect\": false } ] }";
-        answerPane.getChildren().add(currentPlugin.getAntwoordView().getView(dummyJSON));
+        answerPane.getChildren().add(currentPlugin.getAntwoordView(dummyJSON).getView());
     }
 
     public Plugin getPluginForCurrentQuestion() throws ClassNotFoundException {
         Vraag currentVraag = currentToets.getVragen().get(currentQuestionIndex);
-        return PluginLoader.getPlugin(currentVraag.getVraagType(), currentVraag.getData());
+        return PluginLoader.getPlugin(currentVraag.getVraagType());
     }
 
     public void btnPreviousQuestionPressed(ActionEvent event) {
