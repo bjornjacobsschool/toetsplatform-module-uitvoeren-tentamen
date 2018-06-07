@@ -1,7 +1,5 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage;
 
-import nl.han.toetsplatform.module.shared.model.Vraag;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
