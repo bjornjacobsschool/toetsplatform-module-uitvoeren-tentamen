@@ -10,12 +10,16 @@ import javafx.stage.Stage;
 import nl.han.toetsplatform.module.shared.plugin.Plugin;
 import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.IUploadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Vraag;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,9 @@ public class TentamenUitvoerenController extends Controller {
 
     @Inject
     private StorageSetupDao storageSetupDao;
+
+    @Inject
+    private IUploadenTentamenDAO uploadenTentamenDAO;
 
     private Tentamen currentToets;
     private Plugin currentPlugin;
@@ -148,6 +155,17 @@ public class TentamenUitvoerenController extends Controller {
         AlertInfo("Test");
     }
 
+    public void btnInleverenPressed(ActionEvent event){
+        if(checkIfHanAvailableForUpload()) {
+            if(uploadenTentamenDAO.uploadTentamen(verzegelTentamen(currentToets))){
+                AlertInfo("Het tentamen is successvol geupload.");
+            } else {
+                AlertInfo("Het uploaden van de tentamen is niet gelukt.");
+            }
+
+        }
+    }
+
     public String getGivenAntwoordFromPlugin() {
         String givenAntwoord = "";
 
@@ -155,6 +173,39 @@ public class TentamenUitvoerenController extends Controller {
             givenAntwoord = currentPlugin.getAntwoordView().getGivenAntwoord();
 
         return givenAntwoord;
+    }
+
+
+    private boolean checkIfHanAvailableForUpload(){
+        boolean output = false;
+        String toetsUploadServer = "https://isas.han.nl/";
+        if (checkIfInternetAvailable(toetsUploadServer)){
+            //AlertInfo("De han upload server "+toetsUploadServer+" Is bereikbaar");
+            output = true;
+        } else if (checkIfInternetAvailable("http://www.google.com")){
+            AlertInfo("De upload server voor de toetsen is niet bereikbaar.");
+        } else {
+            AlertInfo("Er is een probleem met je internet connectie.");
+        }
+        return output;
+    }
+
+    public static boolean checkIfInternetAvailable(String websiteUrl) {
+        try {
+            final URL url = new URL(websiteUrl);
+            final URLConnection conn = url.openConnection();
+            conn.connect();
+            conn.getInputStream().close();
+            return true;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    public Tentamen verzegelTentamen(Tentamen onverzegeldeTentamen){
+        return onverzegeldeTentamen;
     }
 
 }
