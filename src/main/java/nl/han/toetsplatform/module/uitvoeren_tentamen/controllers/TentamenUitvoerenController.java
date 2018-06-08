@@ -19,8 +19,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TentamenUitvoerenController extends Controller {
+    private static Logger logger = Logger.getLogger("toetsplatform-module-uitvoeren-tentamen");
 
     @FXML
     private Pane questionPane;
@@ -41,22 +44,18 @@ public class TentamenUitvoerenController extends Controller {
     private GsonUtil gsu;
     private Stage primaryStage;
 
-    public void setUp(Stage primaryStage) {
+    public void setUp(Stage primaryStage, Tentamen tentamen) {
         // Setup SQLite
         try {
             storageSetupDao.setup();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException | ClassNotFoundException | IOException e) {
+            logger.log(Level.SEVERE, e.getMessage());
         }
 
         this.primaryStage = primaryStage;
         gsu = new GsonUtil();
 
-        // Build dummy toets met vragen
+        /*// Build dummy toets met vragen
         Vraag vraag1 = new Vraag();
         vraag1.setVraagType("nl.han.toetsapplicatie.plugin.GraphPlugin");
         vraag1.setId(1);
@@ -77,9 +76,10 @@ public class TentamenUitvoerenController extends Controller {
         toets.setTentamenId("1");
         toets.setNaam("Toets 1");
         toets.setVragen(vragen);
+*/
 
-        // Assign dummy toets to currentToets
-        currentToets = toets;
+        // Assign loadedtoets to currentToets
+        currentToets = tentamen;
 
         // Show exercise
         showExercise();
