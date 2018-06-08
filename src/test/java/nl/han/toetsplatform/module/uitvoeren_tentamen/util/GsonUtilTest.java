@@ -3,11 +3,12 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Versie;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class GsonUtilTest {
 
@@ -67,28 +68,28 @@ public class GsonUtilTest {
     public void testGsonWrite() {
         gsu.writeTentamen(tentamen, dir);
         Tentamen result = gsu.loadTentamen(dir);
-        Assert.assertEquals(result.getTentamenId(), tentamenId);
-        Assert.assertEquals(result.getStudentNr(), studentNr);
-        Assert.assertEquals(result.getNaam(), naam);
-        Assert.assertEquals(result.getHash(), hash);
-        Assert.assertEquals(result.getBeschrijving(), beschrijving);
-        Assert.assertEquals(result.getStartDatum(), date);
-        Assert.assertEquals(result.getVersie().getDatum(), versie.getDatum());
-        Assert.assertEquals(result.getVersie().getNummer(), versie.getNummer());
+        assertEquals(result.getTentamenId(), tentamenId);
+        assertEquals(result.getStudentNr(), studentNr);
+        assertEquals(result.getNaam(), naam);
+        assertEquals(result.getHash(), hash);
+        assertEquals(result.getBeschrijving(), beschrijving);
+        assertEquals(result.getStartDatum(), date);
+        assertEquals(result.getVersie().getDatum(), versie.getDatum());
+        assertEquals(result.getVersie().getNummer(), versie.getNummer());
     }
 
     @Test
     public void testGsonLoad() {
         String resourceDir = "src/test/resources/Test.json";
         Tentamen result = gsu.loadTentamen(resourceDir);
-        Assert.assertEquals(result.getTentamenId(), tentamenId);
-        Assert.assertEquals(result.getStudentNr(), studentNr);
-        Assert.assertEquals(result.getNaam(), naam);
-        Assert.assertEquals(result.getHash(), hash);
-        Assert.assertEquals(result.getBeschrijving(), beschrijving);
-        Assert.assertEquals(result.getStartDatum(), date);
-        Assert.assertEquals(result.getVersie().getDatum(), versie.getDatum());
-        Assert.assertEquals(result.getVersie().getNummer(), versie.getNummer());
+        assertEquals(result.getTentamenId(), tentamenId);
+        assertEquals(result.getStudentNr(), studentNr);
+        assertEquals(result.getNaam(), naam);
+        assertEquals(result.getHash(), hash);
+        assertEquals(result.getBeschrijving(), beschrijving);
+        assertEquals(result.getStartDatum(), date);
+        assertEquals(result.getVersie().getDatum(), versie.getDatum());
+        assertEquals(result.getVersie().getNummer(), versie.getNummer());
     }
 }
 
