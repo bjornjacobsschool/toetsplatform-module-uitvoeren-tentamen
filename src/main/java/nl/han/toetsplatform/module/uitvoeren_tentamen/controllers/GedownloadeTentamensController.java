@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -21,6 +22,7 @@ import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 
 public class GedownloadeTentamensController extends Controller {
@@ -47,7 +49,7 @@ public class GedownloadeTentamensController extends Controller {
     }
 
     public void initialize() {
-        dManager = new DownloadenTentamenDAO(new JSONReader());
+        dManager = new DownloadenTentamenDAO(new JSONReader(), new GsonUtil());
 
         this.loadView();
     }
@@ -57,7 +59,7 @@ public class GedownloadeTentamensController extends Controller {
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<Tentamen, String>("naam"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Tentamen, String>("beschrijving"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<Tentamen, String>("strStartDatum"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Tentamen, String>("strStartdatum"));
 
         this.reloadView(primaryStage);
     }
@@ -86,13 +88,47 @@ public class GedownloadeTentamensController extends Controller {
         });
     }
 
-    public void btnStartPressed(ActionEvent actionEvent) {
+    @FXML
+    public void startTentamen(ActionEvent actionEvent) {
         int tentamenIndex = tblViewTentamens.getSelectionModel().getSelectedIndex();
         if (tentamenIndex == -1 || tentamenIndex > tentamens.size() - 1) {
+            AlertError("Selecteer eerst de tentamen die je wilt starten.");
             return;
         }
-        String tentamenId = tentamens.get(tentamenIndex).getTentamenId();
-        Tentamen tentamen = gsu.loadTentamen(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS) + "exam_" + tentamenId + ".json");
+        String tentamenId = tentamens.get(tentamenIndex).getId();
+        Tentamen tentamen = gsu.loadTentamen(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS) + "/exam_" + tentamenId + ".json");
+
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("Sleutel invoeren");
+        dialog.setHeaderText("Voer de sleutel in die je van de surveillant hebt gekregen.");
+        dialog.setContentText("");
+
+
+        String decryptionToken = null;
+        Optional<String> dResult = dialog.showAndWait();
+        if (dResult.isPresent()) {
+            decryptionToken = dResult.get();
+        }
+
+        if (decryptionToken == null || decryptionToken.equals("")) {
+            AlertError("Voer de sleutel in die je van de surveillant hebt gekregen.");
+            return;
+        }
+
+        boolean tentamenVragenDecrypted = true;
+
+        try {
+            tentamen.decryptVragen(decryptionToken);
+        } catch (Exception e) {
+            tentamenVragenDecrypted = false;
+            Utils.logger.log(Level.SEVERE, e.getMessage());
+            e.printStackTrace();
+        }
+
+        if (!tentamenVragenDecrypted) {
+            AlertError("De sleutel die je hebt ingevoerd is onjuist.");
+            return;
+        }
 
         try {
             GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLTentamenUitvoeren(), null);

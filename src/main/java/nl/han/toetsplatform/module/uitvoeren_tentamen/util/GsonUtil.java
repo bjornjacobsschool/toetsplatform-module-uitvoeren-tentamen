@@ -1,16 +1,21 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Vraag;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 public class GsonUtil {
     private static Gson gson;
 
     public GsonUtil() {
-        gson = new Gson();
+        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
     }
 
     /**
@@ -23,6 +28,16 @@ public class GsonUtil {
         Tentamen t = new Tentamen();
         try {
             t = gson.fromJson(readFileToString(dir), Tentamen.class);
+        } catch (Exception e) {
+            Utils.logger.log(Level.SEVERE, e.getMessage());
+        }
+        return t;
+    }
+
+    public Tentamen tentamenStringToModel(String jsonString) {
+        Tentamen t = new Tentamen();
+        try {
+            t = gson.fromJson(jsonString, Tentamen.class);
         } catch (Exception e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
         }
@@ -103,5 +118,16 @@ public class GsonUtil {
         }
 
         return returnString;
+    }
+
+    public List<Vraag> vragenJSONToList(String json) {
+        List<Vraag> vragen = new ArrayList<>();
+        try {
+            vragen = gson.fromJson(json, new TypeToken<List<Vraag>>() {
+            }.getType());
+        } catch (Exception e) {
+            Utils.logger.log(Level.SEVERE, e.getMessage());
+        }
+        return vragen;
     }
 }

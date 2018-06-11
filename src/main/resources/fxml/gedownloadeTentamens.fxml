@@ -6,7 +6,7 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" minWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
             fx:controller="nl.han.toetsplatform.module.uitvoeren_tentamen.controllers.GedownloadeTentamensController">
     <Button onAction="#btnExitPressed" text="Exit" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"/>
-    <Button onAction="#btnStartPressed" text="Start" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0"/>
+    <Button onAction="#startTentamen" text="Start" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0"/>
     <GridPane AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
               AnchorPane.topAnchor="40.0">
 
@@ -14,7 +14,7 @@
             <columns>
                 <TableColumn fx:id="nameColumn" prefWidth="200.0" text="Naam"/>
                 <TableColumn fx:id="descriptionColumn" prefWidth="288.0" text="Beschrijving"/>
-                <TableColumn fx:id="dateColumn" prefWidth="110.0" text="Datum"/>
+                <TableColumn fx:id="dateColumn" prefWidth="125.0" text="Datum"/>
             </columns>
         </TableView>
 

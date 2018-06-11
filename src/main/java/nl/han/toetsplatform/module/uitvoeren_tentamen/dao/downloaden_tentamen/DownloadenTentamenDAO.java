@@ -1,6 +1,7 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen;
 
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.JSONReader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 import org.json.JSONArray;
@@ -10,17 +11,17 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
 
     private JSONReader reader;
+    private GsonUtil gsonUtil;
 
-    public DownloadenTentamenDAO(JSONReader reader) {
+    public DownloadenTentamenDAO(JSONReader reader, GsonUtil gsonUtil) {
         this.reader = reader;
+        this.gsonUtil = gsonUtil;
     }
 
     @Override
@@ -37,7 +38,7 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
     }
 
     @Override
-    public List<Tentamen> getKlaargezetteTentamens() throws IOException, ParseException, JSONException {
+    public List<Tentamen> getKlaargezetteTentamens() throws IOException, JSONException {
         List<Tentamen> tentamens = new ArrayList<>();
 
         // TODO: Replace with real URL
@@ -49,7 +50,7 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
     }
 
     @Override
-    public List<Tentamen> getDownloadedTentamens() throws IOException, ParseException, JSONException {
+    public List<Tentamen> getDownloadedTentamens() throws IOException, JSONException {
         List<Tentamen> tentamens = new ArrayList<>();
 
         JSONArray jTentamens = this.reader.JSONArrayFromFolder(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS));
@@ -59,21 +60,21 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
         return tentamens;
     }
 
-    private void parseTentamenModel(List<Tentamen> tentamens, JSONArray jTentamens) throws ParseException {
+    private void parseTentamenModel(List<Tentamen> tentamens, JSONArray jTentamens) {
         for (int i = 0; i < jTentamens.length(); i++) {
             JSONObject o = jTentamens.getJSONObject(i);
-            Tentamen t = new Tentamen();
+//            Tentamen t = new Tentamen();
+//            t.setTentamenId(o.getString("id"));
+//            t.setNaam(o.getString("naam"));
+//            t.setVragen(o.getString("vragen"));
+//            t.setBeschrijving(o.getString("beschrijving"));
+//
+//            String dateStr = o.getString("startdatum");
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+//
+//            t.setStartDatum(sdf.parse(dateStr));
 
-            t.setTentamenId(o.getString("id"));
-            t.setNaam(o.getString("naam"));
-            t.setBeschrijving(o.getString("beschrijving"));
-
-            String dateStr = o.getString("startdatum");
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-
-            t.setStartDatum(sdf.parse(dateStr));
-
-            tentamens.add(t);
+            tentamens.add(gsonUtil.tentamenStringToModel(o.toString()));
         }
     }
 }
