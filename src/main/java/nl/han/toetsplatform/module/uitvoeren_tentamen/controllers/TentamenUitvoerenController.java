@@ -118,7 +118,7 @@ public class TentamenUitvoerenController extends Controller {
         String givenAntwoord = "";
 
         if (currentPlugin != null)
-            givenAntwoord = currentPlugin.getAntwoordView().getGivenAntwoord();
+            givenAntwoord = currentPlugin.getAntwoordView("").getGivenAntwoord();
 
         return givenAntwoord;
     }
