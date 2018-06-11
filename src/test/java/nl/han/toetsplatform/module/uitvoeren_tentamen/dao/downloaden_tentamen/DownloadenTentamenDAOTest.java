@@ -58,7 +58,7 @@ public class DownloadenTentamenDAOTest {
         boolean res = dt.downloadTentamen("asd123");
         assertTrue(res);
 
-        File file = new File(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS) + "exam_asd123.json");
+        File file = new File(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS).getAbsolutePath() + "/exam_asd123.json");
         assertTrue(file.exists());
 
         String content = new String(Files.readAllBytes(Paths.get(file.getPath())));
