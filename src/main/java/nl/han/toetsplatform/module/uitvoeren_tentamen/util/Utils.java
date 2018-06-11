@@ -1,4 +1,4 @@
-package nl.han.toetsplatform.module.uitvoeren_tentamen.dao;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
 
 import java.io.File;
 import java.net.HttpURLConnection;
@@ -14,7 +14,7 @@ public class Utils {
     private static final String GOOGLE_URL = "http://www.google.com";
     public static Logger logger = Logger.getLogger("toetsplatform-module-uitvoeren-tentamen");
 
-    public static String getTempFolder() {
+    public static File getTempFolder() {
         String temp = System.getProperty("java.io.tmpdir");
         String pathname;
 
@@ -33,10 +33,10 @@ public class Utils {
             }
         }
 
-        return pathname;
+        return tempFolder;
     }
 
-    public static String getFolder(String folder) {
+    public static File getFolder(String folder) {
         String temp = System.getProperty("java.io.tmpdir");
         String pathname;
 
@@ -55,7 +55,7 @@ public class Utils {
             }
         }
 
-        return pathname;
+        return downloadsFolder;
     }
 
     public static boolean checkInternetConnection() {

@@ -1,4 +1,4 @@
-package nl.han.toetsplatform.module.uitvoeren_tentamen.dao;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,9 +27,7 @@ public class JSONReader {
         }
     }
 
-    public JSONArray JSONArrayFromFolder(String pathname) throws IOException, JSONException {
-
-        File folder = new File(pathname);
+    public JSONArray JSONArrayFromFolder(File folder) throws IOException, JSONException {
         File[] listOfFiles = folder.listFiles();
 
         JSONArray files = new JSONArray();

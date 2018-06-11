@@ -3,9 +3,9 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Versie;
-import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
@@ -29,7 +29,7 @@ public class GsonUtilTest {
     private String expected;
     private String dir;
 
-//    @Before
+    //    @Before
     public void setupGsonUtilTest() {
         tentamenId = "1";
         studentNr = 496798;
@@ -64,8 +64,8 @@ public class GsonUtilTest {
                 ":\"Feb 11, 2014 12:00:00 AM\",\"nummer\":\"1\",\"omschrijving\":\"Versieomschrijving\"}}";
     }
 
-//    @Test
-    public void testGsonWrite() {
+    @Test
+    public void testGsonWrite() throws IOException {
         gsu.writeTentamen(tentamen, dir);
         Tentamen result = gsu.loadTentamen(dir);
         assertEquals(result.getTentamenId(), tentamenId);
@@ -78,7 +78,7 @@ public class GsonUtilTest {
         assertEquals(result.getVersie().getNummer(), versie.getNummer());
     }
 
-//    @Test
+    //    @Test
     public void testGsonLoad() {
         String resourceDir = "src/test/resources/Test.json";
         Tentamen result = gsu.loadTentamen(resourceDir);

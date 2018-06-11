@@ -22,7 +22,7 @@ public class GuiceModule extends AbstractModule {
         bind(StorageSetupDao.class).to(StorageSetupSqlite.class);
 
         //TODO: Remove before committing
-//        bind(StorageDao.class).to(StorageSqlite.class);
+        bind(StorageDao.class).to(StorageSqlite.class);
     }
 
 }

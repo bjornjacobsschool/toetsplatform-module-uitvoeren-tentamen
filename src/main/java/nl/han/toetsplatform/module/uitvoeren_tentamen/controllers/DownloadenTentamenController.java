@@ -7,11 +7,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.JSONReader;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.Utils;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.DownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.IDownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.JSONReader;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -109,7 +109,6 @@ public class DownloadenTentamenController extends Controller {
         try {
             result = dManager.downloadTentamen(tentamens.get(tentamenIndex).getTentamenId());
         } catch (IOException | JSONException e) {
-            e.printStackTrace();
             Utils.logger.log(Level.SEVERE, e.getMessage());
             AlertError("Er is iets fout gegaan, probeer opnieuw.");
         }

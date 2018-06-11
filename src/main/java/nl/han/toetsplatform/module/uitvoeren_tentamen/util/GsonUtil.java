@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 
 import java.io.*;
+import java.util.logging.Level;
 
 public class GsonUtil {
     private static Gson gson;
@@ -23,7 +24,7 @@ public class GsonUtil {
         try {
             t = gson.fromJson(readFileToString(dir), Tentamen.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logger.log(Level.SEVERE, e.getMessage());
         }
         return t;
     }
@@ -34,17 +35,34 @@ public class GsonUtil {
      * @param obj Het Tentamen object
      * @param dir de directory + file name
      */
-    public void writeTentamen(Tentamen obj, String dir) {
+    public void writeTentamen(Tentamen obj, String dir) throws IOException {
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(dir));
-            String write = gson.toJson(obj);
-            bw.write(write);
-            bw.close();
+            fileWriter = new FileWriter(dir);
+            bufferedWriter = new BufferedWriter(fileWriter);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Utils.logger.log(Level.SEVERE, e.getMessage());
+        } finally {
+            if (fileWriter != null && bufferedWriter != null) {
 
-        String jsonInString = gson.toJson(obj);
+                String write = gson.toJson(obj);
+                try {
+                    bufferedWriter.write(write);
+                    bufferedWriter.close();
+                } catch (IOException e) {
+                    Utils.logger.log(Level.SEVERE, e.getMessage());
+                }
+            }
+
+            if (bufferedWriter != null) {
+                bufferedWriter.close();
+            }
+
+            if (fileWriter != null) {
+                fileWriter.close();
+            }
+        }
     }
 
     /**
@@ -53,17 +71,37 @@ public class GsonUtil {
      * @param filePath the direct location of the file
      * @return String representation of content of file
      */
-    public String readFileToString(String filePath) {
+    public String readFileToString(String filePath) throws IOException {
+        String returnString = "";
         StringBuilder contentBuilder = new StringBuilder();
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
+
         try {
-            BufferedReader br = new BufferedReader(new FileReader(filePath));
-            String sCurrentLine;
-            while ((sCurrentLine = br.readLine()) != null) {
-                contentBuilder.append(sCurrentLine).append("\n");
+            fileReader = new FileReader(filePath);
+            bufferedReader = new BufferedReader(fileReader);
+        } catch (FileNotFoundException e) {
+            Utils.logger.log(Level.SEVERE, e.getMessage());
+        } finally {
+            if (fileReader != null && bufferedReader != null) {
+                String sCurrentLine;
+
+                while ((sCurrentLine = bufferedReader.readLine()) != null) {
+                    contentBuilder.append(sCurrentLine).append("\n");
+                }
+
+                returnString = contentBuilder.toString();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            if (fileReader != null) {
+                fileReader.close();
+            }
+
+            if (bufferedReader != null) {
+                bufferedReader.close();
+            }
         }
-        return contentBuilder.toString();
+
+        return returnString;
     }
 }
