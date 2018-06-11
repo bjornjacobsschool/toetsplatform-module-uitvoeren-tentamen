@@ -14,9 +14,9 @@ import nl.han.toetsplatform.module.uitvoeren_tentamen.config.ConfigTentamenUitvo
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.DownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.IDownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.JSONReader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
 
 import java.io.IOException;
 import java.text.ParseException;

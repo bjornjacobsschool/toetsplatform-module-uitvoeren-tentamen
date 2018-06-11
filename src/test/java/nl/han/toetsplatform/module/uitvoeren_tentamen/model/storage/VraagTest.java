@@ -28,14 +28,14 @@ public class VraagTest {
 
     @Test
     public void getName() {
-        vraag.setName("Question 1");
-        assertEquals(vraag.getName(), "Question 1");
+        vraag.setNaam("Question 1");
+        assertEquals(vraag.getNaam(), "Question 1");
     }
 
     @Test
     public void setName() {
-        vraag.setName("Question 2");
-        assertEquals(vraag.getName(), "Question 2");
+        vraag.setNaam("Question 2");
+        assertEquals(vraag.getNaam(), "Question 2");
     }
 
     @Test
@@ -76,13 +76,13 @@ public class VraagTest {
 
     @Test
     public void getId() {
-        vraag.setId(1);
-        assertEquals(vraag.getId(), 1);
+        vraag.setId("1");
+        assertEquals(vraag.getId(), "1");
     }
 
     @Test
     public void setId() {
-        vraag.setId(2);
-        assertEquals(vraag.getId(), 2);
+        vraag.setId("1");
+        assertEquals(vraag.getId(), "1");
     }
 }
