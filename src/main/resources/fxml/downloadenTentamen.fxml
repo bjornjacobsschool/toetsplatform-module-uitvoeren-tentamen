@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane minWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.han.toetsplatform.module.uitvoeren_tentamen.controllers.DownloadenTentamenController">
+        <Button onAction="#btnExitPressed" text="Exit" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+    <Button onAction="#downloadPressed" text="Download" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0"/>
+        <GridPane AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0">
+
+               <TableView fx:id="tblViewTentamens" prefHeight="200.0" prefWidth="600.0">
+                 <columns>
+                     <TableColumn fx:id="nameColumn" prefWidth="200.0" text="Naam" />
+                     <TableColumn fx:id="descriptionColumn" prefWidth="288.0" text="Beschrijving" />
+                     <TableColumn fx:id="dateColumn" prefWidth="110.0" text="Datum" />
+                 </columns>
+               </TableView>
+
+            <columnConstraints>
+                <ColumnConstraints percentWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints percentHeight="50.0" />
+                <RowConstraints percentHeight="50.0" />
+            </rowConstraints>
+
+        </GridPane>
+
+        <VBox fx:id="loadingIndicator" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+            <ProgressIndicator prefWidth="200.0" />
+            <padding>
+                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+            </padding>
+        </VBox>
+</AnchorPane>
