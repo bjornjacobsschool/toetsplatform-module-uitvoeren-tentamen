@@ -4,6 +4,7 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.stage.Stage;
 
 public class DownloadenUitvoerenTabPaneController extends Controller {
 
@@ -15,6 +16,8 @@ public class DownloadenUitvoerenTabPaneController extends Controller {
     public Tab gedownloadeTentamensTab;
     public GedownloadeTentamensController gedownloadeTentamensController;
 
+    private Stage primarayStage;
+
     @FXML
     public TabPane tabs;
 
@@ -22,11 +25,15 @@ public class DownloadenUitvoerenTabPaneController extends Controller {
         tabs.getSelectionModel().selectedItemProperty().addListener(
                 (ov, currentTab, newTab) -> {
                     if (newTab.getId().equals("gedownloadeTentamensTab")) {
-                        gedownloadeTentamensController.reloadView();
+                        gedownloadeTentamensController.reloadView(primarayStage);
                     } else {
-                        downloadenTentamenController.reloadView();
+                        downloadenTentamenController.reloadView(primarayStage);
                     }
                 }
         );
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primarayStage = primaryStage;
     }
 }

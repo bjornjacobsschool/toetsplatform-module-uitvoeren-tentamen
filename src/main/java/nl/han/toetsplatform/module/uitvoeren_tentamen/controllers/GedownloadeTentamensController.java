@@ -16,6 +16,7 @@ import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.ID
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.JSONReader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -36,9 +37,14 @@ public class GedownloadeTentamensController extends Controller {
 
 
     private Stage primaryStage;
+    private GsonUtil gsu;
 
     private IDownloadenTentamenDAO dManager;
     private List<Tentamen> tentamens = null;
+
+    public GedownloadeTentamensController() {
+        gsu = new GsonUtil();
+    }
 
     public void initialize() {
         dManager = new DownloadenTentamenDAO(new JSONReader());
@@ -53,10 +59,11 @@ public class GedownloadeTentamensController extends Controller {
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Tentamen, String>("beschrijving"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<Tentamen, String>("strStartDatum"));
 
-        this.reloadView();
+        this.reloadView(primaryStage);
     }
 
-    public void reloadView() {
+    public void reloadView(Stage primaryStage) {
+        this.primaryStage = primaryStage;
         tblViewTentamens.getItems().clear();
 
         try {
@@ -84,16 +91,22 @@ public class GedownloadeTentamensController extends Controller {
         if (tentamenIndex == -1 || tentamenIndex > tentamens.size() - 1) {
             return;
         }
+        String tentamenId = tentamens.get(tentamenIndex).getTentamenId();
+        Tentamen tentamen = gsu.loadTentamen(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS) + "exam_" + tentamenId + ".json");
 
         try {
             GuiceFXMLLoader.Result result = fxmlLoader.load(ConfigTentamenUitvoerenModule.getFXMLTentamenUitvoeren(), null);
 
             TentamenUitvoerenController controller = result.getController();
-            controller.setUp(primaryStage);
+            controller.setUp(primaryStage, tentamen);
             primaryStage.getScene().setRoot(result.getRoot());
 
         } catch (IOException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
         }
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 }

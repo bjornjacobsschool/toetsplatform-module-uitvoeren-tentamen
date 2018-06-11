@@ -6,6 +6,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.DownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.IDownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
@@ -34,7 +35,7 @@ public class DownloadenTentamenController extends Controller {
 
     private IDownloadenTentamenDAO dManager;
     private List<Tentamen> tentamens = null;
-
+    private Stage primaryStage;
 
     public void initialize() {
         dManager = new DownloadenTentamenDAO(new JSONReader());
@@ -56,10 +57,11 @@ public class DownloadenTentamenController extends Controller {
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Tentamen,String>("beschrijving"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<Tentamen,String>("strStartDatum"));
 
-        this.reloadView();
+        this.reloadView(primaryStage);
     }
 
-    public void reloadView() {
+    public void reloadView(Stage primaryStage) {
+        this.primaryStage = primaryStage;
         if (!Utils.checkInternetConnection()) {
             loadingIndicator.setVisible(false);
             AlertError("U heeft geen internet connectie. Maak verbinding met het internet en start de applicatie opnieuw op.");
