@@ -47,13 +47,13 @@ public class GsonUtilTest {
         versie.setNummer("1");
         versie.setOmschrijving("Versieomschrijving");
         tentamen = new Tentamen();
-        tentamen.setTentamenId(tentamenId);
+        tentamen.setId(tentamenId);
         tentamen.setStudentNr(studentNr);
         tentamen.setNaam(naam);
         tentamen.setHash(hash);
         tentamen.setAntwoorden(antwoorden);
         tentamen.setBeschrijving(beschrijving);
-        tentamen.setStartDatum(date);
+        tentamen.setStartdatum(date);
         tentamen.setVersie(versie);
         gsu = new GsonUtil();
         dir = System.getProperty("java.io.tmpdir") + "File.json";
@@ -68,12 +68,12 @@ public class GsonUtilTest {
     public void testGsonWrite() throws IOException {
         gsu.writeTentamen(tentamen, dir);
         Tentamen result = gsu.loadTentamen(dir);
-        assertEquals(result.getTentamenId(), tentamenId);
+        assertEquals(result.getId(), tentamenId);
         assertEquals(result.getStudentNr(), studentNr);
         assertEquals(result.getNaam(), naam);
         assertEquals(result.getHash(), hash);
         assertEquals(result.getBeschrijving(), beschrijving);
-        assertEquals(result.getStartDatum(), date);
+        assertEquals(result.getStartdatum(), date);
         assertEquals(result.getVersie().getDatum(), versie.getDatum());
         assertEquals(result.getVersie().getNummer(), versie.getNummer());
     }
@@ -82,12 +82,12 @@ public class GsonUtilTest {
     public void testGsonLoad() {
         String resourceDir = "src/test/resources/Test.json";
         Tentamen result = gsu.loadTentamen(resourceDir);
-        assertEquals(result.getTentamenId(), tentamenId);
+        assertEquals(result.getId(), tentamenId);
         assertEquals(result.getStudentNr(), studentNr);
         assertEquals(result.getNaam(), naam);
         assertEquals(result.getHash(), hash);
         assertEquals(result.getBeschrijving(), beschrijving);
-        assertEquals(result.getStartDatum(), date);
+        assertEquals(result.getStartdatum(), date);
         assertEquals(result.getVersie().getDatum(), versie.getDatum());
         assertEquals(result.getVersie().getNummer(), versie.getNummer());
     }

@@ -1,35 +1,42 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage;
+
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.AESCipher;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 public class Tentamen {
 
-    private String tentamenId;
+    private GsonUtil gsonUtil;
+
+    private String id;
     private int studentNr;
     private String naam;
+    private String vragen;
     private String hash;
     private List<Antwoord> antwoorden;
-    private List<Vraag> vragen;
+    private List<Vraag> vraagList;
     private String beschrijving;
-    private Date startDatum;
-    private String strStartDatum;
+    private Date startdatum;
+    private String strStartdatum;
     private Versie versie;
 
+    public Tentamen() {
+        this.gsonUtil = new GsonUtil();
+    }
+
     public List<Vraag> getVragen() {
-        return vragen;
+        return vraagList;
     }
 
-    public void setVragen(List<Vraag> vragen) {
-        this.vragen = vragen;
+    public String getId() {
+        return id;
     }
 
-    public String getTentamenId() {
-        return tentamenId;
-    }
-
-    public void setTentamenId(String tentamenId) {
-        this.tentamenId = tentamenId;
+    public void setId(String tentamenId) {
+        this.id = tentamenId;
     }
 
     public int getStudentNr() {
@@ -72,16 +79,12 @@ public class Tentamen {
         this.beschrijving = beschrijving;
     }
 
-    public Date getStartDatum() {
-        return startDatum;
+    public Date getStartdatum() {
+        return startdatum;
     }
 
-    public void setStartDatum(Date startDatum) {
-        this.startDatum = startDatum;
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-
-        this.strStartDatum = sdf.format(startDatum);
+    public void setStartdatum(Date startDatum) {
+        this.startdatum = startDatum;
     }
 
     public Versie getVersie() {
@@ -92,7 +95,18 @@ public class Tentamen {
         this.versie = versie;
     }
 
-    public String getStrStartDatum() {
-        return strStartDatum;
+    public void decryptVragen(String token) throws Exception {
+        String decrypted = AESCipher.decrypt(token, this.vragen);
+        this.vraagList = this.gsonUtil.vragenJSONToList(decrypted);
+    }
+
+    public String getStrStartdatum() {
+
+        if (this.strStartdatum == null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            this.strStartdatum = sdf.format(this.startdatum);
+        }
+
+        return strStartdatum;
     }
 }
