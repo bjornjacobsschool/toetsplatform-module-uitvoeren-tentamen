@@ -95,39 +95,18 @@ public class GedownloadeTentamensController extends Controller {
             AlertError("Selecteer eerst de tentamen die je wilt starten.");
             return;
         }
-        String tentamenId = tentamens.get(tentamenIndex).getId();
-        Tentamen tentamen = gsu.loadTentamen(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS) + "/exam_" + tentamenId + ".json");
 
-        TextInputDialog dialog = new TextInputDialog("");
-        dialog.setTitle("Sleutel invoeren");
-        dialog.setHeaderText("Voer de sleutel in die je van de surveillant hebt gekregen.");
-        dialog.setContentText("");
-
-
-        String decryptionToken = null;
-        Optional<String> dResult = dialog.showAndWait();
-        if (dResult.isPresent()) {
-            decryptionToken = dResult.get();
-        }
-
+        String decryptionToken = this.showDecryptionKeyModal();
         if (decryptionToken == null || decryptionToken.equals("")) {
             AlertError("Voer de sleutel in die je van de surveillant hebt gekregen.");
             return;
         }
 
-        boolean tentamenVragenDecrypted = true;
+        Tentamen tentamen = tentamens.get(tentamenIndex);
 
-        try {
-            tentamen.decryptVragen(decryptionToken);
-        } catch (Exception e) {
-            tentamenVragenDecrypted = false;
-            Utils.logger.log(Level.SEVERE, e.getMessage());
-            e.printStackTrace();
-        }
-
+        boolean tentamenVragenDecrypted = this.decryptVragen(tentamen, decryptionToken);
         if (!tentamenVragenDecrypted) {
             AlertError("De sleutel die je hebt ingevoerd is onjuist.");
-            return;
         }
 
         try {
@@ -140,6 +119,36 @@ public class GedownloadeTentamensController extends Controller {
         } catch (IOException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
         }
+    }
+
+    private boolean decryptVragen(Tentamen tentamen, String decryptionToken) {
+        boolean tentamenVragenDecrypted = true;
+
+        try {
+            tentamen.decryptVragen(decryptionToken);
+        } catch (Exception e) {
+            tentamenVragenDecrypted = false;
+            Utils.logger.log(Level.SEVERE, e.getMessage());
+            e.printStackTrace();
+        }
+
+        return tentamenVragenDecrypted;
+    }
+
+    private String showDecryptionKeyModal() {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("Sleutel invoeren");
+        dialog.setHeaderText("Voer de sleutel in die je van de surveillant hebt gekregen.");
+        dialog.setContentText("");
+
+
+        String decryptionToken = null;
+        Optional<String> dResult = dialog.showAndWait();
+        if (dResult.isPresent()) {
+            decryptionToken = dResult.get();
+        }
+
+        return decryptionToken;
     }
 
     public void setPrimaryStage(Stage primaryStage) {
