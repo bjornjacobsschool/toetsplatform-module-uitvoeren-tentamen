@@ -130,4 +130,8 @@ public class Tentamen {
     public void setTijdsduur(String tijdsduur) {
         this.tijdsduur = tijdsduur;
     }
+
+    public void setVragen(String vragen) {
+        this.vragen = vragen;
+    }
 }

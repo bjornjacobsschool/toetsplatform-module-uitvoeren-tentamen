@@ -133,20 +133,6 @@ public class TentamenTest {
     }
 
     @Test
-    public void getStartDatum() {
-        Date date = new Date();
-        tentamen.setStartdatum(date);
-        assertEquals(tentamen.getStartdatum(), date);
-    }
-
-    @Test
-    public void setStartDatum() {
-        Date date = new Date();
-        tentamen.setStartdatum(date);
-        assertEquals(tentamen.getStartdatum(), date);
-    }
-
-    @Test
     public void getVersie() {
         Versie versie = new Versie();
         tentamen.setVersie(versie);
@@ -161,25 +147,79 @@ public class TentamenTest {
     }
 
     @Test
-    public void setVragen() {
-        getSetVragen();
-
+    public void getStartdatum() {
+        Date date = new Date();
+        tentamen.setStartdatum(date);
+        assertEquals(tentamen.getStartdatum(), date);
     }
 
     @Test
-    public void getVragen() {
-        getSetVragen();
+    public void setStartdatum() {
+        Date date = new Date();
+        tentamen.setStartdatum(date);
+        assertEquals(tentamen.getStartdatum(), date);
     }
 
-    private void getSetVragen() {
-//        List<Vraag> vragen = new ArrayList<>();
-//        Vraag v1 = new Vraag();
-//        Vraag v2 = new Vraag();
-//
-//        vragen.add(v1);
-//        vragen.add(v2);
+    private void setDecryptGetVragen() throws Exception {
+        tentamen.setVragen("BvIT91GMIi//sY4Ygubkd3gkk0ogak3lH2/6Zr6uJZDdrIf9oZmn18Hyc5JOoaR4tun25Sd8XDNZgNMrY9h/1Y0a4jSJLXoJwCpMXqPKm6Pm5JA0+QdLFzsHxzezGDBjA7XJHcsVZZHufSAfzJP3SRloyg78Qnuqo1uiilldWXsGyGsY2guIx3aeb3YIfJ+tjwuOC0PzRKB0LB07A1Y5RJIHEQeKyo46PU6aVm9ylK6VFB5cCuI40XSO/laH/rToRFwSxPhSlFlD1BfaEnrXCSGZ63iayNLx/KD1gLrD9vNBQfgDTgo45V15rtNQsfZRexoKqAl5CkZ8kZOpbRRXVqjcH3SXOY06hd9H45y8WKDGuO0MpFQwxEYqXOhJWd5v60XU7oTW5Gbpz2nomJTKRiEFQRphdLTuDe4FqFC0EJw=");
+        tentamen.decryptVragen("hello world hand");
 
-//        tentamen.setVragen(vragen);
-//        assertEquals(tentamen.getVragen(), vragen);
+        assertEquals(tentamen.getVragen().get(0).getId(), "d290f1ee-6c54-4b01-90e6-d701748f0851");
+        assertEquals(tentamen.getVragen().get(0).getThema(), "Graven");
+        assertEquals(tentamen.getVragen().get(0).getPunten(), 5);
+        assertEquals(tentamen.getVragen().get(0).getNaam(), "Wat is het korste pad startend van A naar E");
+        assertEquals(tentamen.getVragen().get(0).getVersie().getDatum().toString(), "Thu May 24 00:00:00 CEST 2018");
+        assertEquals(tentamen.getVragen().get(0).getVersie().getOmschrijving(), "Spelfout verbeterd.");
+        assertEquals(tentamen.getVragen().get(0).getVersie().getNummer(), "1.0.1");
+    }
+
+    @Test
+    public void setVragen() throws Exception {
+        setDecryptGetVragen();
+    }
+
+    @Test
+    public void decryptVragen() throws Exception {
+        setDecryptGetVragen();
+    }
+
+    @Test
+    public void getVragen() throws Exception {
+        setDecryptGetVragen();
+    }
+
+    @Test
+    public void getStrStartdatum() {
+
+        Date date = new Date();
+        date.setTime(345678765);
+        tentamen.setStartdatum(date);
+        assertEquals(tentamen.getStrStartdatum(), "05-01-1970 01:01");
+    }
+
+    @Test
+    public void getToegestaneHulpmiddelen() {
+        String toegestaneHulpmiddelen = "Geen";
+        tentamen.setToegestaneHulpmiddelen(toegestaneHulpmiddelen);
+        assertEquals(tentamen.getToegestaneHulpmiddelen(), toegestaneHulpmiddelen);
+    }
+
+    @Test
+    public void setToegestaneHulpmiddelen() {
+        String toegestaneHulpmiddelen = "Geen";
+        tentamen.setToegestaneHulpmiddelen(toegestaneHulpmiddelen);
+        assertEquals(tentamen.getToegestaneHulpmiddelen(), toegestaneHulpmiddelen);
+    }
+
+    @Test
+    public void getTijdsduur() {
+        tentamen.setTijdsduur("90 minuten");
+        assertEquals(tentamen.getTijdsduur(), "90 minuten");
+    }
+
+    @Test
+    public void setTijdsduur() {
+        tentamen.setTijdsduur("90 minuten");
+        assertEquals(tentamen.getTijdsduur(), "90 minuten");
     }
 }
