@@ -85,7 +85,7 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void loadAnswerView() {
-        answerPane.getChildren().add(currentPlugin.getAntwoordView("").getView());
+        answerPane.getChildren().add(currentPlugin.getAntwoordView(currentToets.getVragen().get(currentQuestionIndex).getData()).getView());
     }
 
     public Plugin getPluginForCurrentQuestion() throws ClassNotFoundException {
