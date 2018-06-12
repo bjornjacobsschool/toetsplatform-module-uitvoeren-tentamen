@@ -14,28 +14,6 @@ public class Utils {
     private static final String GOOGLE_URL = "http://www.google.com";
     public static Logger logger = Logger.getLogger("toetsplatform-module-uitvoeren-tentamen");
 
-    public static File getTempFolder() {
-        String temp = System.getProperty("java.io.tmpdir");
-        String pathname;
-
-        // Check if tmp folder path already includes file separator or not
-        if (!temp.substring(temp.length() - 1).equals(File.separator)) {
-            pathname = temp + File.separator + TOETSAPPLICATIE + File.separator;
-        } else {
-            pathname = temp + TOETSAPPLICATIE + File.separator;
-        }
-
-        File tempFolder = new File(pathname);
-
-        if (!tempFolder.exists()) {
-            if (!tempFolder.mkdirs()) {
-                System.out.println(pathname + " could not be created");
-            }
-        }
-
-        return tempFolder;
-    }
-
     public static File getFolder(String folder) {
         String temp = System.getProperty("java.io.tmpdir");
         String pathname;
