@@ -43,7 +43,6 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
 
         // TODO: Replace with real URL
         JSONArray jTentamens = this.reader.JSONArrayFromURL(new URL("https://www.focusws.nl/exam.json"));
-
         parseTentamenModel(tentamens, jTentamens);
 
         return tentamens;
@@ -54,7 +53,6 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
         List<Tentamen> tentamens = new ArrayList<>();
 
         JSONArray jTentamens = this.reader.JSONArrayFromFolder(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS));
-
         parseTentamenModel(tentamens, jTentamens);
 
         return tentamens;
@@ -63,17 +61,6 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
     private void parseTentamenModel(List<Tentamen> tentamens, JSONArray jTentamens) {
         for (int i = 0; i < jTentamens.length(); i++) {
             JSONObject o = jTentamens.getJSONObject(i);
-//            Tentamen t = new Tentamen();
-//            t.setTentamenId(o.getString("id"));
-//            t.setNaam(o.getString("naam"));
-//            t.setVragen(o.getString("vragen"));
-//            t.setBeschrijving(o.getString("beschrijving"));
-//
-//            String dateStr = o.getString("startdatum");
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-//
-//            t.setStartDatum(sdf.parse(dateStr));
-
             tentamens.add(gsonUtil.tentamenStringToModel(o.toString()));
         }
     }

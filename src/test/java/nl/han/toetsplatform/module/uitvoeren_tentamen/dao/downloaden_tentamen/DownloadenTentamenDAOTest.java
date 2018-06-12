@@ -25,7 +25,6 @@ public class DownloadenTentamenDAOTest {
 
     private DownloadenTentamenDAO dt;
     private JSONReader JSONReaderMock;
-    private GsonUtil gsonUtilMock;
     private JSONObject t1;
     private JSONObject t2;
     private JSONArray jsonArray;
@@ -33,20 +32,39 @@ public class DownloadenTentamenDAOTest {
     @Before
     public void setUp() {
         JSONReaderMock = mock(JSONReader.class);
-        gsonUtilMock = mock(GsonUtil.class);
-        dt = new DownloadenTentamenDAO(JSONReaderMock, gsonUtilMock);
+        dt = new DownloadenTentamenDAO(JSONReaderMock, new GsonUtil());
 
         t1 = new JSONObject();
-        t1.put("naam", "t1");
-        t1.put("id", "t1-asd123");
-        t1.put("beschrijving", "ASD");
-        t1.put("startdatum", "24-06-2018 12:15:00");
+        t1.put("beschrijving", "Beschrijving 1");
+        t1.put("startdatum", "2018-06-24 12:15:00");
+        t1.put("vragen", "abcdefghijklmnop");
+        t1.put("toegestaneHulpmiddelen", "Geen");
+        t1.put("tijdsduur", "90 minuten");
+        t1.put("id", "1");
+        t1.put("naam", "APP Toets 1");
+
+        JSONObject v1 = new JSONObject();
+        v1.put("datum", "2018-05-24");
+        v1.put("omschrijving", "Spelfout verbeterd.");
+        v1.put("nummer", "1.0.1");
+
+        t1.put("versie", v1);
 
         t2 = new JSONObject();
-        t2.put("naam", "t2");
-        t2.put("id", "t2-abc456");
-        t2.put("beschrijving", "APP");
-        t2.put("startdatum", "26-08-2090 12:45:00");
+        t2.put("beschrijving", "Beschrijving 2");
+        t2.put("startdatum", "2018-06-24 12:15:00");
+        t2.put("vragen", "abcdefghijklmnop");
+        t2.put("toegestaneHulpmiddelen", "Geen");
+        t2.put("tijdsduur", "90 minuten");
+        t2.put("id", "2");
+        t2.put("naam", "SWA Toets 1");
+
+        JSONObject v2 = new JSONObject();
+        v2.put("datum", "2018-05-20");
+        v2.put("omschrijving", "Spelfout verbeterd.");
+        v2.put("nummer", "1.0.5");
+
+        t2.put("versie", v2);
 
         jsonArray = new JSONArray();
         jsonArray.put(t1);
@@ -64,7 +82,7 @@ public class DownloadenTentamenDAOTest {
         assertTrue(file.exists());
 
         String content = new String(Files.readAllBytes(Paths.get(file.getPath())));
-        assertEquals(content, "{\"beschrijving\":\"ASD\",\"startdatum\":\"24-06-2018 12:15:00\",\"id\":\"t1-asd123\",\"naam\":\"t1\"}");
+        assertEquals(content, "{\"beschrijving\":\"Beschrijving 1\",\"startdatum\":\"2018-06-24 12:15:00\",\"vragen\":\"abcdefghijklmnop\",\"tijdsduur\":\"90 minuten\",\"toegestaneHulpmiddelen\":\"Geen\",\"id\":\"1\",\"naam\":\"APP Toets 1\",\"versie\":{\"datum\":\"2018-05-24\",\"omschrijving\":\"Spelfout verbeterd.\",\"nummer\":\"1.0.1\"}}");
 
         assertTrue(file.delete());
     }
@@ -77,15 +95,25 @@ public class DownloadenTentamenDAOTest {
 
         assertEquals(result.size(), 2);
 
-        assertEquals(result.get(0).getNaam(), "t1");
-        assertEquals(result.get(0).getId(), "t1-asd123");
-        assertEquals(result.get(0).getBeschrijving(), "ASD");
-//        assertEquals(result.get(0).getStrStartDatum(), "24-06-2018 12:15");
+        assertEquals(result.get(0).getNaam(), "APP Toets 1");
+        assertEquals(result.get(0).getId(), "1");
+        assertEquals(result.get(0).getBeschrijving(), "Beschrijving 1");
+        assertEquals(result.get(0).getStartdatum().toString(), "Sun Jun 24 12:15:00 CEST 2018");
+        assertEquals(result.get(0).getToegestaneHulpmiddelen(), "Geen");
+        assertEquals(result.get(0).getTijdsduur(), "90 minuten");
+        assertEquals(result.get(0).getVersie().getOmschrijving(), "Spelfout verbeterd.");
+        assertEquals(result.get(0).getVersie().getNummer(), "1.0.1");
+        assertEquals(result.get(0).getVersie().getDatum().toString(), "Thu May 24 00:00:00 CEST 2018");
 
-        assertEquals(result.get(1).getNaam(), "t2");
-        assertEquals(result.get(1).getId(), "t2-abc456");
-        assertEquals(result.get(1).getBeschrijving(), "APP");
-//        assertEquals(result.get(1).getStrStartDatum(), "26-08-2090 12:45");
+        assertEquals(result.get(1).getNaam(), "SWA Toets 1");
+        assertEquals(result.get(1).getId(), "2");
+        assertEquals(result.get(1).getBeschrijving(), "Beschrijving 2");
+        assertEquals(result.get(1).getStartdatum().toString(), "Sun Jun 24 12:15:00 CEST 2018");
+        assertEquals(result.get(1).getToegestaneHulpmiddelen(), "Geen");
+        assertEquals(result.get(1).getTijdsduur(), "90 minuten");
+        assertEquals(result.get(1).getVersie().getOmschrijving(), "Spelfout verbeterd.");
+        assertEquals(result.get(1).getVersie().getNummer(), "1.0.5");
+        assertEquals(result.get(1).getVersie().getDatum().toString(), "Sun May 20 00:00:00 CEST 2018");
     }
 
     @Test
@@ -95,14 +123,24 @@ public class DownloadenTentamenDAOTest {
         List<Tentamen> result = dt.getDownloadedTentamens();
         assertEquals(result.size(), 2);
 
-        assertEquals(result.get(0).getNaam(), "t1");
-        assertEquals(result.get(0).getId(), "t1-asd123");
-        assertEquals(result.get(0).getBeschrijving(), "ASD");
-//        assertEquals(result.get(0).getStrStartDatum(), "24-06-2018 12:15");
+        assertEquals(result.get(0).getNaam(), "APP Toets 1");
+        assertEquals(result.get(0).getId(), "1");
+        assertEquals(result.get(0).getBeschrijving(), "Beschrijving 1");
+        assertEquals(result.get(0).getStartdatum().toString(), "Sun Jun 24 12:15:00 CEST 2018");
+        assertEquals(result.get(0).getToegestaneHulpmiddelen(), "Geen");
+        assertEquals(result.get(0).getTijdsduur(), "90 minuten");
+        assertEquals(result.get(0).getVersie().getOmschrijving(), "Spelfout verbeterd.");
+        assertEquals(result.get(0).getVersie().getNummer(), "1.0.1");
+        assertEquals(result.get(0).getVersie().getDatum().toString(), "Thu May 24 00:00:00 CEST 2018");
 
-        assertEquals(result.get(1).getNaam(), "t2");
-        assertEquals(result.get(1).getId(), "t2-abc456");
-        assertEquals(result.get(1).getBeschrijving(), "APP");
-//        assertEquals(result.get(1).getStrStartDatum(), "26-08-2090 12:45");
+        assertEquals(result.get(1).getNaam(), "SWA Toets 1");
+        assertEquals(result.get(1).getId(), "2");
+        assertEquals(result.get(1).getBeschrijving(), "Beschrijving 2");
+        assertEquals(result.get(1).getStartdatum().toString(), "Sun Jun 24 12:15:00 CEST 2018");
+        assertEquals(result.get(1).getToegestaneHulpmiddelen(), "Geen");
+        assertEquals(result.get(1).getTijdsduur(), "90 minuten");
+        assertEquals(result.get(1).getVersie().getOmschrijving(), "Spelfout verbeterd.");
+        assertEquals(result.get(1).getVersie().getNummer(), "1.0.5");
+        assertEquals(result.get(1).getVersie().getDatum().toString(), "Sun May 20 00:00:00 CEST 2018");
     }
 }
