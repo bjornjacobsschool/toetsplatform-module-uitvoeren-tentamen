@@ -14,17 +14,17 @@ public class VraagTest {
         vraag = new Vraag();
     }
 
-    @Test
-    public void getPlugin() {
-        vraag.setPlugin("han.plugin.graph");
-        assertEquals(vraag.getPlugin(), "han.plugin.graph");
-    }
-
-    @Test
-    public void setPlugin() {
-        vraag.setPlugin("han.plugin.vrije.tekst");
-        assertEquals(vraag.getPlugin(), "han.plugin.vrije.tekst");
-    }
+//    @Test
+//    public void getPlugin() {
+//        vraag.setPlugin("han.plugin.graph");
+//        assertEquals(vraag.getPlugin(), "han.plugin.graph");
+//    }
+//
+//    @Test
+//    public void setPlugin() {
+//        vraag.setPlugin("han.plugin.vrije.tekst");
+//        assertEquals(vraag.getPlugin(), "han.plugin.vrije.tekst");
+//    }
 
     @Test
     public void getName() {

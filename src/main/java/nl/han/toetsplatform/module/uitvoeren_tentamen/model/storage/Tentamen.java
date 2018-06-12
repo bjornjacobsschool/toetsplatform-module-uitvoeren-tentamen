@@ -16,7 +16,7 @@ public class Tentamen {
     private String naam;
     private String vragen;
     private String hash;
-    private List<Antwoord> antwoorden;
+    // private List<Antwoord> antwoorden;
     private List<Vraag> vraagList;
     private String beschrijving;
     private Date startdatum;
@@ -30,6 +30,11 @@ public class Tentamen {
     public List<Vraag> getVragen() {
         return vraagList;
     }
+
+    public void setVragen(List<Vraag> vraagList) {
+        this.vraagList = vraagList;
+    }
+
 
     public String getId() {
         return id;
@@ -63,13 +68,13 @@ public class Tentamen {
         this.hash = hash;
     }
 
-    public List<Antwoord> getAntwoorden() {
-        return antwoorden;
-    }
-
-    public void setAntwoorden(List<Antwoord> antwoorden) {
-        this.antwoorden = antwoorden;
-    }
+//    public List<Antwoord> getAntwoorden() {
+//        return antwoorden;
+//    }
+//
+//    public void setAntwoorden(List<Antwoord> antwoorden) {
+//        this.antwoorden = antwoorden;
+//    }
 
     public String getBeschrijving() {
         return beschrijving;

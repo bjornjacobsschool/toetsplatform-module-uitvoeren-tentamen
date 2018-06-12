@@ -73,51 +73,51 @@ public class TentamenTest {
     }
 
     @Test
-    public void getAntwoorden() {
-        List<Antwoord> antwoordList = new ArrayList<>();
+    public void testGetVragen() {
+        List<Vraag> VraagList = new ArrayList<>();
 
-        Antwoord a1 = new Antwoord();
-        a1.setTentamenId("1");
-        a1.setVraagId("1");
-        a1.setGegevenAntwoord("1");
+        Vraag a1 = new Vraag();
+        a1.setId("1");
+        a1.setNaam("1");
+        a1.setDescription("1");
 
-        Antwoord a2 = new Antwoord();
-        a2.setTentamenId("2");
-        a2.setVraagId("2");
-        a2.setGegevenAntwoord("2");
+        Vraag a2 = new Vraag();
+        a2.setId("2");
+        a2.setNaam("2");
+        a2.setDescription("2");
 
-        antwoordList.add(a1);
-        antwoordList.add(a2);
+        VraagList.add(a1);
+        VraagList.add(a2);
 
-        tentamen.setAntwoorden(antwoordList);
+        tentamen.setVragen(VraagList);
 
-        assertEquals(tentamen.getAntwoorden().size(), 2);
-        assertEquals(tentamen.getAntwoorden().get(0), a1);
-        assertEquals(tentamen.getAntwoorden().get(1), a2);
+        assertEquals(tentamen.getVragen().size(), 2);
+        assertEquals(tentamen.getVragen().get(0), a1);
+        assertEquals(tentamen.getVragen().get(1), a2);
     }
 
     @Test
-    public void setAntwoorden() {
-        List<Antwoord> antwoordList = new ArrayList<>();
+    public void testSetVragen() {
+        List<Vraag> VraagList = new ArrayList<>();
 
-        Antwoord a1 = new Antwoord();
-        a1.setTentamenId("11");
-        a1.setVraagId("11");
-        a1.setGegevenAntwoord("11");
+        Vraag a1 = new Vraag();
+        a1.setId("11");
+        a1.setNaam("11");
+        a1.setDescription("11");
 
-        Antwoord a2 = new Antwoord();
-        a2.setTentamenId("22");
-        a2.setVraagId("22");
-        a2.setGegevenAntwoord("22");
+        Vraag a2 = new Vraag();
+        a2.setId("22");
+        a2.setNaam("22");
+        a2.setDescription("22");
 
-        antwoordList.add(a1);
-        antwoordList.add(a2);
+        VraagList.add(a1);
+        VraagList.add(a2);
 
-        tentamen.setAntwoorden(antwoordList);
+        tentamen.setVragen(VraagList);
 
-        assertEquals(tentamen.getAntwoorden().size(), 2);
-        assertEquals(tentamen.getAntwoorden().get(0), a1);
-        assertEquals(tentamen.getAntwoorden().get(1), a2);
+        assertEquals(tentamen.getVragen().size(), 2);
+        assertEquals(tentamen.getVragen().get(0), a1);
+        assertEquals(tentamen.getVragen().get(1), a2);
     }
 
     @Test
@@ -158,28 +158,5 @@ public class TentamenTest {
         Versie versie = new Versie();
         tentamen.setVersie(versie);
         assertEquals(tentamen.getVersie(), versie);
-    }
-
-    @Test
-    public void setVragen() {
-        getSetVragen();
-
-    }
-
-    @Test
-    public void getVragen() {
-        getSetVragen();
-    }
-
-    private void getSetVragen() {
-//        List<Vraag> vragen = new ArrayList<>();
-//        Vraag v1 = new Vraag();
-//        Vraag v2 = new Vraag();
-//
-//        vragen.add(v1);
-//        vragen.add(v2);
-
-//        tentamen.setVragen(vragen);
-//        assertEquals(tentamen.getVragen(), vragen);
     }
 }

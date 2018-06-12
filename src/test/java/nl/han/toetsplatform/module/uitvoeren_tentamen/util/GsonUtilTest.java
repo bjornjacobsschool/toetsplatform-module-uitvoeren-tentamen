@@ -51,7 +51,7 @@ public class GsonUtilTest {
         tentamen.setStudentNr(studentNr);
         tentamen.setNaam(naam);
         tentamen.setHash(hash);
-        tentamen.setAntwoorden(antwoorden);
+        //tentamen.setAntwoorden(antwoorden);
         tentamen.setBeschrijving(beschrijving);
         tentamen.setStartdatum(date);
         tentamen.setVersie(versie);
@@ -64,7 +64,7 @@ public class GsonUtilTest {
                 ":\"Feb 11, 2014 12:00:00 AM\",\"nummer\":\"1\",\"omschrijving\":\"Versieomschrijving\"}}";
     }
 
-    @Test
+    // @Test
     public void testGsonWrite() throws IOException {
         gsu.writeTentamen(tentamen, dir);
         Tentamen result = gsu.loadTentamen(dir);

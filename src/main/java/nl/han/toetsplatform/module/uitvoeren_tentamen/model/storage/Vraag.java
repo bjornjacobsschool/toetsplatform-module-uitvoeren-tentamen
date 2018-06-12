@@ -6,19 +6,20 @@ public class Vraag {
     private String naam;
     private String description;
     private String vraagType;
-    private String plugin;
+    // private String plugin;
     private String thema;
     private int punten;
     private String data;
     private Versie versie;
+    private Antwoord antwoord;
 
-    public String getPlugin() {
-        return plugin;
-    }
-
-    public void setPlugin(String plugin) {
-        this.plugin = plugin;
-    }
+//    public String getPlugin() {
+//        return plugin;
+//    }
+//
+//    public void setPlugin(String plugin) {
+//        this.plugin = plugin;
+//    }
 
     public String getNaam() {
         return naam;
@@ -82,5 +83,13 @@ public class Vraag {
 
     public void setVersie(Versie versie) {
         this.versie = versie;
+    }
+
+    public Antwoord getAntwoord() {
+        return antwoord;
+    }
+
+    public void setAntwoord(Antwoord antwoord) {
+        this.antwoord = antwoord;
     }
 }
