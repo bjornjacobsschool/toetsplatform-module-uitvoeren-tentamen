@@ -1,4 +1,4 @@
-package nl.han.toetsplatform.module.uitvoeren_tentamen.dao;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -6,9 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -16,12 +14,13 @@ import java.net.URLStreamHandler;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class JSONReaderTest {
 
-    private JSONReader JSONReader;
+    private nl.han.toetsplatform.module.uitvoeren_tentamen.util.JSONReader JSONReader;
     private String responseArray;
     private String responseObject;
 
@@ -38,8 +37,9 @@ public class JSONReaderTest {
 
     @Test
     public void JSONArrayFromURL() throws IOException {
-        final HttpURLConnection mockCon = mock(HttpURLConnection. class);
+        final HttpURLConnection mockCon = mock(HttpURLConnection.class);
         InputStream inputStream = new ByteArrayInputStream(responseArray.getBytes(StandardCharsets.UTF_8));
+
         when(mockCon.getLastModified()).thenReturn(10L, 11L);
         when(mockCon.getInputStream()).thenReturn(inputStream);
 
@@ -50,8 +50,6 @@ public class JSONReaderTest {
                 return mockCon;
             }
         };
-
-
         JSONArray result = JSONReader.JSONArrayFromURL(new URL(null,"http://get.some.json.from.somewhere", URLStreamHandler));
 
         assertEquals(result.length(), 1);
@@ -65,6 +63,7 @@ public class JSONReaderTest {
     public void JSONObjectFromURL() throws IOException {
         final HttpURLConnection mockCon = mock(HttpURLConnection. class);
         InputStream inputStream = new ByteArrayInputStream(responseObject.getBytes(StandardCharsets.UTF_8));
+
         when(mockCon.getLastModified()).thenReturn(10L, 11L);
         when(mockCon.getInputStream()).thenReturn(inputStream);
 
@@ -76,7 +75,6 @@ public class JSONReaderTest {
             }
         };
 
-
         JSONObject result = JSONReader.JSONObjectFromURL(new URL(null,"http://get.some.json.from.somewhere", URLStreamHandler));
 
         assertEquals(result.length(), 4);
@@ -84,5 +82,22 @@ public class JSONReaderTest {
         assertEquals(result.getString("startdatum"), "24-06-2018 12:15:00");
         assertEquals(result.getString("id"), "t1-asd123");
         assertEquals(result.getString("naam"), "t1");
+    }
+
+    @Test
+    public void JSONArrayFromFolder() throws IOException {
+        File folder = mock(File.class);
+        File exam1 = File.createTempFile("exam_1", ".json");
+
+        BufferedWriter out = new BufferedWriter(new FileWriter(exam1));
+        out.write(responseObject);
+        out.close();
+
+        when(folder.listFiles()).thenReturn(new File[]{exam1});
+
+        JSONArray result = JSONReader.JSONArrayFromFolder(folder);
+
+        assertEquals(result.toString(), responseArray);
+        assertTrue(exam1.delete());
     }
 }

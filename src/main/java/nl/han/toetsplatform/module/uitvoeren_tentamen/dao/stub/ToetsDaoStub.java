@@ -20,7 +20,7 @@ public class ToetsDaoStub implements ToetsDao {
 
         // Dummy tentamen
         Tentamen tentamen = new Tentamen();
-        tentamen.setTentamenId("ID-VAN-TENTAMEN");
+        tentamen.setId("ID-VAN-TENTAMEN");
         tentamen.setStudentNr(123456);
         tentamen.setNaam("Toets APP 1 (Grafen en Paden)");
 //        tentamen.setVersieNummer("1.0");

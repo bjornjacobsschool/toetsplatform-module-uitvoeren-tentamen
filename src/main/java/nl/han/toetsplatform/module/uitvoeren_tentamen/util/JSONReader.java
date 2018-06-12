@@ -1,5 +1,6 @@
-package nl.han.toetsplatform.module.uitvoeren_tentamen.dao;
+package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
 
+import org.apache.commons.io.FilenameUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,19 +28,19 @@ public class JSONReader {
         }
     }
 
-    public JSONArray JSONArrayFromFolder(String pathname) throws IOException, JSONException {
-
-        File folder = new File(pathname);
+    public JSONArray JSONArrayFromFolder(File folder) throws IOException, JSONException {
         File[] listOfFiles = folder.listFiles();
 
         JSONArray files = new JSONArray();
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
-                try (InputStream is = new FileInputStream(file)) {
-                    BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-                    String jsonText = this.readAll(rd);
+                if (FilenameUtils.getExtension(file.getName()).equals("json")) {
+                    try (InputStream is = new FileInputStream(file)) {
+                        BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+                        String jsonText = this.readAll(rd);
 
-                    files.put(new JSONObject(jsonText));
+                        files.put(new JSONObject(jsonText));
+                    }
                 }
             }
         }

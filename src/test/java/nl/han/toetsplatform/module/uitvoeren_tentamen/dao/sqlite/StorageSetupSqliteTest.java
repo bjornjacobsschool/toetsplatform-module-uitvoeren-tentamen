@@ -1,47 +1,22 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite;
 
-import com.google.inject.Inject;
-import nl.han.toetsplatform.module.shared.storage.StorageDao;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.sql.SQLException;
+import static org.junit.Assert.assertEquals;
 
-public class StorageSetupSqlite implements StorageSetupDao {
+public class StorageSetupSqliteTest {
 
-    private static String TABLE_MODULE_UITVOEREN_ANTWOORD = "MODULE_UITVOEREN_ANTWOORD";
-    private static String TABLE_MODULE_UITVOEREN_STUDENT = "MODULE_UITVOEREN_STUDENT";
-    private static String TABLE_MODULE_UITVOEREN_TENTAMEN = "MODULE_UITVOEREN_TENTAMEN";
+    private StorageSetupSqlite storageSetupSqlite;
 
-    @Inject
-    public StorageDao storageDao;
-
-    @Override
-    public void setup() throws SQLException {
-        storageDao.setup(getSQLFromFile(), new String[]{
-                TABLE_MODULE_UITVOEREN_ANTWOORD,
-                TABLE_MODULE_UITVOEREN_STUDENT,
-                TABLE_MODULE_UITVOEREN_TENTAMEN
-        });
+    @Before
+    public void setUp() {
+        this.storageSetupSqlite = new StorageSetupSqlite();
     }
 
-    public String getSQLFromFile() {
-        /*
-        FileReader fr = new FileReader(new File(DDL_SCRIPT_FILENAME));
-        BufferedReader in = new BufferedReader(fr);
-
-        String str;
-        StringBuffer sb = new StringBuffer();
-
-        while ((str = in.readLine()) != null) {
-            sb.append(str);
-        }
-
-        in.close();
-
-        return sb.toString();
-        */
-
-        return "DROP TABLE IF EXISTS MODULE_UITVOEREN_ANTWOORD;\n" +
+    @Test
+    public void getSQLFromFile() {
+        assertEquals(this.storageSetupSqlite.getSQLFromFile(), "DROP TABLE IF EXISTS MODULE_UITVOEREN_ANTWOORD;\n" +
                 "DROP TABLE IF EXISTS MODULE_UITVOEREN_TENTAMEN;\n" +
                 "DROP TABLE IF EXISTS MODULE_UITVOEREN_STUDENT;\n" +
                 "\n" +
@@ -67,7 +42,6 @@ public class StorageSetupSqlite implements StorageSetupDao {
                 "  gegevenAntwoord varchar(1024) NULL,\n" +
                 "  CONSTRAINT pk_vraag PRIMARY KEY (vraagid, tentamenid),\n" +
                 "  CONSTRAINT fk_vraag_van_tentamen FOREIGN KEY (tentamenid) REFERENCES TENTAMEN (tentamenid)\n" +
-                ");";
+                ");");
     }
-
 }
