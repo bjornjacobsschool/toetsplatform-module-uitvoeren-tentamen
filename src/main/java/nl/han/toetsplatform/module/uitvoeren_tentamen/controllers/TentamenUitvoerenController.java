@@ -134,10 +134,6 @@ public class TentamenUitvoerenController extends Controller {
         return givenAntwoord;
     }
 
-    public void loadAnswerView() {
-        answerPane.getChildren().add(currentPlugin.getAntwoordView(currentToets.getVragen().get(currentQuestionIndex).getData()).getView());
-    }
-
     private void saveQuestion() {
         String tentamenId = currentToets.getId();
         Vraag vraag = currentToets.getVragen().get(currentQuestionIndex);

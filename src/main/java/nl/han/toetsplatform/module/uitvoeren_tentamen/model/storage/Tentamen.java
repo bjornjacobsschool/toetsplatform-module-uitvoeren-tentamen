@@ -16,7 +16,6 @@ public class Tentamen {
     private String naam;
     private String vragen;
     private String hash;
-    // private List<Antwoord> antwoorden;
     private List<Vraag> vraagList;
     private String beschrijving;
     private String toegestaneHulpmiddelen;
@@ -69,14 +68,6 @@ public class Tentamen {
     public void setHash(String hash) {
         this.hash = hash;
     }
-
-//    public List<Antwoord> getAntwoorden() {
-//        return antwoorden;
-//    }
-//
-//    public void setAntwoorden(List<Antwoord> antwoorden) {
-//        this.antwoorden = antwoorden;
-//    }
 
     public String getBeschrijving() {
         return beschrijving;

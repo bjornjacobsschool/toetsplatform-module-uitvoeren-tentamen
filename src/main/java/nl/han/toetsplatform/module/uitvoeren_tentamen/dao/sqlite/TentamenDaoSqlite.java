@@ -72,7 +72,13 @@ public class TentamenDaoSqlite implements ToetsDao {
                     Antwoord newAntwoord = new Antwoord();
                     newAntwoord.setTentamenId(tentamenId);
                     newAntwoord.setVraagId(vragenResult.getString("vraagid"));
-                    newAntwoord.setGegevenAntwoord(vragenResult.getString("gegevenAntwoord"));
+                    String antwoordQuery = "SELECT gegevenAntwoord FROM MODULE_UITVOEREN_ANTWOORD WHERE " +
+                            "vraagid = '" + vragenResult.getString("vraagid") + "' AND " +
+                            "tentamenid = '" + tentamenId + "'";
+                    ResultSet antwoordResult = storageDao.executeQuery(antwoordQuery);
+                    if (antwoordResult.next()) {
+                        newAntwoord.setGegevenAntwoord(antwoordResult.getString("gegevenAntwoord"));
+                    }
                     newVraag.setAntwoord(newAntwoord);
                     vragen.add(newVraag);
                 }
@@ -80,6 +86,8 @@ public class TentamenDaoSqlite implements ToetsDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            storageDao.closeConnection();
         }
         return tentamen;
     }
@@ -110,6 +118,8 @@ public class TentamenDaoSqlite implements ToetsDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            storageDao.closeConnection();
         }
     }
 
@@ -123,6 +133,8 @@ public class TentamenDaoSqlite implements ToetsDao {
             storageDao.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            storageDao.closeConnection();
         }
 
     }
@@ -143,6 +155,8 @@ public class TentamenDaoSqlite implements ToetsDao {
             storageDao.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            storageDao.closeConnection();
         }
     }
 
@@ -175,6 +189,8 @@ public class TentamenDaoSqlite implements ToetsDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            storageDao.closeConnection();
         }
     }
 }
