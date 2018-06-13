@@ -75,9 +75,7 @@ public class GedownloadeTentamensController extends Controller {
             AlertError("Er is iets fout gegaan, probeer opnieuw.");
         }
 
-        for (Tentamen tentamen : tentamens) {
-            tblViewTentamens.getItems().add(tentamen);
-        }
+        Controller.loadTable(tentamens, tblViewTentamens);
     }
 
     @FXML

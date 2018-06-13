@@ -4,7 +4,7 @@ public class Vraag {
 
     private String id;
     private String naam;
-    private String description;
+    private String mogelijkeAntwoorden;
     private String vraagType;
     private String plugin;
     private String thema;
@@ -28,12 +28,12 @@ public class Vraag {
         this.naam = naam;
     }
 
-    public String getDescription() {
-        return description;
+    public String getMogelijkeAntwoorden() {
+        return mogelijkeAntwoorden;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMogelijkeAntwoorden(String mogelijkeAntwoorden) {
+        this.mogelijkeAntwoorden = mogelijkeAntwoorden;
     }
 
     public String getVraagType() {

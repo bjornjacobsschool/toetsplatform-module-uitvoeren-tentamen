@@ -20,7 +20,6 @@ public class GsonUtilTest {
     private JSONObject t1;
     private JSONObject t2;
     private JSONObject vr1;
-    private JSONObject vr2;
     private JSONArray jsonArray;
 
     @Before
@@ -29,7 +28,7 @@ public class GsonUtilTest {
         t1 = new JSONObject();
 
         t1.put("beschrijving", "Beschrijving 1");
-        t1.put("startdatum", "2018-06-24 12:15:00");
+        t1.put("startdatum", "1375726743000");
         t1.put("vragen", "abcdefghijklmnop");
         t1.put("toegestaneHulpmiddelen", "Geen");
         t1.put("tijdsduur", "90 minuten");
@@ -37,7 +36,7 @@ public class GsonUtilTest {
         t1.put("naam", "APP Toets 1");
 
         JSONObject v1 = new JSONObject();
-        v1.put("datum", "2018-05-24");
+        v1.put("datum", "1367777943000");
         v1.put("omschrijving", "Spelfout verbeterd.");
         v1.put("nummer", "1.0.1");
 
@@ -45,7 +44,7 @@ public class GsonUtilTest {
 
         t2 = new JSONObject();
         t2.put("beschrijving", "Beschrijving 2");
-        t2.put("startdatum", "2018-06-24 12:15:00");
+        t2.put("startdatum", "1375726743000");
         t2.put("vragen", "abcdefghijklmnop");
         t2.put("toegestaneHulpmiddelen", "Geen");
         t2.put("tijdsduur", "90 minuten");
@@ -53,7 +52,7 @@ public class GsonUtilTest {
         t2.put("naam", "SWA Toets 1");
 
         JSONObject v2 = new JSONObject();
-        v2.put("datum", "2018-05-20");
+        v2.put("datum", "1367777943000");
         v2.put("omschrijving", "Spelfout verbeterd.");
         v2.put("nummer", "1.0.5");
 
@@ -91,12 +90,12 @@ public class GsonUtilTest {
         assertEquals(t.getNaam(), "APP Toets 1");
         assertEquals(t.getId(), "1");
         assertEquals(t.getBeschrijving(), "Beschrijving 1");
-        assertEquals(t.getStartdatum().toString(), "Sun Jun 24 12:15:00 CEST 2018");
+        assertEquals(t.getStartdatum().toString(), "Sun Jan 17 06:30:00 CET 45565");
         assertEquals(t.getToegestaneHulpmiddelen(), "Geen");
         assertEquals(t.getTijdsduur(), "90 minuten");
         assertEquals(t.getVersie().getOmschrijving(), "Spelfout verbeterd.");
         assertEquals(t.getVersie().getNummer(), "1.0.1");
-        assertEquals(t.getVersie().getDatum().toString(), "Thu May 24 00:00:00 CEST 2018");
+        assertEquals(t.getVersie().getDatum().toString(), "Mon Feb 27 06:30:00 CET 45313");
         assertTrue(file.delete());
     }
 
@@ -107,12 +106,12 @@ public class GsonUtilTest {
         assertEquals(t.getNaam(), "APP Toets 1");
         assertEquals(t.getId(), "1");
         assertEquals(t.getBeschrijving(), "Beschrijving 1");
-        assertEquals(t.getStartdatum().toString(), "Sun Jun 24 12:15:00 CEST 2018");
+        assertEquals(t.getStartdatum().toString(), "Sun Jan 17 06:30:00 CET 45565");
         assertEquals(t.getToegestaneHulpmiddelen(), "Geen");
         assertEquals(t.getTijdsduur(), "90 minuten");
         assertEquals(t.getVersie().getOmschrijving(), "Spelfout verbeterd.");
         assertEquals(t.getVersie().getNummer(), "1.0.1");
-        assertEquals(t.getVersie().getDatum().toString(), "Thu May 24 00:00:00 CEST 2018");
+        assertEquals(t.getVersie().getDatum().toString(), "Mon Feb 27 06:30:00 CET 45313");
     }
 
     @Test
@@ -134,7 +133,7 @@ public class GsonUtilTest {
         assertEquals(result.get(0).getData(), "data");
         assertEquals(result.get(0).getVersie().getOmschrijving(), "Spelfout verbeterd.");
         assertEquals(result.get(0).getVersie().getNummer(), "1.0.1");
-        assertEquals(result.get(0).getVersie().getDatum().toString(), "Thu May 24 00:00:00 CEST 2018");
+        assertEquals(result.get(0).getVersie().getDatum().toString(), "Mon Feb 27 06:30:00 CET 45313");
     }
 }
 
