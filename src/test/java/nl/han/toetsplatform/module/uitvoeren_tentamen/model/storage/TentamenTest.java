@@ -37,18 +37,6 @@ public class TentamenTest {
     }
 
     @Test
-    public void getStudentNr() {
-        tentamen.setStudentNr(555928);
-        assertEquals(tentamen.getStudentNr(), 555928);
-    }
-
-    @Test
-    public void setStudentNr() {
-        tentamen.setStudentNr(829555);
-        assertEquals(tentamen.getStudentNr(), 829555);
-    }
-
-    @Test
     public void getNaam() {
         tentamen.setNaam("John");
         assertEquals(tentamen.getNaam(), "John");
@@ -58,18 +46,6 @@ public class TentamenTest {
     public void setNaam() {
         tentamen.setNaam("Apple");
         assertEquals(tentamen.getNaam(), "Apple");
-    }
-
-    @Test
-    public void getHash() {
-        tentamen.setHash("23567uhg6747i4u3hwg543");
-        assertEquals(tentamen.getHash(), "23567uhg6747i4u3hwg543");
-    }
-
-    @Test
-    public void setHash() {
-        tentamen.setHash("56785ijeyhrtwg3h47j6ue");
-        assertEquals(tentamen.getHash(), "56785ijeyhrtwg3h47j6ue");
     }
 
     @Test
@@ -147,6 +123,12 @@ public class TentamenTest {
     }
 
     @Test
+    public void setStrtartdatum() {
+        tentamen.setStrStartdatum("10-10-2010 10:10");
+        assertEquals(tentamen.getStrStartdatum(), "10-10-2010 10:10");
+    }
+
+    @Test
     public void getStartdatum() {
         Date date = new Date();
         tentamen.setStartdatum(date);
@@ -161,16 +143,16 @@ public class TentamenTest {
     }
 
     private void setDecryptGetVragen() throws Exception {
-        tentamen.setVragen("BvIT91GMIi//sY4Ygubkd3gkk0ogak3lH2/6Zr6uJZDdrIf9oZmn18Hyc5JOoaR4tun25Sd8XDNZgNMrY9h/1Y0a4jSJLXoJwCpMXqPKm6Pm5JA0+QdLFzsHxzezGDBjA7XJHcsVZZHufSAfzJP3SRloyg78Qnuqo1uiilldWXsGyGsY2guIx3aeb3YIfJ+tjwuOC0PzRKB0LB07A1Y5RJIHEQeKyo46PU6aVm9ylK6VFB5cCuI40XSO/laH/rToRFwSxPhSlFlD1BfaEnrXCSGZ63iayNLx/KD1gLrD9vNBQfgDTgo45V15rtNQsfZRexoKqAl5CkZ8kZOpbRRXVqjcH3SXOY06hd9H45y8WKDGuO0MpFQwxEYqXOhJWd5v60XU7oTW5Gbpz2nomJTKRiEFQRphdLTuDe4FqFC0EJw=");
+        tentamen.setVragen("C58VCdZmEGITxud92+VDr6gj4t7ux1B3l3UHUuMthult8JOyxrDZy+C2Hjrd8fsWHXTaTGjH8nzPy1JSNljpCERHcsq4ERG+d7HGXQRaqjZZYLIZivLTBYshPkI/h8SHrFCUxZfHpfHzvIIfuSly4Em1sdWXRphSPfK43CbwKZWZS2zd8aFmz2YkzKK2GK3tEfk41vqv2HZEnyA5bsGM3ntwEttQsOPf9SOzWu+/gdxAHi2e5G8b46/CnVzInzVLsY1aJpXVIKTfmgdUOIDWAWfyDLvgo+Bpasjg3UVGOXbndxTsKjOR+XJerKGIrccbpIg6P7mySL/0/+uXNnnCJIUfPpQ734y3Gpcanugcqhw=");
         tentamen.decryptVragen("hello world hand");
 
-        assertEquals(tentamen.getVragen().get(0).getId(), "d290f1ee-6c54-4b01-90e6-d701748f0851");
-        assertEquals(tentamen.getVragen().get(0).getThema(), "Graven");
-        assertEquals(tentamen.getVragen().get(0).getPunten(), 5);
-        assertEquals(tentamen.getVragen().get(0).getNaam(), "Wat is het korste pad startend van A naar E");
-        assertEquals(tentamen.getVragen().get(0).getVersie().getDatum().toString(), "Thu May 24 00:00:00 CEST 2018");
-        assertEquals(tentamen.getVragen().get(0).getVersie().getOmschrijving(), "Spelfout verbeterd.");
-        assertEquals(tentamen.getVragen().get(0).getVersie().getNummer(), "1.0.1");
+        assertEquals(tentamen.getVragen().get(0).getId(), "123e4567-e89b-12d3-a456-426655441111");
+        assertEquals(tentamen.getVragen().get(0).getThema(), "GRAAF");
+        assertEquals(tentamen.getVragen().get(0).getPunten(), 15);
+        assertEquals(tentamen.getVragen().get(0).getNaam(), "Hoe verbind je twee nodes binnen een graaf?");
+        assertEquals(tentamen.getVragen().get(0).getVersie().getDatum().toString(), "Mon Feb 27 06:30:00 CET 45313");
+        assertEquals(tentamen.getVragen().get(0).getVersie().getOmschrijving(), "Eerste versie");
+        assertEquals(tentamen.getVragen().get(0).getVersie().getNummer(), "1");
     }
 
     @Test
