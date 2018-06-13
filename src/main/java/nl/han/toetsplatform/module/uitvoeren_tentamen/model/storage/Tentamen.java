@@ -19,6 +19,8 @@ public class Tentamen {
     // private List<Antwoord> antwoorden;
     private List<Vraag> vraagList;
     private String beschrijving;
+    private String toegestaneHulpmiddelen;
+    private String tijdsduur;
     private Date startdatum;
     private String strStartdatum;
     private Versie versie;
@@ -90,6 +92,11 @@ public class Tentamen {
 
     public void setStartdatum(Date startDatum) {
         this.startdatum = startDatum;
+
+        if (this.strStartdatum == null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            this.strStartdatum = sdf.format(this.startdatum);
+        }
     }
 
     public Versie getVersie() {
@@ -106,12 +113,30 @@ public class Tentamen {
     }
 
     public String getStrStartdatum() {
-
         if (this.strStartdatum == null) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             this.strStartdatum = sdf.format(this.startdatum);
         }
-
         return strStartdatum;
+    }
+
+    public String getToegestaneHulpmiddelen() {
+        return toegestaneHulpmiddelen;
+    }
+
+    public void setToegestaneHulpmiddelen(String toegestaneHulpmiddelen) {
+        this.toegestaneHulpmiddelen = toegestaneHulpmiddelen;
+    }
+
+    public String getTijdsduur() {
+        return tijdsduur;
+    }
+
+    public void setTijdsduur(String tijdsduur) {
+        this.tijdsduur = tijdsduur;
+    }
+
+    public void setVragen(String vragen) {
+        this.vragen = vragen;
     }
 }

@@ -4,12 +4,9 @@ import com.google.inject.Inject;
 import nl.han.toetsplatform.module.shared.storage.StorageDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class StorageSetupSqlite implements StorageSetupDao {
-
-    private static String DDL_SCRIPT_FILENAME = "/sql/ddl_script_uitvoeren_tentamen.sql";
 
     private static String TABLE_MODULE_UITVOEREN_ANTWOORD = "MODULE_UITVOEREN_ANTWOORD";
     private static String TABLE_MODULE_UITVOEREN_STUDENT = "MODULE_UITVOEREN_STUDENT";
@@ -19,7 +16,7 @@ public class StorageSetupSqlite implements StorageSetupDao {
     public StorageDao storageDao;
 
     @Override
-    public void setup() throws SQLException, IOException {
+    public void setup() throws SQLException {
         storageDao.setup(getSQLFromFile(), new String[]{
                 TABLE_MODULE_UITVOEREN_ANTWOORD,
                 TABLE_MODULE_UITVOEREN_STUDENT,
@@ -27,7 +24,7 @@ public class StorageSetupSqlite implements StorageSetupDao {
         });
     }
 
-    public String getSQLFromFile() throws IOException {
+    public String getSQLFromFile() {
         /*
         FileReader fr = new FileReader(new File(DDL_SCRIPT_FILENAME));
         BufferedReader in = new BufferedReader(fr);
