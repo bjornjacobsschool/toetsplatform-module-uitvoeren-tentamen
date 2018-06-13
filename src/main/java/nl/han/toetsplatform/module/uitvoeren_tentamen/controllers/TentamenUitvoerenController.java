@@ -151,30 +151,16 @@ public class TentamenUitvoerenController extends Controller {
     private boolean checkIfHanAvailableForUpload(){
         boolean output = false;
         String toetsUploadServer = "https://isas.han.nl/";
-        if (checkIfInternetAvailable(toetsUploadServer)){
+        if (Utils.checkInternetConnection()){
             //AlertInfo("De han upload server "+toetsUploadServer+" Is bereikbaar");
             output = true;
-        } else if (checkIfInternetAvailable("http://www.google.com")){
-            AlertInfo("De upload server voor de toetsen is niet bereikbaar.");
-        } else {
+        }  else {
             AlertInfo("Er is een probleem met je internet connectie.");
         }
         return output;
     }
 
-    public static boolean checkIfInternetAvailable(String websiteUrl) {
-        try {
-            final URL url = new URL(websiteUrl);
-            final URLConnection conn = url.openConnection();
-            conn.connect();
-            conn.getInputStream().close();
-            return true;
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            return false;
-        }
-    }
+
 
     public Tentamen verzegelTentamen(Tentamen onverzegeldeTentamen){
         return onverzegeldeTentamen;

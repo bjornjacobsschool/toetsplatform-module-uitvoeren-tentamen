@@ -130,4 +130,8 @@ public class GsonUtil {
         }
         return vragen;
     }
+
+    public String toJsonTentamen(Tentamen tentamen) {
+        return gson.toJson(tentamen);
+    }
 }
