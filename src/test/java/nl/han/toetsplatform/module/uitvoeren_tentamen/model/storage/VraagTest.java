@@ -42,14 +42,14 @@ public class VraagTest {
 
     @Test
     public void getVraagType() {
-        vraag.setVraagType("Vraagtype 1");
-        assertEquals(vraag.getVraagType(), "Vraagtype 1");
+        vraag.setVraagtype("Vraagtype 1");
+        assertEquals(vraag.getVraagtype(), "Vraagtype 1");
     }
 
     @Test
     public void setVraagType() {
-        vraag.setVraagType("Vraagtype 2");
-        assertEquals(vraag.getVraagType(), "Vraagtype 2");
+        vraag.setVraagtype("Vraagtype 2");
+        assertEquals(vraag.getVraagtype(), "Vraagtype 2");
     }
 
     @Test

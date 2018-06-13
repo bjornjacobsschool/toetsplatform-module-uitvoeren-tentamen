@@ -5,7 +5,7 @@ public class Vraag {
     private String id;
     private String naam;
     private String mogelijkeAntwoorden;
-    private String vraagType;
+    private String vraagtype;
     private String plugin;
     private String thema;
     private int punten;
@@ -36,12 +36,12 @@ public class Vraag {
         this.mogelijkeAntwoorden = mogelijkeAntwoorden;
     }
 
-    public String getVraagType() {
-        return vraagType;
+    public String getVraagtype() {
+        return vraagtype;
     }
 
-    public void setVraagType(String vraagType) {
-        this.vraagType = vraagType;
+    public void setVraagtype(String vraagtype) {
+        this.vraagtype = vraagtype;
     }
 
     public String getData() {

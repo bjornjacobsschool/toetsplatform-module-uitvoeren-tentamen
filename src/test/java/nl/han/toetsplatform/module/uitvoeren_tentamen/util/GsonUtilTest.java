@@ -126,7 +126,7 @@ public class GsonUtilTest {
         assertEquals(result.get(0).getNaam(), "Naampje");
         assertEquals(result.get(0).getId(), "1");
         assertEquals(result.get(0).getMogelijkeAntwoorden(), "description");
-        assertEquals(result.get(0).getVraagType(), "vraagType");
+        assertEquals(result.get(0).getVraagtype(), "vraagType");
         assertEquals(result.get(0).getPlugin(), "plugin");
         assertEquals(result.get(0).getThema(), "thema");
         assertEquals(result.get(0).getPunten(), 1);
