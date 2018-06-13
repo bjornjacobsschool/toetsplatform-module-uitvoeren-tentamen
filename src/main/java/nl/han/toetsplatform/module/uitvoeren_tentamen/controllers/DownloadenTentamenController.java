@@ -83,11 +83,7 @@ public class DownloadenTentamenController extends Controller {
                 AlertError("Er is iets fout gegaan, probeer opnieuw.");
             }
 
-            if (tentamens != null) {
-                for (Tentamen tentamen : tentamens) {
-                    tblViewTentamens.getItems().add(tentamen);
-                }
-            }
+            Controller.loadTable(tentamens, tblViewTentamens);
 
             tblViewTentamens.setVisible(true);
             loadingIndicator.setVisible(false);

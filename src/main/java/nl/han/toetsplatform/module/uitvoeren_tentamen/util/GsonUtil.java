@@ -1,13 +1,13 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Vraag;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -15,7 +15,11 @@ public class GsonUtil {
     private static Gson gson;
 
     public GsonUtil() {
-        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        JsonSerializer<Date> serializer = (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.getTime());
+        JsonDeserializer<Date> deserializer = (json, typeOfT, context) -> json == null ? null : new Date(json.getAsLong() * 1000);
+
+        gson = new GsonBuilder().registerTypeAdapter(Date.class, serializer).registerTypeAdapter(Date.class, deserializer).create();
+
     }
 
     /**

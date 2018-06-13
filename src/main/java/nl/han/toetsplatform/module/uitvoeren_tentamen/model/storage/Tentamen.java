@@ -12,10 +12,8 @@ public class Tentamen {
     private GsonUtil gsonUtil;
 
     private String id;
-    private int studentNr;
     private String naam;
     private String vragen;
-    private String hash;
     private List<Antwoord> antwoorden;
     private List<Vraag> vraagList;
     private String beschrijving;
@@ -41,28 +39,12 @@ public class Tentamen {
         this.id = tentamenId;
     }
 
-    public int getStudentNr() {
-        return studentNr;
-    }
-
-    public void setStudentNr(int studentNr) {
-        this.studentNr = studentNr;
-    }
-
     public String getNaam() {
         return naam;
     }
 
     public void setNaam(String naam) {
         this.naam = naam;
-    }
-
-    public String getHash() {
-        return hash;
-    }
-
-    public void setHash(String hash) {
-        this.hash = hash;
     }
 
     public List<Antwoord> getAntwoorden() {
@@ -108,11 +90,11 @@ public class Tentamen {
     }
 
     public String getStrStartdatum() {
-        if (this.strStartdatum == null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-            this.strStartdatum = sdf.format(this.startdatum);
-        }
         return strStartdatum;
+    }
+
+    public void setStrStartdatum(String strStartdatum) {
+        this.strStartdatum = strStartdatum;
     }
 
     public String getToegestaneHulpmiddelen() {

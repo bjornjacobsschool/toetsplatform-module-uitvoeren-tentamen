@@ -26,10 +26,10 @@ public class ToetsDaoSqlite implements ToetsDao {
         while (resultSet.next()) {
             Tentamen tentamen = new Tentamen();
             tentamen.setId(resultSet.getString("tentamenid"));
-            tentamen.setStudentNr(resultSet.getInt("studentnr"));
+//            tentamen.setStudentNr(resultSet.getInt("studentnr"));
 //            tentamen.setVersieNummer(resultSet.getString("versieNummer"));
             tentamen.setNaam(resultSet.getString("naam"));
-            tentamen.setHash(resultSet.getString("hash"));
+//            tentamen.setHash(resultSet.getString("hash"));
 
             tentamens.add(tentamen);
         }
