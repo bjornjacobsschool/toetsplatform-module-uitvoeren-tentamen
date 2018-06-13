@@ -4,13 +4,21 @@ public class Vraag {
 
     private String id;
     private String naam;
-    private String description;
-    private String vraagType;
+    private String mogelijkeAntwoorden;
+    private String vraagtype;
+    private String plugin;
     private String thema;
     private int punten;
     private String data;
     private Versie versie;
-    private Antwoord antwoord;
+
+    public String getPlugin() {
+        return plugin;
+    }
+
+    public void setPlugin(String plugin) {
+        this.plugin = plugin;
+    }
 
     public String getNaam() {
         return naam;
@@ -20,20 +28,20 @@ public class Vraag {
         this.naam = naam;
     }
 
-    public String getDescription() {
-        return description;
+    public String getMogelijkeAntwoorden() {
+        return mogelijkeAntwoorden;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMogelijkeAntwoorden(String mogelijkeAntwoorden) {
+        this.mogelijkeAntwoorden = mogelijkeAntwoorden;
     }
 
-    public String getVraagType() {
-        return vraagType;
+    public String getVraagtype() {
+        return vraagtype;
     }
 
-    public void setVraagType(String vraagType) {
-        this.vraagType = vraagType;
+    public void setVraagtype(String vraagtype) {
+        this.vraagtype = vraagtype;
     }
 
     public String getData() {
@@ -74,13 +82,5 @@ public class Vraag {
 
     public void setVersie(Versie versie) {
         this.versie = versie;
-    }
-
-    public Antwoord getAntwoord() {
-        return antwoord;
-    }
-
-    public void setAntwoord(Antwoord antwoord) {
-        this.antwoord = antwoord;
     }
 }

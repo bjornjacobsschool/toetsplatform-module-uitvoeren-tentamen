@@ -29,27 +29,27 @@ public class VraagTest {
 //    }
 
     @Test
-    public void getDescription() {
-        vraag.setDescription("Description 1");
-        assertEquals(vraag.getDescription(), "Description 1");
+    public void getMogelijkeAntwoorden() {
+        vraag.setMogelijkeAntwoorden("Description 1");
+        assertEquals(vraag.getMogelijkeAntwoorden(), "Description 1");
     }
 
     @Test
     public void setDescription() {
-        vraag.setDescription("Description 2");
-        assertEquals(vraag.getDescription(), "Description 2");
+        vraag.setMogelijkeAntwoorden("Description 2");
+        assertEquals(vraag.getMogelijkeAntwoorden(), "Description 2");
     }
 
     @Test
     public void getVraagType() {
-        vraag.setVraagType("Vraagtype 1");
-        assertEquals(vraag.getVraagType(), "Vraagtype 1");
+        vraag.setVraagtype("Vraagtype 1");
+        assertEquals(vraag.getVraagtype(), "Vraagtype 1");
     }
 
     @Test
     public void setVraagType() {
-        vraag.setVraagType("Vraagtype 2");
-        assertEquals(vraag.getVraagType(), "Vraagtype 2");
+        vraag.setVraagtype("Vraagtype 2");
+        assertEquals(vraag.getVraagtype(), "Vraagtype 2");
     }
 
     @Test

@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.toets.ToetsDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.vraag.VraagDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Vraag;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,27 +21,16 @@ public class ToetsDaoStub implements ToetsDao {
         // Dummy tentamen
         Tentamen tentamen = new Tentamen();
         tentamen.setId("ID-VAN-TENTAMEN");
-        tentamen.setStudentNr(123456);
+//        tentamen.setStudentNr(123456);
         tentamen.setNaam("Toets APP 1 (Grafen en Paden)");
-        tentamen.setHash("HASH");
+//        tentamen.setVersieNummer("1.0");
+//        tentamen.setHash("HASH");
+
+        tentamen.setAntwoorden(vraagDao.getAntwoorden());
 
         // Add all exams to the list
         tentamens.add(tentamen);
 
         return tentamens;
-    }
-
-    @Override
-    public Tentamen fetchTentamenFromDatabase(String tentamenId) {
-        return null;
-    }
-
-    @Override
-    public void saveTentamen(Tentamen tentamen) throws SQLException {
-    }
-
-    @Override
-    public void saveAntwoord(Vraag vraag, String tentamenId) {
-
     }
 }
