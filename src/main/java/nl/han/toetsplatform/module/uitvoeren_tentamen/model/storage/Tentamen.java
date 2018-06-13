@@ -12,9 +12,9 @@ public class Tentamen {
     private GsonUtil gsonUtil;
 
     private String id;
+    private int studentNr;
     private String naam;
     private String vragen;
-    private List<Antwoord> antwoorden;
     private List<Vraag> vraagList;
     private String beschrijving;
     private String toegestaneHulpmiddelen;
@@ -22,6 +22,7 @@ public class Tentamen {
     private Date startdatum;
     private String strStartdatum;
     private Versie versie;
+    private String hash;
 
     public Tentamen() {
         this.gsonUtil = new GsonUtil();
@@ -29,6 +30,10 @@ public class Tentamen {
 
     public List<Vraag> getVragen() {
         return vraagList;
+    }
+
+    public void setVraagList(List<Vraag> vraagList) {
+        this.vraagList = vraagList;
     }
 
     public String getId() {
@@ -39,20 +44,20 @@ public class Tentamen {
         this.id = tentamenId;
     }
 
+    public int getStudentNr() {
+        return studentNr;
+    }
+
+    public void setStudentNr(int studentNr) {
+        this.studentNr = studentNr;
+    }
+
     public String getNaam() {
         return naam;
     }
 
     public void setNaam(String naam) {
         this.naam = naam;
-    }
-
-    public List<Antwoord> getAntwoorden() {
-        return antwoorden;
-    }
-
-    public void setAntwoorden(List<Antwoord> antwoorden) {
-        this.antwoorden = antwoorden;
     }
 
     public String getBeschrijving() {
@@ -115,5 +120,13 @@ public class Tentamen {
 
     public void setVragen(String vragen) {
         this.vragen = vragen;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 }

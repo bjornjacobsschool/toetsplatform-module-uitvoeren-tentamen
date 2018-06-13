@@ -70,7 +70,7 @@ public class TentamenDaoSqlite implements ToetsDao {
                     newVraag.setDescription(vragenResult.getString("omschrijving"));
                     newVraag.setThema(vragenResult.getString("thema"));
                     newVraag.setPunten(vragenResult.getInt("punten"));
-                    newVraag.setVraagType(vragenResult.getString("vraagtype"));
+                    newVraag.setVraagtype(vragenResult.getString("vraagtype"));
                     Antwoord newAntwoord = new Antwoord();
                     newAntwoord.setTentamenId(tentamenId);
                     newAntwoord.setVraagId(vragenResult.getString("vraagid"));
@@ -84,7 +84,7 @@ public class TentamenDaoSqlite implements ToetsDao {
                     newVraag.setAntwoord(newAntwoord);
                     vragen.add(newVraag);
                 }
-                tentamen.setVragen(vragen);
+                tentamen.setVraagList(vragen);
             }
         } catch (SQLException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
@@ -178,7 +178,7 @@ public class TentamenDaoSqlite implements ToetsDao {
                 Vraag currentVraag = vragen.get(i);
                 String createVraagQuery = "INSERT INTO MODULE_UITVOEREN_VRAAG (vraagid, tentamenid, naam, omschrijving, thema, punten, vraagtype, vraagdata) " +
                         "VALUES ('" + currentVraag.getId() + "', '" + tentamen.getId() + "', '" + currentVraag.getNaam() +"','" + currentVraag.getDescription() +
-                        "', '"+ currentVraag.getThema() +"', "+ currentVraag.getPunten() +",'" + currentVraag.getVraagType() + "', '" + currentVraag.getData() + "')";
+                        "', '"+ currentVraag.getThema() +"', "+ currentVraag.getPunten() +",'" + currentVraag.getVraagtype() + "', '" + currentVraag.getData() + "')";
                 storageDao.executeUpdate(createVraagQuery);
 
                 Antwoord currentAntwoord = currentVraag.getAntwoord();
