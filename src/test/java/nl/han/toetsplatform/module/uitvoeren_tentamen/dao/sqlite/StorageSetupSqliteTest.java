@@ -52,8 +52,8 @@ public class StorageSetupSqliteTest {
                 ");\n" +
                 "\n" +
                 "CREATE TABLE MODULE_UITVOEREN_ANTWOORD (\n" +
-                "  vraagid         varchar(36)   NOT NULL,\n" +
-                "  tentamenid      varchar(36)   NOT NULL,\n" +
+                "  vraagid         char(36)      NOT NULL,\n" +
+                "  tentamenid      char(36)      NOT NULL,\n" +
                 "  gegevenAntwoord varchar(1024) NULL,\n" +
                 "  CONSTRAINT pk_antwoord PRIMARY KEY (vraagid, tentamenid),\n" +
                 "  CONSTRAINT fk_antwoord_van_vraag FOREIGN KEY (vraagid, tentamenid) REFERENCES MODULE_UITVOEREN_VRAAG (vraagid, tentamenid)\n" +
