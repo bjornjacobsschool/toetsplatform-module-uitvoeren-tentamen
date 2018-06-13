@@ -27,7 +27,6 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
     @Override
     public boolean downloadTentamen(String tentamenId) throws IOException, JSONException {
 
-        // TODO: Replace with real URL
         JSONObject jTentamen = this.reader.JSONObjectFromURL(new URL("http://94.124.143.127/tentamens/klaargezet/" + tentamenId));
 
         Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS).getAbsolutePath() + "/exam_" + tentamenId + ".json"), StandardCharsets.UTF_8));
@@ -41,7 +40,6 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
     public List<Tentamen> getKlaargezetteTentamens() throws IOException, JSONException {
         List<Tentamen> tentamens = new ArrayList<>();
 
-        // TODO: Replace with real URL
         JSONArray jTentamens = this.reader.JSONArrayFromURL(new URL("http://94.124.143.127/tentamens/klaargezet"));
         parseTentamenModel(tentamens, jTentamens);
 
