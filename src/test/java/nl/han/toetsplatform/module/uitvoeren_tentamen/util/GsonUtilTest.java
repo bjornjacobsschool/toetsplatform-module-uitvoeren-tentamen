@@ -63,7 +63,7 @@ public class GsonUtilTest {
         vr1 = new JSONObject();
         vr1.put("id", "1");
         vr1.put("naam", "Naampje");
-        vr1.put("description", "description");
+        vr1.put("mogelijkeAntwoorden", "description");
         vr1.put("vraagType", "vraagType");
         vr1.put("plugin", "plugin");
         vr1.put("thema", "thema");
@@ -125,7 +125,7 @@ public class GsonUtilTest {
         assertEquals(result.size(), 1);
         assertEquals(result.get(0).getNaam(), "Naampje");
         assertEquals(result.get(0).getId(), "1");
-        assertEquals(result.get(0).getDescription(), "description");
+        assertEquals(result.get(0).getMogelijkeAntwoorden(), "description");
         assertEquals(result.get(0).getVraagType(), "vraagType");
         assertEquals(result.get(0).getPlugin(), "plugin");
         assertEquals(result.get(0).getThema(), "thema");

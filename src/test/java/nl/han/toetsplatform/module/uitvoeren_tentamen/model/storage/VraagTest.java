@@ -29,15 +29,15 @@ public class VraagTest {
     }
 
     @Test
-    public void getDescription() {
-        vraag.setDescription("Description 1");
-        assertEquals(vraag.getDescription(), "Description 1");
+    public void getMogelijkeAntwoorden() {
+        vraag.setMogelijkeAntwoorden("Description 1");
+        assertEquals(vraag.getMogelijkeAntwoorden(), "Description 1");
     }
 
     @Test
     public void setDescription() {
-        vraag.setDescription("Description 2");
-        assertEquals(vraag.getDescription(), "Description 2");
+        vraag.setMogelijkeAntwoorden("Description 2");
+        assertEquals(vraag.getMogelijkeAntwoorden(), "Description 2");
     }
 
     @Test
