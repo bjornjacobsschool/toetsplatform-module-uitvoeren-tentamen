@@ -11,6 +11,9 @@ import nl.han.toetsplatform.module.shared.plugin.Plugin;
 import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.IUploadenTentamenDAO;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.UitgevoerdTentamenDto;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Student;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Vraag;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
@@ -47,6 +50,8 @@ public class TentamenUitvoerenController extends Controller {
     private GsonUtil gsu;
     private Stage primaryStage;
 
+    private Student studentDieDezeTentamenUitvoerd = new Student();
+
     public void setUp(Stage primaryStage, Tentamen tentamen) {
         // Setup SQLite
         try {
@@ -54,6 +59,8 @@ public class TentamenUitvoerenController extends Controller {
         } catch (SQLException | ClassNotFoundException | IOException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
         }
+
+
 
         this.primaryStage = primaryStage;
         gsu = new GsonUtil();
@@ -63,6 +70,7 @@ public class TentamenUitvoerenController extends Controller {
 
         // Show exercise
         showExercise();
+
     }
 
     public void setPrimaryStage(Stage ps) {
@@ -127,15 +135,17 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void btnInleverenPressed(ActionEvent event){
+        //Tijdelijke initializatie voor de student
+        studentDieDezeTentamenUitvoerd.setKlas("ASD NIJM 17/18 P2");
+        studentDieDezeTentamenUitvoerd.setStudentNr("573612");
+        //currentToets.getAntwoorden().add(new Antwoord("testvraagid", "testtentamenid", "ditiseentestantwoord"));
+
+
         if(checkIfHanAvailableForUpload()) {
-            if(uploadenTentamenDAO.uploadTentamen(verzegelTentamen(currentToets))){
-                AlertInfo("Het tentamen is successvol geupload.");
-            } else {
-                AlertInfo("Het uploaden van de tentamen is niet gelukt.");
-            }
+            UitgevoerdTentamenDto uitgevoerdTentamenDto = new UitgevoerdTentamenDto(currentToets, studentDieDezeTentamenUitvoerd);
+            AlertInfo(uploadenTentamenDAO.uploadTentamen(uitgevoerdTentamenDto));
 
         }
-        //Unknown author after commit e5f84b986fe fixed (hopefully).
     }
 
     public String getGivenAntwoordFromPlugin() {
@@ -162,8 +172,8 @@ public class TentamenUitvoerenController extends Controller {
 
 
 
-    public Tentamen verzegelTentamen(Tentamen onverzegeldeTentamen){
-        return onverzegeldeTentamen;
+    public UitgevoerdTentamenDto verzegelTentamen(UitgevoerdTentamenDto uitgevoerdTentamenDto){
+        return uitgevoerdTentamenDto;
     }
 
 }
