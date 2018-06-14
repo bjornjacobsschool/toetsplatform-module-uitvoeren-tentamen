@@ -18,6 +18,7 @@ import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 
 public class TentamenUitvoerenController extends Controller {
@@ -56,6 +57,10 @@ public class TentamenUitvoerenController extends Controller {
 
         // Assign loadedtoets to currentToets
         currentToets = tentamen;
+        currentToets.setStudentNr(500000); //TODO dynamisch maken
+
+        // Create antwoord objects for every vraag where no antwoord exists and save in local database
+        createAntwoordObjectsForVragenWhereNoneExist();
         saveTentamen();
 
         // Show exercise
@@ -123,6 +128,7 @@ public class TentamenUitvoerenController extends Controller {
 //        currentToets = gsu.loadTentamen(selectedDirectory.toString());
 //        showExercise();
 //        AlertInfo("Test");
+        saveTentamen();
     }
 
     public String getGivenAntwoordFromPlugin() {
@@ -144,10 +150,26 @@ public class TentamenUitvoerenController extends Controller {
 
     private void saveTentamen() {
         try {
-            toetsDao.saveTentamen(currentToets);
+            AlertInfo(toetsDao.saveTentamen(currentToets));
         }
         catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Maak antwoord objecten aan met een lege string als antwoord voor vragen waar nog geen antwoord object
+     * voor bestaat.
+     */
+    private void createAntwoordObjectsForVragenWhereNoneExist() {
+        List<Vraag> vragen = currentToets.getVragen();
+        for (int i = 0; i < vragen.size(); i++) {
+            Vraag currentVraag = vragen.get(i);
+            Antwoord currentAntwoord = currentVraag.getAntwoord();
+            if (currentAntwoord == null) {
+                Antwoord newAntwoord = new Antwoord(currentVraag.getId(), currentToets.getId(), "");
+                currentVraag.setAntwoord(newAntwoord);
+            }
         }
     }
 

@@ -37,8 +37,8 @@ public class ToetsDaoStub implements ToetsDao {
     }
 
     @Override
-    public void saveTentamen(Tentamen tentamen) throws SQLException {
-
+    public String saveTentamen(Tentamen tentamen) throws SQLException {
+        return "";
     }
 
     @Override

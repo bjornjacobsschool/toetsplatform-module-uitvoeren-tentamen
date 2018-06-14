@@ -95,27 +95,31 @@ public class TentamenDaoSqlite implements ToetsDao {
     }
 
     @Override
-    public void saveTentamen(Tentamen tentamen) throws SQLException {
+    public String saveTentamen(Tentamen tentamen) throws SQLException {
+        String print = "";
         int studNo = tentamen.getStudentNr();
         String tentamenId = tentamen.getId();
-        //String ret = "Result:\n";
-        // String query = "INSERT INTO MODULE_UITVOEREN_STUDENT (studentnr, klas) values (" + studNo + ", 'ASD-B')";
         try {
             String studentQuery = "SELECT * FROM MODULE_UITVOEREN_STUDENT where studentnr = " + studNo;
             ResultSet resultStudent = storageDao.executeQuery(studentQuery);
             if (resultStudent.next()) {
+                print += "Student bestaat\n";
                 // Student bestaat al in lokale database
             } else {
                 // Student bestaat nog niet -> maak aan
+                print += "Student bestaat niet. Nu wel.\n";
                 createStudentInLocalDatabase(studNo);
             }
             String tentamenQuery = "SELECT * FROM MODULE_UITVOEREN_TENTAMEN where studentnr = " + studNo +
                     " AND tentamenid = " + tentamenId;
             ResultSet resultTentamen = storageDao.executeQuery(tentamenQuery);
             if (resultTentamen.next()) {
+                // Tentamen bestaat al in database -> updaten
+                print += "Tentamen bestaat\n";
                 updateAntwoordenInLocalDatabase(tentamen);
             } else {
                 // Tentamen bestaat niet -> aanmaken
+                print += "Tentamen bestaat niet.\n";
                 createTentamenInLocalDatabase(tentamen);
             }
         } catch (SQLException e) {
@@ -123,6 +127,7 @@ public class TentamenDaoSqlite implements ToetsDao {
         } finally {
             storageDao.closeConnection();
         }
+        return print;
     }
 
     @Override
@@ -182,9 +187,7 @@ public class TentamenDaoSqlite implements ToetsDao {
                 storageDao.executeUpdate(createVraagQuery);
 
                 Antwoord currentAntwoord = currentVraag.getAntwoord();
-                String gegevenAntwoord = "";
-                // Maak antwoordobjecten aan voor vragen, met een leeg gegevenAntwoord voor vragen die nog niet zijn ingevuld
-                if (currentAntwoord != null) gegevenAntwoord = currentAntwoord.getGegevenAntwoord();
+                String gegevenAntwoord = currentAntwoord.getGegevenAntwoord();
                 String createAntwoordQuery = "INSERT INTO MODULE_UITVOEREN_ANTWOORD (vraagid, tentamenid, gegevenAntwoord) VALUES (" +
                         "'" + currentVraag.getId() + "', '" + tentamen.getId() + "', '" + gegevenAntwoord + "')";
                 storageDao.executeUpdate(createAntwoordQuery);
