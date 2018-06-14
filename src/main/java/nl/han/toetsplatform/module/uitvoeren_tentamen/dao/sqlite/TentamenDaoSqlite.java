@@ -95,19 +95,16 @@ public class TentamenDaoSqlite implements ToetsDao {
     }
 
     @Override
-    public String saveTentamen(Tentamen tentamen) throws SQLException {
-        String print = "";
+    public void saveTentamen(Tentamen tentamen) throws SQLException {
         int studNo = tentamen.getStudentNr();
         String tentamenId = tentamen.getId();
         try {
             String studentQuery = "SELECT * FROM MODULE_UITVOEREN_STUDENT where studentnr = " + studNo;
             ResultSet resultStudent = storageDao.executeQuery(studentQuery);
             if (resultStudent.next()) {
-                print += "Student bestaat\n";
                 // Student bestaat al in lokale database
             } else {
                 // Student bestaat nog niet -> maak aan
-                print += "Student bestaat niet. Nu wel.\n";
                 createStudentInLocalDatabase(studNo);
             }
             String tentamenQuery = "SELECT * FROM MODULE_UITVOEREN_TENTAMEN where studentnr = " + studNo +
@@ -115,11 +112,9 @@ public class TentamenDaoSqlite implements ToetsDao {
             ResultSet resultTentamen = storageDao.executeQuery(tentamenQuery);
             if (resultTentamen.next()) {
                 // Tentamen bestaat al in database -> updaten
-                print += "Tentamen bestaat\n";
                 updateAntwoordenInLocalDatabase(tentamen);
             } else {
                 // Tentamen bestaat niet -> aanmaken
-                print += "Tentamen bestaat niet.\n";
                 createTentamenInLocalDatabase(tentamen);
             }
         } catch (SQLException e) {
@@ -127,7 +122,6 @@ public class TentamenDaoSqlite implements ToetsDao {
         } finally {
             storageDao.closeConnection();
         }
-        return print;
     }
 
     @Override

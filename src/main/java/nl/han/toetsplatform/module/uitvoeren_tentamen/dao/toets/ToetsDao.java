@@ -12,7 +12,7 @@ public interface ToetsDao {
 
     Tentamen fetchTentamenFromDatabase(String tentamenId);
 
-    String saveTentamen(Tentamen tentamen) throws SQLException;
+    void saveTentamen(Tentamen tentamen) throws SQLException;
 
     void saveAntwoord(Vraag vraag, String tentamenId);
 }

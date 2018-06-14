@@ -141,20 +141,25 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     private void saveQuestion() {
+        updateAntwoordForCurrentVraag();
         String tentamenId = currentToets.getId();
-        Vraag vraag = currentToets.getVragen().get(currentQuestionIndex);
-        Antwoord gegevenAntwoord = new Antwoord(vraag.getId(), tentamenId, getGivenAntwoordFromPlugin());
-        vraag.setAntwoord(gegevenAntwoord);
-        toetsDao.saveAntwoord(vraag, tentamenId);
+        toetsDao.saveAntwoord(currentToets.getVragen().get(currentQuestionIndex), tentamenId);
     }
 
     private void saveTentamen() {
+        updateAntwoordForCurrentVraag();
         try {
-            AlertInfo(toetsDao.saveTentamen(currentToets));
+            toetsDao.saveTentamen(currentToets);
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateAntwoordForCurrentVraag() {
+        Vraag currentVraag = currentToets.getVragen().get(currentQuestionIndex);
+        Antwoord currentAntwoord = currentVraag.getAntwoord();
+        currentAntwoord.setGegevenAntwoord(getGivenAntwoordFromPlugin());
     }
 
     /**
@@ -167,7 +172,7 @@ public class TentamenUitvoerenController extends Controller {
             Vraag currentVraag = vragen.get(i);
             Antwoord currentAntwoord = currentVraag.getAntwoord();
             if (currentAntwoord == null) {
-                Antwoord newAntwoord = new Antwoord(currentVraag.getId(), currentToets.getId(), "");
+                Antwoord newAntwoord = new Antwoord(currentVraag.getId(), currentToets.getId(), "sterf");
                 currentVraag.setAntwoord(newAntwoord);
             }
         }

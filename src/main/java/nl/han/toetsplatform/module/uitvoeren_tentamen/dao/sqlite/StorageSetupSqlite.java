@@ -56,7 +56,7 @@ public class StorageSetupSqlite implements StorageSetupDao {
                 "  studentnr       int           NOT NULL,\n" +
                 "  versieNummer    varchar(10)   NOT NULL,\n" +     // versie
                 "  datum           varchar(10)   NOT NULL,\n" +     // versie
-                "  omschrijving    varchar(10)   NOT NULL,\n" +     // versie
+                "  omschrijving    varchar(255)  NOT NULL,\n" +     // versie
                 "  naam            varchar(50)   NOT NULL,\n" +
                 "  hash            char(24)      NULL,\n" +
                 "  CONSTRAINT pk_tentamen PRIMARY KEY (tentamenid),\n" +
