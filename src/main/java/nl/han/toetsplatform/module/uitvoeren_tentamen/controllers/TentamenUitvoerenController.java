@@ -94,8 +94,14 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void loadAnswerView() {
-        answerPane.getChildren().add(currentPlugin.getAntwoordView(currentToets.getVragen().get(currentQuestionIndex).getData()).getView());
+        String antwoord = currentToets.getVragen().get(currentQuestionIndex).getAntwoord().getGegevenAntwoord();
+        if (antwoord == "") {
+            answerPane.getChildren().add(currentPlugin.getAntwoordView(currentToets.getVragen().get(currentQuestionIndex).getData()).getView());
+        } else {
+            answerPane.getChildren().add(currentPlugin.getAntwoordView(currentToets.getVragen().get(currentQuestionIndex).getData(), antwoord).getView());
+        }
     }
+
 
     public Plugin getPluginForCurrentQuestion() throws ClassNotFoundException {
         Vraag currentVraag = currentToets.getVragen().get(currentQuestionIndex);
@@ -172,7 +178,7 @@ public class TentamenUitvoerenController extends Controller {
             Vraag currentVraag = vragen.get(i);
             Antwoord currentAntwoord = currentVraag.getAntwoord();
             if (currentAntwoord == null) {
-                Antwoord newAntwoord = new Antwoord(currentVraag.getId(), currentToets.getId(), "sterf");
+                Antwoord newAntwoord = new Antwoord(currentVraag.getId(), currentToets.getId(), "");
                 currentVraag.setAntwoord(newAntwoord);
             }
         }
