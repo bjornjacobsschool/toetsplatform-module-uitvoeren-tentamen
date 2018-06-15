@@ -17,6 +17,7 @@ import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Student;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Vraag;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.util.HashingUtil;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 
 import java.io.File;
@@ -144,7 +145,11 @@ public class TentamenUitvoerenController extends Controller {
         } else {
             if(checkIfHanAvailableForUpload()) {
                 UitgevoerdTentamenDto uitgevoerdTentamenDto = new UitgevoerdTentamenDto(currentToets, studentDieDezeTentamenUitvoerd);
-                uitgevoerdTentamenDto.setHash(new GsonUtil().toJsonTentamen(uitgevoerdTentamenDto));
+                try {
+                    uitgevoerdTentamenDto.setHash(HashingUtil.generateHash(new GsonUtil().toJsonTentamen(uitgevoerdTentamenDto)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 AlertInfo(uploadenTentamenDAO.uploadTentamen(uitgevoerdTentamenDto));
             }
         }
