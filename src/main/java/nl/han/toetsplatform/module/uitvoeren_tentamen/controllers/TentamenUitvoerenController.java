@@ -140,11 +140,13 @@ public class TentamenUitvoerenController extends Controller {
         studentDieDezeTentamenUitvoerd.setStudentNr("573612");
         //currentToets.getAntwoorden().add(new Antwoord("testvraagid", "testtentamenid", "ditiseentestantwoord"));
 
-
-        if(checkIfHanAvailableForUpload()) {
-            UitgevoerdTentamenDto uitgevoerdTentamenDto = new UitgevoerdTentamenDto(currentToets, studentDieDezeTentamenUitvoerd);
-            AlertInfo(uploadenTentamenDAO.uploadTentamen(uitgevoerdTentamenDto));
-
+        if(currentToets.getAntwoorden() == null){
+            AlertInfo("Je hebt geen vragen beantwoord om in te kunnen leveren.");
+        } else {
+            if(checkIfHanAvailableForUpload()) {
+                UitgevoerdTentamenDto uitgevoerdTentamenDto = new UitgevoerdTentamenDto(currentToets, studentDieDezeTentamenUitvoerd);
+                AlertInfo(uploadenTentamenDAO.uploadTentamen(uitgevoerdTentamenDto));
+            }
         }
     }
 

@@ -24,11 +24,11 @@ public class UitgevoerdTentamenDto {
         this.student = new StudentDto(student);
         this.versie = new VersieDto(tentamen.getVersie());
 
+
         this.vragen = new ArrayList<IngevuldeVraagDto>();
-        //int testnullantwoorden = tentamen.getAntwoorden().size();
-        //for(int i = 0; i < tentamen.getAntwoorden().size(); i++){
-            //vragen.add(new IngevuldeVraagDto(id,tentamen.getAntwoorden().get(i),versie));
-        //}
+        for(int i = 0; i < tentamen.getAntwoorden().size(); i++){
+            vragen.add(new IngevuldeVraagDto(id,tentamen.getAntwoorden().get(i),versie));
+        }
 
     }
 

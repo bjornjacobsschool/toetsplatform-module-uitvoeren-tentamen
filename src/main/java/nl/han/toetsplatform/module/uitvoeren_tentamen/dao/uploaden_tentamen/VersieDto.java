@@ -10,6 +10,7 @@ public class VersieDto {
 
     VersieDto(Versie versie){
         this.datum = versie.getDatum().getTime();
+        //TODO
         //this.nummer = Integer.parseInt(versie.getNummer().replaceAll("[^\\d.]", ""));
         this.omschrijving = versie.getOmschrijving();
     }
