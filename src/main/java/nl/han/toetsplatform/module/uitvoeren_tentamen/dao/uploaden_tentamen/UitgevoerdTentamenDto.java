@@ -19,7 +19,7 @@ public class UitgevoerdTentamenDto {
     public UitgevoerdTentamenDto(Tentamen tentamen, Student student){
         this.id = java.util.UUID.fromString("d3aa88e2-c754-41e0-8ba6-4198a34aa0a2");//TODO this is a temporary UUID //tentamen.getId());
         this.naam = tentamen.getNaam();
-        this.hash = "temporaryhash"; //TODO this is a temporary hash
+        this.hash = null;
 
         this.student = new StudentDto(student);
         this.versie = new VersieDto(tentamen.getVersie());
@@ -29,7 +29,9 @@ public class UitgevoerdTentamenDto {
         for(int i = 0; i < tentamen.getAntwoorden().size(); i++){
             vragen.add(new IngevuldeVraagDto(id,tentamen.getAntwoorden().get(i),versie));
         }
-
     }
 
+    public void setHash(String hash){
+        this.hash = hash;
+    }
 }

@@ -135,16 +135,16 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void btnInleverenPressed(ActionEvent event){
-        //Tijdelijke initializatie voor de student
+        //TODO Tijdelijke initializatie voor de student
         studentDieDezeTentamenUitvoerd.setKlas("ASD NIJM 17/18 P2");
         studentDieDezeTentamenUitvoerd.setStudentNr("573612");
-        //currentToets.getAntwoorden().add(new Antwoord("testvraagid", "testtentamenid", "ditiseentestantwoord"));
 
         if(currentToets.getAntwoorden() == null){
             AlertInfo("Je hebt geen vragen beantwoord om in te kunnen leveren.");
         } else {
             if(checkIfHanAvailableForUpload()) {
                 UitgevoerdTentamenDto uitgevoerdTentamenDto = new UitgevoerdTentamenDto(currentToets, studentDieDezeTentamenUitvoerd);
+                uitgevoerdTentamenDto.setHash(new GsonUtil().toJsonTentamen(uitgevoerdTentamenDto));
                 AlertInfo(uploadenTentamenDAO.uploadTentamen(uitgevoerdTentamenDto));
             }
         }
@@ -172,11 +172,4 @@ public class TentamenUitvoerenController extends Controller {
         }
         return output;
     }
-
-
-
-    public UitgevoerdTentamenDto verzegelTentamen(UitgevoerdTentamenDto uitgevoerdTentamenDto){
-        return uitgevoerdTentamenDto;
-    }
-
 }
