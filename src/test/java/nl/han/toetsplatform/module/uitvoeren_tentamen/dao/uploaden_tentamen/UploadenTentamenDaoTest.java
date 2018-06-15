@@ -30,5 +30,6 @@ public class UploadenTentamenDaoTest {
         //Assert
 
         assertEquals("Uploading tentamen resultaat: http error: 500", uploadResult);
+        //TODO verander de expected naar een success bericht wannneer de backend klaar is voor upload.
     }
 }
