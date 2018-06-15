@@ -14,6 +14,11 @@ public class IngevuldeVraagDto {
         this.id = id;
         this.gegevenAntwoord = antwoord.getGegevenAntwoord();
         this.versie = versie;
+    }
 
+    IngevuldeVraagDto(UUID id, String antwoord, VersieDto versie){
+        this.id = id;
+        this.gegevenAntwoord = antwoord;
+        this.versie = versie;
     }
 }

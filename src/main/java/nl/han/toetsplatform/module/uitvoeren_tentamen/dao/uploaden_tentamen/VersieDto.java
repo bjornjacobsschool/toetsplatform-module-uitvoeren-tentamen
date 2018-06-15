@@ -15,4 +15,10 @@ public class VersieDto {
         this.omschrijving = versie.getOmschrijving();
     }
 
+    VersieDto(Long datum, int nummer, String omschrijving){
+        this.datum = datum;
+        this.nummer = nummer;
+        this.omschrijving = omschrijving;
+    }
+
 }

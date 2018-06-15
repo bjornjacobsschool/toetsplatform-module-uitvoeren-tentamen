@@ -31,6 +31,18 @@ public class UitgevoerdTentamenDto {
         }
     }
 
+    public UitgevoerdTentamenDto(UUID id, String naam, String hash, StudentDto student, VersieDto versie, List<IngevuldeVraagDto> antwoorden){
+        this.id = id;
+        this.naam = naam;
+        this.hash = hash;
+
+        this.student = student;
+        this.versie = versie;
+
+
+        this.vragen = antwoorden;
+    }
+
     public void setHash(String hash){
         this.hash = hash;
     }

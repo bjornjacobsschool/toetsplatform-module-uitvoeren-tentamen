@@ -9,4 +9,8 @@ public class StudentDto {
         this.studentNummer = Integer.parseInt(student.getStudentNr());
         this.klas = student.getKlas();
     }
+    StudentDto(int studentNummer, String klas){
+        this.studentNummer = studentNummer;
+        this.klas = klas;
+    }
 }
