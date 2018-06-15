@@ -161,10 +161,11 @@ public class TentamenUitvoerenController extends Controller {
     private boolean checkIfHanAvailableForUpload(){
         boolean output = false;
         String toetsUploadServer = "https://isas.han.nl/";
-        if (Utils.checkInternetConnection()){
-            //AlertInfo("De han upload server "+toetsUploadServer+" Is bereikbaar");
+        if (Utils.checkInternetConnection(toetsUploadServer)){
             output = true;
-        }  else {
+        }  else  if(Utils.checkInternetConnection()) {
+            AlertInfo("Er is een probleem met de bereikbaarheid van de upload server.");
+        } else {
             AlertInfo("Er is een probleem met je internet connectie.");
         }
         return output;
