@@ -98,21 +98,25 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void loadQuestionView() {
-        questionPane.getChildren().add(currentPlugin.getVraagView(currentToets.getVragen().get(currentQuestionIndex).getData()).getView());
+        questionPane.getChildren().add(currentPlugin.getVraagView(getCurrentVraag().getData()).getView());
     }
 
     public void loadAnswerView() {
-        String antwoord = currentToets.getVragen().get(currentQuestionIndex).getAntwoord().getGegevenAntwoord();
-        if (antwoord == "") {
-            answerPane.getChildren().add(currentPlugin.getAntwoordView(currentToets.getVragen().get(currentQuestionIndex).getData()).getView());
+        String antwoord = getCurrentVraag().getAntwoord().getGegevenAntwoord();
+        if (antwoord.equals("")) {
+            answerPane.getChildren().add(currentPlugin.getAntwoordView(getCurrentVraag().getData()).getView());
         } else {
-            answerPane.getChildren().add(currentPlugin.getAntwoordView(currentToets.getVragen().get(currentQuestionIndex).getData(), antwoord).getView());
+            answerPane.getChildren().add(currentPlugin.getAntwoordView(getCurrentVraag().getData(), antwoord).getView());
         }
+    }
+
+    private Vraag getCurrentVraag() {
+        return currentToets.getVragen().get(currentQuestionIndex);
     }
 
 
     public Plugin getPluginForCurrentQuestion() throws ClassNotFoundException {
-        Vraag currentVraag = currentToets.getVragen().get(currentQuestionIndex);
+        Vraag currentVraag = getCurrentVraag();
         return PluginLoader.getPlugin(currentVraag.getVraagtype());
     }
 
@@ -137,11 +141,6 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void btnLoadPressed(ActionEvent event) {
-//        FileChooser directoryChooser = new FileChooser();
-//        File selectedDirectory = directoryChooser.showOpenDialog(primaryStage);
-//        currentToets = gsu.loadTentamen(selectedDirectory.toString());
-//        showExercise();
-//        AlertInfo("Test");
         saveTentamen();
     }
 
@@ -150,6 +149,14 @@ public class TentamenUitvoerenController extends Controller {
 
         if (currentPlugin != null)
             givenAntwoord = currentPlugin.getAntwoordView("").getGivenAntwoord();
+        else {
+            try {
+                currentPlugin = getPluginForCurrentQuestion();
+            } catch (ClassNotFoundException e) {
+                AlertError(e.getMessage());
+            }
+            givenAntwoord = currentPlugin.getAntwoordView("").getGivenAntwoord();
+        }
 
         return givenAntwoord;
     }
@@ -157,7 +164,7 @@ public class TentamenUitvoerenController extends Controller {
     private void saveQuestion() {
         updateAntwoordForCurrentVraag();
         String tentamenId = currentToets.getId();
-        toetsDao.saveAntwoord(currentToets.getVragen().get(currentQuestionIndex), tentamenId);
+        toetsDao.saveAntwoord(getCurrentVraag(), tentamenId);
     }
 
     private void saveTentamen() {
@@ -171,9 +178,12 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     private void updateAntwoordForCurrentVraag() {
-        Vraag currentVraag = currentToets.getVragen().get(currentQuestionIndex);
-        Antwoord currentAntwoord = currentVraag.getAntwoord();
-        currentAntwoord.setGegevenAntwoord(getGivenAntwoordFromPlugin());
+        Antwoord currentAntwoord = getCurrentVraag().getAntwoord();
+        if (currentAntwoord == null) {
+            getCurrentVraag().setAntwoord(new Antwoord());
+        } else {
+            currentAntwoord.setGegevenAntwoord(getGivenAntwoordFromPlugin());
+        }
     }
 
     /**
