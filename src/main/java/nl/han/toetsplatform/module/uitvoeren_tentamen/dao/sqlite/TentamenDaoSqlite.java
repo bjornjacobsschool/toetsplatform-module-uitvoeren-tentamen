@@ -89,7 +89,7 @@ public class TentamenDaoSqlite implements ToetsDao {
         } catch (SQLException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
         } finally {
-            storageDao.closeConnection();
+//            storageDao.closeConnection();
         }
         return tentamen;
     }
@@ -101,16 +101,14 @@ public class TentamenDaoSqlite implements ToetsDao {
         try {
             String studentQuery = "SELECT * FROM MODULE_UITVOEREN_STUDENT where studentnr = " + studNo;
             ResultSet resultStudent = storageDao.executeQuery(studentQuery);
-            if (resultStudent.next()) {
-                // Student bestaat al in lokale database
-            } else {
+            if (!resultStudent.next()) {
                 // Student bestaat nog niet -> maak aan
                 createStudentInLocalDatabase(studNo);
             }
             String tentamenQuery = "SELECT * FROM MODULE_UITVOEREN_TENTAMEN where studentnr = " + studNo +
                     " AND tentamenid = " + tentamenId;
             ResultSet resultTentamen = storageDao.executeQuery(tentamenQuery);
-            if (resultTentamen.next()) {
+            if (resultTentamen.getRow() >= 1) {
                 // Tentamen bestaat al in database -> updaten
                 updateAntwoordenInLocalDatabase(tentamen);
             } else {
@@ -120,7 +118,7 @@ public class TentamenDaoSqlite implements ToetsDao {
         } catch (SQLException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
         } finally {
-            storageDao.closeConnection();
+//            storageDao.closeConnection();
         }
     }
 
@@ -135,7 +133,7 @@ public class TentamenDaoSqlite implements ToetsDao {
         } catch (SQLException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
         } finally {
-            storageDao.closeConnection();
+//            storageDao.closeConnection();
         }
 
     }
@@ -157,7 +155,7 @@ public class TentamenDaoSqlite implements ToetsDao {
         } catch (SQLException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
         } finally {
-            storageDao.closeConnection();
+//            storageDao.closeConnection();
         }
     }
 
@@ -189,7 +187,7 @@ public class TentamenDaoSqlite implements ToetsDao {
         } catch (SQLException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
         } finally {
-            storageDao.closeConnection();
+//            storageDao.closeConnection();
         }
     }
 }

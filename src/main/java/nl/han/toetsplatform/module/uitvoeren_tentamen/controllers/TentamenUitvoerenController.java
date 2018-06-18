@@ -10,6 +10,7 @@ import nl.han.toetsplatform.module.shared.plugin.Plugin;
 import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.TentamenDaoSqlite;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.vraag.VraagDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Vraag;
@@ -37,6 +38,9 @@ public class TentamenUitvoerenController extends Controller {
     @Inject
     private TentamenDaoSqlite toetsDao;
 
+    @Inject
+    private VraagDao vraagDao;
+
     private Tentamen currentToets;
     private Plugin currentPlugin;
 
@@ -60,7 +64,11 @@ public class TentamenUitvoerenController extends Controller {
         currentToets.setStudentNr(500000); //TODO dynamisch maken
 
         // Create antwoord objects for every vraag where no antwoord exists and save in local database
-        createAntwoordObjectsForVragenWhereNoneExist();
+        try {
+            createAntwoordObjectsForVragenWhereNoneExist();
+        } catch (SQLException e) {
+            AlertInfo(e.getMessage());
+        }
         saveTentamen();
 
         // Show exercise
@@ -172,13 +180,16 @@ public class TentamenUitvoerenController extends Controller {
      * Maak antwoord objecten aan met een lege string als antwoord voor vragen waar nog geen antwoord object
      * voor bestaat.
      */
-    private void createAntwoordObjectsForVragenWhereNoneExist() {
+    private void createAntwoordObjectsForVragenWhereNoneExist() throws SQLException {
         List<Vraag> vragen = currentToets.getVragen();
-        for (int i = 0; i < vragen.size(); i++) {
-            Vraag currentVraag = vragen.get(i);
+        for (Vraag currentVraag : vragen) {
             Antwoord currentAntwoord = currentVraag.getAntwoord();
             if (currentAntwoord == null) {
-                Antwoord newAntwoord = new Antwoord(currentVraag.getId(), currentToets.getId(), "");
+
+                Antwoord newAntwoord = vraagDao.getAntwoord(currentVraag.getId());
+                if (newAntwoord == null) {
+                    newAntwoord = new Antwoord(currentVraag.getId(), currentToets.getId(), "");
+                }
                 currentVraag.setAntwoord(newAntwoord);
             }
         }

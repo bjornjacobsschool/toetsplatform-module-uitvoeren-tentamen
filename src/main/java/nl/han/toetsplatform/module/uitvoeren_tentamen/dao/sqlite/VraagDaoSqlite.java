@@ -36,7 +36,7 @@ public class VraagDaoSqlite implements VraagDao {
 
     @Override
     public Antwoord getAntwoord(String vraagId) throws SQLException {
-        ResultSet resultSet = storageDao.executeQuery("SELECT * FROM MODULE_UITVOEREN_ANTWOORD WHERE vraagid = " + vraagId + ";");
+        ResultSet resultSet = storageDao.executeQuery("SELECT * FROM MODULE_UITVOEREN_ANTWOORD WHERE vraagid = '" + vraagId + "';");
         return new Antwoord(
                 resultSet.getString("vraagid"),
                 resultSet.getString("tentamenid"),
