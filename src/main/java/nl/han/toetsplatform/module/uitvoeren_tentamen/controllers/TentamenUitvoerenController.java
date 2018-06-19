@@ -20,6 +20,8 @@ import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 
 public class TentamenUitvoerenController extends Controller {
@@ -61,6 +63,18 @@ public class TentamenUitvoerenController extends Controller {
 
         // Show exercise
         showExercise();
+        intializeAutoSaver();
+    }
+
+    private void intializeAutoSaver() {
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Saving answer to local db automatically");
+                saveAnswerToLocal();
+            }
+        }, 30000, 30000);
     }
 
     public void setPrimaryStage(Stage ps) {
