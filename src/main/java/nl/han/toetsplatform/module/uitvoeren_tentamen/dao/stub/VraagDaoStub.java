@@ -42,14 +42,13 @@ public class VraagDaoStub implements VraagDao {
     }
 
     @Override
-    public Antwoord getAntwoord(String id) {
-
-        /*
-        for (Vraag v : vragen)
-            if (v.getId() == id)
-                return v;*/
-
+    public Antwoord getAntwoord(String vraagId, String tentamenId) {
         return null;
+    }
+
+    @Override
+    public void setAntwoord(String vraagId, String tentamenId, String gegevenAntwoord) {
+
     }
 
 }

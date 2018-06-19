@@ -35,12 +35,34 @@ public class VraagDaoSqlite implements VraagDao {
     }
 
     @Override
-    public Antwoord getAntwoord(String vraagId) throws SQLException {
-        ResultSet resultSet = storageDao.executeQuery("SELECT * FROM MODULE_UITVOEREN_ANTWOORD WHERE vraagid = " + vraagId + ";");
+    public Antwoord getAntwoord(String vraagId, String tentamenId) throws SQLException {
+        ResultSet resultSet = storageDao.executeQuery("SELECT * FROM MODULE_UITVOEREN_ANTWOORD WHERE (vraagid = '" + vraagId + "' AND tentamenid = '" + tentamenId + "');");
+
         return new Antwoord(
                 resultSet.getString("vraagid"),
                 resultSet.getString("tentamenid"),
                 resultSet.getString("gegevenAntwoord")
         );
+    }
+
+    @Override
+    public void setAntwoord(String vraagId, String tentamenId, String gegevenAntwoord) throws SQLException {
+
+        String checkAntwoord = "SELECT COUNT(*) AS rowcount FROM MODULE_UITVOEREN_ANTWOORD WHERE (vraagid = '" + vraagId + "' AND tentamenid = '" + tentamenId + "')";
+
+        ResultSet res = storageDao.executeQuery(checkAntwoord);
+        String query;
+
+        int count = res.getInt("rowcount");
+
+        if (count == 0) {
+            query = "INSERT INTO MODULE_UITVOEREN_ANTWOORD (vraagid, tentamenid, gegevenAntwoord) VALUES (" +
+                    "'" + vraagId + "', '" + tentamenId + "', '" + gegevenAntwoord + "');";
+        } else {
+            query = "UPDATE MODULE_UITVOEREN_ANTWOORD SET gegevenAntwoord = '" + gegevenAntwoord + "' WHERE " +
+                    "(vraagid = '" + vraagId + "' AND tentamenid = '" + tentamenId + "');";
+        }
+
+        storageDao.executeUpdate(query);
     }
 }

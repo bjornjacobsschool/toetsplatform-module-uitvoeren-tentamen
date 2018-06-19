@@ -1,7 +1,7 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.stub;
 
 import com.google.inject.Inject;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.toets.ToetsDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.tentamen.TentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.vraag.VraagDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToetsDaoStub implements ToetsDao {
+public class TentamenDAOStub implements TentamenDAO {
 
     @Inject
     private VraagDao vraagDao;
@@ -32,5 +32,10 @@ public class ToetsDaoStub implements ToetsDao {
         tentamens.add(tentamen);
 
         return tentamens;
+    }
+
+    @Override
+    public void addTentamen(String tentamenId, String versieNummer) {
+
     }
 }

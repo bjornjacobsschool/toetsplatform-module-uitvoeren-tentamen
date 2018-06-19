@@ -9,6 +9,8 @@ public interface VraagDao {
 
     List<Antwoord> getAntwoorden() throws SQLException;
 
-    Antwoord getAntwoord(String vraagId) throws SQLException;
+    Antwoord getAntwoord(String vraagId, String tentamenId) throws SQLException;
+
+    void setAntwoord(String vraagId, String tentamenId, String gegevenAntwoord) throws SQLException;
 
 }
