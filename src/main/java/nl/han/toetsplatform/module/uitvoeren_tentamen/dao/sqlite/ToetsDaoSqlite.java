@@ -24,14 +24,15 @@ public class ToetsDaoSqlite implements ToetsDao {
 
         ResultSet resultSet = storageDao.executeQuery("SELECT * FROM MODULE_UITVOEREN_TENTAMEN");
         while (resultSet.next()) {
-            Tentamen tentamen = new Tentamen();
-            tentamen.setId(resultSet.getString("tentamenid"));
+            if (!resultSet.getBoolean("ingeleverd")) {
+                Tentamen tentamen = new Tentamen();
+                tentamen.setId(resultSet.getString("tentamenid"));
 //            tentamen.setStudentNr(resultSet.getInt("studentnr"));
 //            tentamen.setVersieNummer(resultSet.getString("versieNummer"));
-            tentamen.setNaam(resultSet.getString("naam"));
+                tentamen.setNaam(resultSet.getString("naam"));
 //            tentamen.setHash(resultSet.getString("hash"));
-
-            tentamens.add(tentamen);
+                tentamens.add(tentamen);
+            }
         }
 
         return tentamens;

@@ -32,6 +32,7 @@ public class StorageSetupSqliteTest {
                 "  versieNummer    varchar(10)   NOT NULL,\n" +
                 "  naam            varchar(50)   NOT NULL,\n" +
                 "  hash            char(24)      NULL,\n" +
+                "  ingeleverd      bit           NULL,\n" +
                 "  CONSTRAINT pk_tentamen PRIMARY KEY (tentamenid),\n" +
                 "  CONSTRAINT fk_Student_maakt_tentamen FOREIGN KEY (studentnr) REFERENCES STUDENT (studentnr)\n" +
                 ");\n" +

@@ -16,6 +16,11 @@ public class DownloadenUitvoerenTabPaneController extends Controller {
     public Tab gedownloadeTentamensTab;
     public GedownloadeTentamensController gedownloadeTentamensController;
 
+    @FXML
+    private Tab inteleverenTenamensTab;
+    @FXML
+    private InteleverenTentamenController inteleverenTentamenController;
+
     private Stage primarayStage;
 
     @FXML
@@ -26,8 +31,10 @@ public class DownloadenUitvoerenTabPaneController extends Controller {
                 (ov, currentTab, newTab) -> {
                     if (newTab.getId().equals("gedownloadeTentamensTab")) {
                         gedownloadeTentamensController.reloadView(primarayStage);
-                    } else {
+                    } else if (newTab.getId().equals("downloadTentamenTab")) {
                         downloadenTentamenController.reloadView(primarayStage);
+                    } else {
+                        inteleverenTentamenController.reloadView(primarayStage);
                     }
                 }
         );
