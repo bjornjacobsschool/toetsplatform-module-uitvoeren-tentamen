@@ -33,7 +33,7 @@ public class GsonUtil {
         try {
             t = gson.fromJson(readFileToString(dir), Tentamen.class);
         } catch (Exception e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
         return t;
     }
@@ -43,7 +43,7 @@ public class GsonUtil {
         try {
             t = gson.fromJson(jsonString, Tentamen.class);
         } catch (Exception e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
         return t;
     }
@@ -55,32 +55,18 @@ public class GsonUtil {
      * @param dir de directory + file name
      */
     public void writeTentamen(Tentamen obj, String dir) throws IOException {
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
-        try {
-            fileWriter = new FileWriter(dir);
-            bufferedWriter = new BufferedWriter(fileWriter);
-        } catch (IOException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
-        } finally {
-            if (fileWriter != null && bufferedWriter != null) {
+        try (FileWriter fileWriter = new FileWriter(dir);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
 
-                String write = gson.toJson(obj);
-                try {
-                    bufferedWriter.write(write);
-                    bufferedWriter.close();
-                } catch (IOException e) {
-                    Utils.logger.log(Level.SEVERE, e.getMessage());
-                }
-            }
-
-            if (bufferedWriter != null) {
+            String write = gson.toJson(obj);
+            try {
+                bufferedWriter.write(write);
                 bufferedWriter.close();
+            } catch (IOException e) {
+                Utils.getLogger().log(Level.SEVERE, e.getMessage());
             }
-
-            if (fileWriter != null) {
-                fileWriter.close();
-            }
+        } catch (IOException e) {
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
     }
 
@@ -100,7 +86,7 @@ public class GsonUtil {
             fileReader = new FileReader(filePath);
             bufferedReader = new BufferedReader(fileReader);
         } catch (FileNotFoundException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         } finally {
             if (fileReader != null && bufferedReader != null) {
                 String sCurrentLine;
@@ -130,7 +116,7 @@ public class GsonUtil {
             vragen = gson.fromJson(json, new TypeToken<List<Vraag>>() {
             }.getType());
         } catch (Exception e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
         return vragen;
     }

@@ -12,7 +12,11 @@ public class Utils {
     public static final String DOWNLOADED_TENTAMENS = "downloads" + File.separator + "tentamens";
     private static final String TOETSAPPLICATIE = "toetsapplicatie";
     private static final String GOOGLE_URL = "http://www.google.com";
-    public static Logger logger = Logger.getLogger("toetsplatform-module-uitvoeren-tentamen");
+    private static Logger logger = Logger.getLogger("toetsplatform-module-uitvoeren-tentamen");
+
+    public static Logger getLogger() {
+        return logger;
+    }
 
     public static File getFolder(String folder) {
         String temp = System.getProperty("java.io.tmpdir");

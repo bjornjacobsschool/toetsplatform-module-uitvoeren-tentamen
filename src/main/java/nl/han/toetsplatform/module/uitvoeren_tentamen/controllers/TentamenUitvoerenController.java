@@ -52,7 +52,7 @@ public class TentamenUitvoerenController extends Controller {
         try {
             storageSetupDao.setup();
         } catch (SQLException | ClassNotFoundException | IOException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
 
         this.primaryStage = primaryStage;
@@ -71,7 +71,7 @@ public class TentamenUitvoerenController extends Controller {
         t.schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Saving answer to local db automatically");
+                Utils.getLogger().log(Level.INFO, "Saving answer to local db automatically");
                 saveAnswerToLocal();
             }
         }, 30000, 30000);
@@ -92,7 +92,7 @@ public class TentamenUitvoerenController extends Controller {
         try {
             currentPlugin = getPluginForCurrentQuestion();
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
 
         loadQuestionView();
@@ -125,28 +125,19 @@ public class TentamenUitvoerenController extends Controller {
             currentQuestionIndex -= 1;
             showExercise();
         } else {
-            AlertInfo("Er zijn geen vragen meer om hiervoor in te laden.");
+            alertInfo("Er zijn geen vragen meer om hiervoor in te laden.");
         }
     }
 
-    public void btnNextQuestionPressed(ActionEvent event) {
-
+    public void btnNextQuestionPressed() {
         saveAnswerToLocal();
 
         if (currentQuestionIndex < (currentTentamen.getVragen().size() - 1)) {
             currentQuestionIndex += 1;
             showExercise();
         } else {
-            AlertInfo("Laatste vraag bereikt.");
+            alertInfo("Laatste vraag bereikt.");
         }
-    }
-
-    public void btnLoadPressed(ActionEvent event) {
-        FileChooser directoryChooser = new FileChooser();
-        File selectedDirectory = directoryChooser.showOpenDialog(primaryStage);
-        currentTentamen = gsu.loadTentamen(selectedDirectory.toString());
-        showExercise();
-        AlertInfo("Test");
     }
 
     private void saveAnswerToLocal() {
@@ -156,11 +147,11 @@ public class TentamenUitvoerenController extends Controller {
             vraagDaoSqlite.setAntwoord(currentTentamen.getVragen().get(currentQuestionIndex).getId(), currentTentamen.getId(), getGivenAntwoordFromPlugin());
             saved = true;
         } catch (SQLException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
 
         if (!saved) {
-            AlertError("Er is wat misgegaan met het (automatisch) opslaan van je vraag, probeer opnieuw.");
+            alertError("Er is wat misgegaan met het (automatisch) opslaan van je vraag, probeer opnieuw.");
         }
     }
 
@@ -169,7 +160,7 @@ public class TentamenUitvoerenController extends Controller {
         try {
             antwoord = vraagDaoSqlite.getAntwoord(currentTentamen.getVragen().get(currentQuestionIndex).getId(), currentTentamen.getId());
         } catch (SQLException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
 
         if (antwoord != null) {

@@ -19,9 +19,6 @@ public class GuiceModule extends AbstractModule {
         bind(VraagDao.class).to(VraagDaoSqlite.class);
         bind(StorageSetupDao.class).to(StorageSetupSqlite.class);
         bind(VraagDao.class).to(VraagDaoSqlite.class);
-
-        //TODO: Remove before committing
-//        bind(StorageDao.class).to(StorageSqlite.class);
     }
 
 }

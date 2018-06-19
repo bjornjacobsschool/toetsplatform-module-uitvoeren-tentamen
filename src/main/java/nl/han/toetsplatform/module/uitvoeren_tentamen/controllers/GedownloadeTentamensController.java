@@ -44,14 +44,11 @@ public class GedownloadeTentamensController extends Controller {
 
 
     private Stage primaryStage;
-    private GsonUtil gsu;
 
     private IDownloadenTentamenDAO dManager;
     private List<Tentamen> tentamens = null;
 
-    public GedownloadeTentamensController() {
-        gsu = new GsonUtil();
-    }
+    public GedownloadeTentamensController() {}
 
     public void initialize() {
         dManager = new DownloadenTentamenDAO(new JSONReader(), new GsonUtil());
@@ -76,8 +73,8 @@ public class GedownloadeTentamensController extends Controller {
         try {
             tentamens = dManager.getDownloadedTentamens();
         } catch (IOException | ParseException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
-            AlertError("Er is iets fout gegaan, probeer opnieuw.");
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
+            alertError("Er is iets fout gegaan, probeer opnieuw.");
         }
 
         Controller.loadTable(tentamens, tblViewTentamens);
@@ -87,7 +84,7 @@ public class GedownloadeTentamensController extends Controller {
     public void btnExitPressed() {
         Platform.runLater(() -> {
             loadingIndicator.setVisible(false);
-            AlertError("Er is iets fout gegaan, probeer opnieuw.");
+            alertError("Er is iets fout gegaan, probeer opnieuw.");
         });
     }
 
@@ -95,13 +92,13 @@ public class GedownloadeTentamensController extends Controller {
     public void startTentamen(ActionEvent actionEvent) {
         int tentamenIndex = tblViewTentamens.getSelectionModel().getSelectedIndex();
         if (tentamenIndex == -1 || tentamenIndex > tentamens.size() - 1) {
-            AlertError("Selecteer eerst de tentamen die je wilt starten.");
+            alertError("Selecteer eerst de tentamen die je wilt starten.");
             return;
         }
 
         String decryptionToken = this.showDecryptionKeyModal();
         if (decryptionToken == null || decryptionToken.equals("")) {
-            AlertError("Voer de sleutel in die je van de surveillant hebt gekregen.");
+            alertError("Voer de sleutel in die je van de surveillant hebt gekregen.");
             return;
         }
 
@@ -109,7 +106,7 @@ public class GedownloadeTentamensController extends Controller {
 
         boolean tentamenVragenDecrypted = this.decryptVragen(tentamen, decryptionToken);
         if (!tentamenVragenDecrypted) {
-            AlertError("De sleutel die je hebt ingevoerd is onjuist.");
+            alertError("De sleutel die je hebt ingevoerd is onjuist.");
             return;
         }
 
@@ -118,11 +115,11 @@ public class GedownloadeTentamensController extends Controller {
             tentamenDAOSQLite.addTentamen(tentamen.getId(), tentamen.getVersie().getNummer());
             tentamenSaved = true;
         } catch (SQLException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
 
         if (!tentamenSaved) {
-            AlertError("De tentamen kon niet gestart worden vanwege een fout in de database, probeer opnieuw.");
+            alertError("De tentamen kon niet gestart worden vanwege een fout in de database, probeer opnieuw.");
             return;
         }
 
@@ -134,7 +131,7 @@ public class GedownloadeTentamensController extends Controller {
             primaryStage.getScene().setRoot(result.getRoot());
 
         } catch (IOException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
     }
 
@@ -145,8 +142,7 @@ public class GedownloadeTentamensController extends Controller {
             tentamen.decryptVragen(decryptionToken);
         } catch (Exception e) {
             tentamenVragenDecrypted = false;
-            Utils.logger.log(Level.SEVERE, e.getMessage());
-            e.printStackTrace();
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
 
         return tentamenVragenDecrypted;

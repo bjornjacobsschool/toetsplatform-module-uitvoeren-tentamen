@@ -23,6 +23,7 @@ import java.util.logging.Level;
 public class DownloadenTentamenController extends Controller {
 
 
+    public static final String ERROR_MESSAGE = "Er is iets fout gegaan, probeer opnieuw.";
     @FXML
     public VBox loadingIndicator;
     @FXML
@@ -48,7 +49,7 @@ public class DownloadenTentamenController extends Controller {
 
         if (!Utils.checkInternetConnection()) {
             loadingIndicator.setVisible(false);
-            AlertError("U heeft geen internet connectie. Maak verbinding met het internet en start de applicatie opnieuw op.");
+            alertError("U heeft geen internet connectie. Maak verbinding met het internet en start de applicatie opnieuw op.");
             return;
         }
 
@@ -65,7 +66,7 @@ public class DownloadenTentamenController extends Controller {
         this.primaryStage = primaryStage;
         if (!Utils.checkInternetConnection()) {
             loadingIndicator.setVisible(false);
-            AlertError("U heeft geen internet connectie. Maak verbinding met het internet en start de applicatie opnieuw op.");
+            alertError("U heeft geen internet connectie. Maak verbinding met het internet en start de applicatie opnieuw op.");
             return;
         }
 
@@ -79,8 +80,8 @@ public class DownloadenTentamenController extends Controller {
             try {
                 tentamens = dManager.getKlaargezetteTentamens();
             } catch (IOException | ParseException | JSONException e) {
-                Utils.logger.log(Level.SEVERE, e.getMessage());
-                AlertError("Er is iets fout gegaan, probeer opnieuw.");
+                Utils.getLogger().log(Level.SEVERE, e.getMessage());
+                alertError(ERROR_MESSAGE);
             }
 
             Controller.loadTable(tentamens, tblViewTentamens);
@@ -94,12 +95,12 @@ public class DownloadenTentamenController extends Controller {
     public void downloadPressed() {
         int tentamenIndex = tblViewTentamens.getSelectionModel().getSelectedIndex();
         if (tentamenIndex == -1 || tentamenIndex > tentamens.size()-1) {
-            AlertError("Selecteer eerst de tentamen die je wilt downloaden.");
+            alertError("Selecteer eerst de tentamen die je wilt downloaden.");
             return;
         }
 
         if (!Utils.checkInternetConnection()) {
-            AlertError("U heeft geen internet connectie. Maak verbinding met het internet en probeer opnieuw te downloaden.");
+            alertError("U heeft geen internet connectie. Maak verbinding met het internet en probeer opnieuw te downloaden.");
             return;
         }
 
@@ -107,14 +108,14 @@ public class DownloadenTentamenController extends Controller {
         try {
             result = dManager.downloadTentamen(tentamens.get(tentamenIndex).getId());
         } catch (IOException | JSONException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
-            AlertError("Er is iets fout gegaan, probeer opnieuw.");
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
+            alertError(ERROR_MESSAGE);
         }
 
         if (result) {
-            AlertInfo("Het tentamen is succesvol lokaal opgeslagen.");
+            alertInfo("Het tentamen is succesvol lokaal opgeslagen.");
         } else {
-            AlertError("Er is iets fout gegaan, probeer opnieuw.");
+            alertError(ERROR_MESSAGE);
         }
 
     }
@@ -124,7 +125,7 @@ public class DownloadenTentamenController extends Controller {
     public void btnExitPressed() {
         Platform.runLater(() -> {
             loadingIndicator.setVisible(false);
-            AlertError("Er is iets fout gegaan, probeer opnieuw.");
+            alertError(ERROR_MESSAGE);
         });
     }
 }
