@@ -26,11 +26,7 @@ public class TentamenDAOSQLite implements TentamenDAO {
         while (resultSet.next()) {
             Tentamen tentamen = new Tentamen();
             tentamen.setId(resultSet.getString("tentamenid"));
-//            tentamen.setStudentNr(resultSet.getInt("studentnr"));
-//            tentamen.setVersieNummer(resultSet.getString("versieNummer"));
             tentamen.setNaam(resultSet.getString("naam"));
-//            tentamen.setHash(resultSet.getString("hash"));
-
             tentamens.add(tentamen);
         }
 
@@ -39,14 +35,9 @@ public class TentamenDAOSQLite implements TentamenDAO {
 
     @Override
     public void addTentamen(String tentamenId, String versieNummer) throws SQLException {
-//        String createAntwoordQuery = "INSERT INTO MODULE_UITVOEREN_TENTAMEN(tentamenid, versieNummer) VALUES (" +
-//                "'" + tentamenId + "', '" + versieNummer + "') " +
-//                "WHERE NOT EXISTS(SELECT 1 FROM MODULE_UITVOEREN_TENTAMEN WHERE tentamenid = '" + tentamenId + "');";
-
         String createAntwoordQuery = "INSERT OR IGNORE INTO MODULE_UITVOEREN_TENTAMEN(tentamenid, versieNummer) VALUES (" +
                 "'" + tentamenId + "', '" + versieNummer + "');";
 
-        System.out.println(createAntwoordQuery);
         storageDao.executeUpdate(createAntwoordQuery);
     }
 }
