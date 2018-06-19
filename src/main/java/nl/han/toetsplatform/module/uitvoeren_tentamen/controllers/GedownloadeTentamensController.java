@@ -14,12 +14,14 @@ import javafx.stage.Stage;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.config.ConfigTentamenUitvoerenModule;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.DownloadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.downloaden_tentamen.IDownloadenTentamenDAO;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.TentamenDAOSQLite;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.JSONReader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +38,9 @@ public class GedownloadeTentamensController extends Controller {
 
     @Inject
     private GuiceFXMLLoader fxmlLoader;
+
+    @Inject
+    private TentamenDAOSQLite tentamenDAOSQLite;
 
 
     private Stage primaryStage;
@@ -105,6 +110,20 @@ public class GedownloadeTentamensController extends Controller {
         boolean tentamenVragenDecrypted = this.decryptVragen(tentamen, decryptionToken);
         if (!tentamenVragenDecrypted) {
             AlertError("De sleutel die je hebt ingevoerd is onjuist.");
+            return;
+        }
+
+        boolean tentamenSaved = false;
+        try {
+            tentamenDAOSQLite.addTentamen(tentamen.getId(), tentamen.getVersie().getNummer());
+            tentamenSaved = true;
+        } catch (SQLException e) {
+            Utils.logger.log(Level.SEVERE, e.getMessage());
+        }
+
+        if (!tentamenSaved) {
+            AlertError("De tentamen kon niet gestart worden vanwege een fout in de database, probeer opnieuw.");
+            return;
         }
 
         try {
@@ -138,7 +157,6 @@ public class GedownloadeTentamensController extends Controller {
         dialog.setTitle("Sleutel invoeren");
         dialog.setHeaderText("Voer de sleutel in die je van de surveillant hebt gekregen.");
         dialog.setContentText("");
-
 
         String decryptionToken = null;
         Optional<String> dResult = dialog.showAndWait();

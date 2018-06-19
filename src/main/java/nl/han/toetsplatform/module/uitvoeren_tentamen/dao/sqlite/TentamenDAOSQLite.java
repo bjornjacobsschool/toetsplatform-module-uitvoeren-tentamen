@@ -2,7 +2,7 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite;
 
 import com.google.inject.Inject;
 import nl.han.toetsplatform.module.shared.storage.StorageDao;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.toets.ToetsDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.tentamen.TentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 
 import java.sql.ResultSet;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToetsDaoSqlite implements ToetsDao {
+public class TentamenDAOSQLite implements TentamenDAO {
 
     /**
      * Injected from frontend GuiceModule.java
@@ -35,5 +35,18 @@ public class ToetsDaoSqlite implements ToetsDao {
         }
 
         return tentamens;
+    }
+
+    @Override
+    public void addTentamen(String tentamenId, String versieNummer) throws SQLException {
+//        String createAntwoordQuery = "INSERT INTO MODULE_UITVOEREN_TENTAMEN(tentamenid, versieNummer) VALUES (" +
+//                "'" + tentamenId + "', '" + versieNummer + "') " +
+//                "WHERE NOT EXISTS(SELECT 1 FROM MODULE_UITVOEREN_TENTAMEN WHERE tentamenid = '" + tentamenId + "');";
+
+        String createAntwoordQuery = "INSERT OR IGNORE INTO MODULE_UITVOEREN_TENTAMEN(tentamenid, versieNummer) VALUES (" +
+                "'" + tentamenId + "', '" + versieNummer + "');";
+
+        System.out.println(createAntwoordQuery);
+        storageDao.executeUpdate(createAntwoordQuery);
     }
 }

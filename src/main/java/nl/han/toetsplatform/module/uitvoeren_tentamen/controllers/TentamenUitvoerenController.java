@@ -9,7 +9,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import nl.han.toetsplatform.module.shared.plugin.Plugin;
 import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.VraagDaoSqlite;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Vraag;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
@@ -33,7 +35,10 @@ public class TentamenUitvoerenController extends Controller {
     @Inject
     private StorageSetupDao storageSetupDao;
 
-    private Tentamen currentToets;
+    @Inject
+    private VraagDaoSqlite vraagDaoSqlite;
+
+    private Tentamen currentTentamen;
     private Plugin currentPlugin;
 
     private int currentQuestionIndex = 0;
@@ -51,8 +56,8 @@ public class TentamenUitvoerenController extends Controller {
         this.primaryStage = primaryStage;
         gsu = new GsonUtil();
 
-        // Assign loadedtoets to currentToets
-        currentToets = tentamen;
+        // Assign loadedtoets to currentTentamen
+        currentTentamen = tentamen;
 
         // Show exercise
         showExercise();
@@ -67,7 +72,7 @@ public class TentamenUitvoerenController extends Controller {
         questionPane.getChildren().clear();
         answerPane.getChildren().clear();
 
-        lblCurrentQuestionNo.setText((currentQuestionIndex + 1) + "/" + currentToets.getVragen().size());
+        lblCurrentQuestionNo.setText((currentQuestionIndex + 1) + "/" + currentTentamen.getVragen().size());
 
         // Get current plugin and store it in local variable
         try {
@@ -81,19 +86,27 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void loadQuestionView() {
-        questionPane.getChildren().add(currentPlugin.getVraagView(currentToets.getVragen().get(currentQuestionIndex).getData()).getView());
+        questionPane.getChildren().add(currentPlugin.getVraagView(currentTentamen.getVragen().get(currentQuestionIndex).getData()).getView());
     }
 
     public void loadAnswerView() {
-        answerPane.getChildren().add(currentPlugin.getAntwoordView(currentToets.getVragen().get(currentQuestionIndex).getData()).getView());
+        String localAnswer = loadLocalAnswer();
+        if (localAnswer != null) {
+            answerPane.getChildren().add(currentPlugin.getAntwoordView(currentTentamen.getVragen().get(currentQuestionIndex).getData(), localAnswer).getView());
+        } else {
+            answerPane.getChildren().add(currentPlugin.getAntwoordView(currentTentamen.getVragen().get(currentQuestionIndex).getData()).getView());
+        }
     }
 
     public Plugin getPluginForCurrentQuestion() throws ClassNotFoundException {
-        Vraag currentVraag = currentToets.getVragen().get(currentQuestionIndex);
+        Vraag currentVraag = currentTentamen.getVragen().get(currentQuestionIndex);
         return PluginLoader.getPlugin(currentVraag.getVraagtype());
     }
 
     public void btnPreviousQuestionPressed(ActionEvent event) {
+
+        saveAnswerToLocal();
+
         if (currentQuestionIndex > 0) {
             currentQuestionIndex -= 1;
             showExercise();
@@ -103,7 +116,10 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void btnNextQuestionPressed(ActionEvent event) {
-        if (currentQuestionIndex < (currentToets.getVragen().size() - 1)) {
+
+        saveAnswerToLocal();
+
+        if (currentQuestionIndex < (currentTentamen.getVragen().size() - 1)) {
             currentQuestionIndex += 1;
             showExercise();
         } else {
@@ -114,9 +130,39 @@ public class TentamenUitvoerenController extends Controller {
     public void btnLoadPressed(ActionEvent event) {
         FileChooser directoryChooser = new FileChooser();
         File selectedDirectory = directoryChooser.showOpenDialog(primaryStage);
-        currentToets = gsu.loadTentamen(selectedDirectory.toString());
+        currentTentamen = gsu.loadTentamen(selectedDirectory.toString());
         showExercise();
         AlertInfo("Test");
+    }
+
+    private void saveAnswerToLocal() {
+
+        boolean saved = false;
+        try {
+            vraagDaoSqlite.setAntwoord(currentTentamen.getVragen().get(currentQuestionIndex).getId(), currentTentamen.getId(), getGivenAntwoordFromPlugin());
+            saved = true;
+        } catch (SQLException e) {
+            Utils.logger.log(Level.SEVERE, e.getMessage());
+        }
+
+        if (!saved) {
+            AlertError("Er is wat misgegaan met het (automatisch) opslaan van je vraag, probeer opnieuw.");
+        }
+    }
+
+    private String loadLocalAnswer() {
+        Antwoord antwoord = null;
+        try {
+            antwoord = vraagDaoSqlite.getAntwoord(currentTentamen.getVragen().get(currentQuestionIndex).getId(), currentTentamen.getId());
+        } catch (SQLException e) {
+            Utils.logger.log(Level.SEVERE, e.getMessage());
+        }
+
+        if (antwoord != null) {
+            return antwoord.getGegevenAntwoord();
+        }
+
+        return null;
     }
 
     public String getGivenAntwoordFromPlugin() {
