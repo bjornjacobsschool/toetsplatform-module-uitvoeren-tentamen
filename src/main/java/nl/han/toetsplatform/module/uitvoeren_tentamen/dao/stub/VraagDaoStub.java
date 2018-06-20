@@ -3,6 +3,7 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.stub;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.vraag.VraagDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +37,14 @@ public class VraagDaoStub implements VraagDao {
         vragen.add(vraag2);*/
     }
 
-    @Override
+
     public List<Antwoord> getAntwoorden() {
         return vragen;
+    }
+
+    @Override
+    public List<Antwoord> getAntwoorden(String tentamenId) throws SQLException {
+        return null;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.config;
 
 import com.google.inject.AbstractModule;
+import nl.han.toetsplatform.module.shared.storage.StorageDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.cache.CacheDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.StorageSetupSqlite;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.TentamenDAOSQLite;

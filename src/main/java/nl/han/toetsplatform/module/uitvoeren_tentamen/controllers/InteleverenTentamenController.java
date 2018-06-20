@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.StorageSetupSqlite;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.tentamen.TentamenDAO;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.UitgevoerdTentamenDto;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.IUploadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.UploadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Student;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
@@ -40,6 +40,13 @@ public class InteleverenTentamenController extends Controller {
     private StorageSetupSqlite storageSetupSqlite;
     private List<Tentamen> tentamens = null;
     private Stage primaryStage;
+
+    private IUploadenTentamenDAO uploadenTentamenDAO;
+
+    @Inject
+    public InteleverenTentamenController(IUploadenTentamenDAO uploadenTentamenDAO) {
+        this.uploadenTentamenDAO = uploadenTentamenDAO;
+    }
 
     public void initialize() {
         try {
@@ -106,7 +113,6 @@ public class InteleverenTentamenController extends Controller {
 
         String result = null;
 
-        UploadenTentamenDAO uploadenTentamenDAO = new UploadenTentamenDAO();
         for (Tentamen tentamen :
                 tentamens) {
             uploadenTentamenDAO.superUploadTentamen(tentamen, new Student());

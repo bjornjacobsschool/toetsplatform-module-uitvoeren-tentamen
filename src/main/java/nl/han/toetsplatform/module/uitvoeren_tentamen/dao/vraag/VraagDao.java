@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface VraagDao {
 
-    List<Antwoord> getAntwoorden() throws SQLException;
+    List<Antwoord> getAntwoorden(String tentamenId) throws SQLException;
 
     Antwoord getAntwoord(String vraagId, String tentamenId) throws SQLException;
 

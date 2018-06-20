@@ -9,24 +9,34 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VraagDaoSqlite implements VraagDao {
-
+    private static Logger LOGGER = Logger.getLogger(VraagDaoSqlite.class.getName());
     /**
      * Injected from frontend GuiceModule.java
      */
-    @Inject
     public StorageDao storageDao;
 
+    @Inject
+    public VraagDaoSqlite(StorageDao storageDao) {
+        this.storageDao = storageDao;
+    }
+
     @Override
-    public List<Antwoord> getAntwoorden() throws SQLException {
+    public List<Antwoord> getAntwoorden(String tentamenid) throws SQLException {
+        if (storageDao == null) {
+            LOGGER.log(Level.SEVERE, "storagedao is null..");
+        }
+
         List<Antwoord> antwoorden = new ArrayList<>();
 
-        ResultSet resultSet = storageDao.executeQuery("SELECT * FROM MODULE_UITVOEREN_ANTWOORD");
+        ResultSet resultSet = storageDao.executeQuery("SELECT * FROM MODULE_UITVOEREN_ANTWOORD WHERE tentamenid ='" + tentamenid + "';");
         while (resultSet.next()) {
             Antwoord antwoord = new Antwoord();
             antwoord.setTentamenId(resultSet.getString("tentamenid"));
-            antwoord.setTentamenId(resultSet.getString("vraagid"));
+            antwoord.setVraagId(resultSet.getString("vraagid"));
             antwoord.setGegevenAntwoord(resultSet.getString("gegevenAntwoord"));
             antwoorden.add(antwoord);
         }

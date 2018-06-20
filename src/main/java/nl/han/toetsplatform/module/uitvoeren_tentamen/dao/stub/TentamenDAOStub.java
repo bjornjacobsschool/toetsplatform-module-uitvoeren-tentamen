@@ -26,7 +26,7 @@ public class TentamenDAOStub implements TentamenDAO {
 //        tentamen.setVersieNummer("1.0");
 //        tentamen.setHash("HASH");
 
-        tentamen.setAntwoorden(vraagDao.getAntwoorden());
+        //tentamen.setAntwoorden(vraagDao.getAntwoorden());
 
         // Add all exams to the list
         tentamens.add(tentamen);

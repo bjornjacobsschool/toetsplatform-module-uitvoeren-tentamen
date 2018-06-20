@@ -2,7 +2,7 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.UitgevoerdTentamenDto;
+import nl.han.toetsapplicatie.apimodels.dto.UitgevoerdTentamenDto;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Vraag;
 
