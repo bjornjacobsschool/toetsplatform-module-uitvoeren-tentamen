@@ -15,11 +15,14 @@ public class GsonUtil {
     private static Gson gson;
 
     public GsonUtil() {
+        init();
+    }
+
+    private static void init() {
         JsonSerializer<Date> serializer = (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.getTime());
         JsonDeserializer<Date> deserializer = (json, typeOfT, context) -> json == null ? null : new Date(json.getAsLong() * 1000);
 
         gson = new GsonBuilder().registerTypeAdapter(Date.class, serializer).registerTypeAdapter(Date.class, deserializer).create();
-
     }
 
     /**

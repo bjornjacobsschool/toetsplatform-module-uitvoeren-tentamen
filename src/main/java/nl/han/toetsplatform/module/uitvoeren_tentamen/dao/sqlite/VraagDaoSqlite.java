@@ -36,7 +36,7 @@ public class VraagDaoSqlite implements VraagDao {
 
     @Override
     public Antwoord getAntwoord(String vraagId, String tentamenId) throws SQLException {
-        ResultSet resultSet = storageDao.executeQuery("SELECT * FROM MODULE_UITVOEREN_ANTWOORD WHERE (vraagid = '" + vraagId + "' AND tentamenid = '" + tentamenId + "');");
+        ResultSet resultSet = storageDao.executeQuery(getSqlString(false, vraagId, tentamenId));
 
         return new Antwoord(
                 resultSet.getString("vraagid"),
@@ -48,7 +48,7 @@ public class VraagDaoSqlite implements VraagDao {
     @Override
     public void setAntwoord(String vraagId, String tentamenId, String gegevenAntwoord) throws SQLException {
 
-        String checkAntwoord = "SELECT COUNT(*) AS rowcount FROM MODULE_UITVOEREN_ANTWOORD WHERE (vraagid = '" + vraagId + "' AND tentamenid = '" + tentamenId + "')";
+        String checkAntwoord = getSqlString(true, vraagId, tentamenId);
 
         ResultSet res = storageDao.executeQuery(checkAntwoord);
         String query;
@@ -64,5 +64,16 @@ public class VraagDaoSqlite implements VraagDao {
         }
 
         storageDao.executeUpdate(query);
+    }
+
+    private String getSqlString(boolean getCount, String vraagId, String tentamenId) {
+        StringBuilder str = new StringBuilder();
+        if (getCount)
+            str.append("SELECT COUNT(*) AS rowcount FROM ");
+        else
+            str.append("SELECT * FROM ");
+
+        str.append("MODULE_UITVOEREN_ANTWOORD WHERE (vraagid = '").append(vraagId).append("' AND tentamenid = '").append(tentamenId).append("');");
+        return str.toString();
     }
 }

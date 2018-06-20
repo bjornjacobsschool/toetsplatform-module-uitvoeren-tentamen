@@ -1,5 +1,6 @@
 package nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite;
 
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.stub.StorageSqliteStub;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,27 +9,27 @@ import java.sql.SQLException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
-public class StorageSqliteTest {
+public class StorageSqliteStubTest {
 
-    private StorageSqlite storageSqlite;
+    private StorageSqliteStub storageSqliteStub;
 
     @Before
     public void setUp() {
-        this.storageSqlite = new StorageSqlite();
+        this.storageSqliteStub = new StorageSqliteStub();
     }
 
     @Test
     public void executeQuery() throws SQLException {
-        assertNull(this.storageSqlite.executeQuery(""));
+        assertNull(this.storageSqliteStub.executeQuery(""));
     }
 
     @Test
     public void executeUpdate() throws SQLException {
-        assertFalse(this.storageSqlite.executeUpdate(""));
+        assertFalse(this.storageSqliteStub.executeUpdate(""));
     }
 
     @Test
     public void getConnection() {
-        assertNull(this.storageSqlite.getConnection());
+        assertNull(this.storageSqliteStub.getConnection());
     }
 }
