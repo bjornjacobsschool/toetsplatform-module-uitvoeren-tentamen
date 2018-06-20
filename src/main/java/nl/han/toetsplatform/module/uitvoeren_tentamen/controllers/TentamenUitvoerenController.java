@@ -49,8 +49,6 @@ public class TentamenUitvoerenController extends Controller {
     private Plugin currentPlugin;
 
     private int currentQuestionIndex = 0;
-    private GsonUtil gsu;
-    private Stage primaryStage;
 
     public void setUp(Stage primaryStage, Tentamen tentamen) {
         // Lock min window to 640x480
@@ -63,9 +61,6 @@ public class TentamenUitvoerenController extends Controller {
         } catch (SQLException | ClassNotFoundException | IOException e) {
             Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
-
-        this.primaryStage = primaryStage;
-        gsu = new GsonUtil();
 
         // Assign loadedtoets to currentTentamen
         currentTentamen = tentamen;
@@ -102,10 +97,6 @@ public class TentamenUitvoerenController extends Controller {
                 saveAnswerToLocal();
             }
         }, 30000, 30000);
-    }
-
-    public void setPrimaryStage(Stage ps) {
-        this.primaryStage = ps;
     }
 
     public void showExercise() {
@@ -147,7 +138,7 @@ public class TentamenUitvoerenController extends Controller {
         return PluginLoader.getPlugin(currentVraag.getVraagtype());
     }
 
-    public void btnPreviousQuestionPressed(ActionEvent event) {
+    public void btnPreviousQuestionPressed() {
         saveAnswerToLocal();
         if (currentQuestionIndex > 0) {
             currentQuestionIndex -= 1;
