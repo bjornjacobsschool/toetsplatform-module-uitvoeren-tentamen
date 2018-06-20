@@ -24,10 +24,11 @@
                         <fx:include fx:id="gedownloadeTentamens" source="gedownloadeTentamens.fxml"/>
                     </content>
                 </Tab>
-                <Tab text="In te leveren tentamens" fx:id="inteLeverenTentamensTab">
+                <Tab text="In te leveren tentamens" fx:id="inteleverenTenamensTab">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
-                        <fx:include fx:id="inteleverenTentamens" source="inteleverententamen.fxml"/>
+                        <fx:include fx:id="inteleverenTentamen"
+                                    source="inteleverententamen.fxml"/>
                     </content>
                 </Tab>
             </tabs>

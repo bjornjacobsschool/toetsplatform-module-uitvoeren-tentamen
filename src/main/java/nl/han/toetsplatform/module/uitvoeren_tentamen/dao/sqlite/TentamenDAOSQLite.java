@@ -21,13 +21,13 @@ public class TentamenDAOSQLite implements TentamenDAO {
     @Override
     public List<Tentamen> getLocalTentamens() throws SQLException {
         List<Tentamen> tentamens = new ArrayList<>();
-
-        ResultSet resultSet = storageDao.executeQuery("SELECT * FROM MODULE_UITVOEREN_TENTAMEN");
+        ResultSet resultSet = storageDao.executeQuery("SELECT * FROM MODULE_UITVOEREN_TENTAMEN WHERE ingeleverd = 0" );
         while (resultSet.next()) {
-            Tentamen tentamen = new Tentamen();
-            tentamen.setId(resultSet.getString("tentamenid"));
-            tentamen.setNaam(resultSet.getString("naam"));
-            tentamens.add(tentamen);
+                Tentamen tentamen = new Tentamen();
+                tentamen.setId(resultSet.getString("tentamenid"));
+                //tentamen.setNaam(resultSet.getString("naam"));
+                tentamens.add(tentamen);
+
         }
 
         return tentamens;
@@ -35,8 +35,8 @@ public class TentamenDAOSQLite implements TentamenDAO {
 
     @Override
     public void addTentamen(String tentamenId, String versieNummer) throws SQLException {
-        String createAntwoordQuery = "INSERT OR IGNORE INTO MODULE_UITVOEREN_TENTAMEN(tentamenid, versieNummer) VALUES (" +
-                "'" + tentamenId + "', '" + versieNummer + "');";
+        String createAntwoordQuery = "INSERT OR IGNORE INTO MODULE_UITVOEREN_TENTAMEN(tentamenid, versieNummer, ingeleverd) VALUES (" +
+                "'" + tentamenId + "', '" + versieNummer + "',0);";
 
         storageDao.executeUpdate(createAntwoordQuery);
     }

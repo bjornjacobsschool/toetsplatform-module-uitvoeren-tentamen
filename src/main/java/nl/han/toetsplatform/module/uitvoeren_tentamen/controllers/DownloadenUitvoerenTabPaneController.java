@@ -24,9 +24,8 @@ public class DownloadenUitvoerenTabPaneController extends Controller {
     public GedownloadeTentamensController gedownloadeTentamensController;
 
     @FXML
-    private Tab inteleverenTenamensTab;
-    @FXML
-    private InteleverenTentamenController inteleverenTentamenController;
+    public Tab inteleverenTenamensTab;
+    public InteleverenTentamenController inteleverenTentamenController;
 
     private Stage primarayStage;
 

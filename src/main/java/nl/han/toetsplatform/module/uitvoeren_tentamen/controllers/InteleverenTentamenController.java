@@ -8,18 +8,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.ToetsDaoSqlite;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.toets.ToetsDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.StorageSetupSqlite;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.TentamenDAOSQLite;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.tentamen.TentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.util.JSONReader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 import org.json.JSONException;
 
-import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -37,22 +34,26 @@ public class InteleverenTentamenController extends Controller {
     public TableColumn dateColumn;
 
     @Inject
-    private ToetsDao dManager;
+    private TentamenDAO dManager;
+    @Inject
+    private StorageSetupSqlite storageSetupSqlite;
     private List<Tentamen> tentamens = null;
     private Stage primaryStage;
 
     public void initialize() {
-        dManager = new ToetsDaoSqlite();
-
-
+        try {
+            storageSetupSqlite.setup();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         this.loadView();
     }
 
     public void loadView() {
         tblViewTentamens.setVisible(false);
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Tentamen,String>("naam"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<Tentamen,String>("beschrijving"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Tentamen, String>("naam"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<Tentamen, String>("beschrijving"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<Tentamen, String>("strStartdatum"));
 
         this.reloadView(primaryStage);
@@ -73,9 +74,11 @@ public class InteleverenTentamenController extends Controller {
 
 
         new Thread(() -> {
+
             try {
+
                 tentamens = dManager.getLocalTentamens();
-            } catch (SQLException|  JSONException e) {
+            } catch (SQLException | JSONException e) {
                 Utils.logger.log(Level.SEVERE, e.getMessage());
                 AlertError("Er is iets fout gegaan, probeer opnieuw.");
             }
@@ -90,7 +93,7 @@ public class InteleverenTentamenController extends Controller {
     @FXML
     public void uploadPressed() {
         int tentamenIndex = tblViewTentamens.getSelectionModel().getSelectedIndex();
-        if (tentamenIndex == -1 || tentamenIndex > tentamens.size()-1) {
+        if (tentamenIndex == -1 || tentamenIndex > tentamens.size() - 1) {
             AlertError("Selecteer eerst de tentamen die je wilt downloaden.");
             return;
         }

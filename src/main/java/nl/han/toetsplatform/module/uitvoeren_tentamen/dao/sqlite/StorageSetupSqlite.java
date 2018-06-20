@@ -26,6 +26,7 @@ public class StorageSetupSqlite implements StorageSetupDao {
         return "CREATE TABLE IF NOT EXISTS MODULE_UITVOEREN_TENTAMEN (\n" +
                 "  tentamenid      char(36)      NOT NULL,\n" +
                 "  versieNummer    varchar(10)   NOT NULL,\n" +
+                "  ingeleverd      bit           NOT NULL,\n" +
                 "  hash            char(24)      NULL,\n" +
                 "  CONSTRAINT pk_tentamen PRIMARY KEY (tentamenid)\n" +
                 ");\n" +

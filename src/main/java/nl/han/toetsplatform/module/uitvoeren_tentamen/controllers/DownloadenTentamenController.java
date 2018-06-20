@@ -45,7 +45,6 @@ public class DownloadenTentamenController extends Controller {
     }
 
     public void loadView() {
-
         if (!Utils.checkInternetConnection()) {
             loadingIndicator.setVisible(false);
             AlertError("U heeft geen internet connectie. Maak verbinding met het internet en start de applicatie opnieuw op.");
