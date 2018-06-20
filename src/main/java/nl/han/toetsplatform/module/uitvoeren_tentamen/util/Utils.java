@@ -2,6 +2,7 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.util;
 
 import java.io.File;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,10 +37,28 @@ public class Utils {
         return downloadsFolder;
     }
 
+    public static boolean checkInternetConnection(String url) {
+        try {
+            return checkInternetConnection(new URL(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
     public static boolean checkInternetConnection() {
         try {
+            return checkInternetConnection(new URL(GOOGLE_URL));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
+    public static boolean checkInternetConnection(URL url) {
+        try {
             try {
-                URL url = new URL(GOOGLE_URL);
+                //URL url = new URL(GOOGLE_URL);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.connect();
                 if (con.getResponseCode() == 200) {
