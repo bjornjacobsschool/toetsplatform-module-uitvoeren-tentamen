@@ -47,7 +47,7 @@ public class DownloadenTentamenController extends Controller {
 
     public void loadView() {
 
-        if (!Utils.checkInternetConnection()) {
+        if (!Utils.checkHasInternetConnection()) {
             loadingIndicator.setVisible(false);
             alertError("U heeft geen internet connectie. Maak verbinding met het internet en start de applicatie opnieuw op.");
             return;
@@ -64,7 +64,7 @@ public class DownloadenTentamenController extends Controller {
 
     public void reloadView(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        if (!Utils.checkInternetConnection()) {
+        if (!Utils.checkHasInternetConnection()) {
             loadingIndicator.setVisible(false);
             alertError("U heeft geen internet connectie. Maak verbinding met het internet en start de applicatie opnieuw op.");
             return;
@@ -99,7 +99,7 @@ public class DownloadenTentamenController extends Controller {
             return;
         }
 
-        if (!Utils.checkInternetConnection()) {
+        if (!Utils.checkHasInternetConnection()) {
             alertError("U heeft geen internet connectie. Maak verbinding met het internet en probeer opnieuw te downloaden.");
             return;
         }

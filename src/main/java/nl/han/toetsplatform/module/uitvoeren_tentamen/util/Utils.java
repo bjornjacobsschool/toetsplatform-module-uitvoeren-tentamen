@@ -9,10 +9,12 @@ import java.util.logging.Logger;
 public class Utils {
 
     public static final String DOWNLOADS = "downloads";
-    public static final String DOWNLOADED_TENTAMENS = "downloads" + File.separator + "tentamens";
+    public static final String DOWNLOADED_TENTAMENS = DOWNLOADS + File.separator + "tentamens";
     private static final String TOETSAPPLICATIE = "toetsapplicatie";
     private static final String GOOGLE_URL = "http://www.google.com";
     private static Logger logger = Logger.getLogger("toetsplatform-module-uitvoeren-tentamen");
+
+    private Utils() {}
 
     public static Logger getLogger() {
         return logger;
@@ -31,33 +33,37 @@ public class Utils {
 
         File downloadsFolder = new File(pathname);
 
-        if (!downloadsFolder.exists()) {
-            if (!downloadsFolder.mkdirs()) {
-                Utils.logger.log(Level.SEVERE, pathname + " could not be created");
-            }
+        if (!downloadsFolder.exists() || !downloadsFolder.mkdirs()) {
+            Utils.logger.log(Level.SEVERE, "{0} could not be created", pathname);
         }
 
         return downloadsFolder;
     }
 
-    public static boolean checkInternetConnection() {
+    public static boolean checkHasInternetConnection() {
         try {
-            try {
-                URL url = new URL(GOOGLE_URL);
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.connect();
-                if (con.getResponseCode() == 200) {
-                    return true;
-                }
-            } catch (Exception e) {
-                Utils.logger.log(Level.SEVERE, e.getMessage());
-                return false;
-            }
+            Boolean hasConnection = checkGoogleConnection();
+            if (hasConnection != null) return hasConnection;
         } catch (Exception e) {
             Utils.logger.log(Level.SEVERE, e.getMessage());
             return false;
         }
 
         return false;
+    }
+
+    private static Boolean checkGoogleConnection() {
+        try {
+            URL url = new URL(GOOGLE_URL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.connect();
+            if (con.getResponseCode() == 200) {
+                return true;
+            }
+        } catch (Exception e) {
+            Utils.logger.log(Level.SEVERE, e.getMessage());
+            return false;
+        }
+        return null;
     }
 }
