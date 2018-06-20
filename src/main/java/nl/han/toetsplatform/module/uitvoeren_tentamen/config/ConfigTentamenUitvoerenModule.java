@@ -6,6 +6,8 @@ import java.net.URL;
 
 public class ConfigTentamenUitvoerenModule {
 
+    private ConfigTentamenUitvoerenModule() {}
+
     public static URL getFXMLTentamenUitvoeren() {
         return ConfigTentamenUitvoerenModule.class.getResource("/fxml/tentamenUitvoeren.fxml");
     }

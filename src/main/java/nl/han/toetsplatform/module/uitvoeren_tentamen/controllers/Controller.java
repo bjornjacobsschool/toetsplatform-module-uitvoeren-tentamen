@@ -10,12 +10,12 @@ import java.util.List;
 
 class Controller {
 
-    void AlertError(String message) {
+    void alertError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
         alert.show();
     }
 
-    void AlertInfo(String message) {
+    void alertInfo(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
         alert.show();
     }
@@ -24,10 +24,8 @@ class Controller {
         if (tentamens != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             for (Tentamen tentamen : tentamens) {
-                if (tentamen.getStrStartdatum() == null) {
-                    if (tentamen.getStartdatum() != null) {
-                        tentamen.setStrStartdatum(sdf.format(tentamen.getStartdatum()));
-                    }
+                if (tentamen.getStrStartdatum() == null && tentamen.getStartdatum() != null) {
+                    tentamen.setStrStartdatum(sdf.format(tentamen.getStartdatum()));
                 }
                 tblViewTentamens.getItems().add(tentamen);
             }

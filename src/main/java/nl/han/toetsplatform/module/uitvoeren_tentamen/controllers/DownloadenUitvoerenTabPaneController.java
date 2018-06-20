@@ -37,7 +37,7 @@ public class DownloadenUitvoerenTabPaneController extends Controller {
         try {
             storageSetupDao.setup();
         } catch (SQLException | ClassNotFoundException | IOException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
 
         tabs.getSelectionModel().selectedItemProperty().addListener(

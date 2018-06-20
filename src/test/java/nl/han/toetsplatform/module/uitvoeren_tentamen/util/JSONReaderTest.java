@@ -50,7 +50,7 @@ public class JSONReaderTest {
                 return mockCon;
             }
         };
-        JSONArray result = JSONReader.JSONArrayFromURL(new URL(null,"http://get.some.json.from.somewhere", URLStreamHandler));
+        JSONArray result = JSONReader.getJSONArrayFromURL(new URL(null,"http://get.some.json.from.somewhere", URLStreamHandler));
 
         assertEquals(result.length(), 1);
         assertEquals(result.getJSONObject(0).getString("beschrijving"), "ASD");
@@ -75,7 +75,7 @@ public class JSONReaderTest {
             }
         };
 
-        JSONObject result = JSONReader.JSONObjectFromURL(new URL(null,"http://get.some.json.from.somewhere", URLStreamHandler));
+        JSONObject result = JSONReader.getJSONObjectFromURL(new URL(null,"http://get.some.json.from.somewhere", URLStreamHandler));
 
         assertEquals(result.length(), 4);
         assertEquals(result.getString("beschrijving"), "ASD");
@@ -95,7 +95,7 @@ public class JSONReaderTest {
 
         when(folder.listFiles()).thenReturn(new File[]{exam1});
 
-        JSONArray result = JSONReader.JSONArrayFromFolder(folder);
+        JSONArray result = JSONReader.getJSONArrayFromFolder(folder);
 
         assertEquals(result.toString(), responseArray);
         assertTrue(exam1.delete());
