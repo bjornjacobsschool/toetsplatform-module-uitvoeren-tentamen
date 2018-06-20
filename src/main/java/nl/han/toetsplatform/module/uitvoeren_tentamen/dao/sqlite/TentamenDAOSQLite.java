@@ -30,6 +30,8 @@ public class TentamenDAOSQLite implements TentamenDAO {
 
         }
 
+        resultSet.close();
+
         return tentamens;
     }
 

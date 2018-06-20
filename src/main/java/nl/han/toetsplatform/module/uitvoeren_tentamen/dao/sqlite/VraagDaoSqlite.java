@@ -41,6 +41,8 @@ public class VraagDaoSqlite implements VraagDao {
             antwoorden.add(antwoord);
         }
 
+        resultSet.close();
+
         return antwoorden;
     }
 
@@ -48,11 +50,16 @@ public class VraagDaoSqlite implements VraagDao {
     public Antwoord getAntwoord(String vraagId, String tentamenId) throws SQLException {
         ResultSet resultSet = storageDao.executeQuery("SELECT * FROM MODULE_UITVOEREN_ANTWOORD WHERE (vraagid = '" + vraagId + "' AND tentamenid = '" + tentamenId + "');");
 
-        return new Antwoord(
+
+        Antwoord antwoord = new Antwoord(
                 resultSet.getString("vraagid"),
                 resultSet.getString("tentamenid"),
                 resultSet.getString("gegevenAntwoord")
         );
+
+        resultSet.close();
+
+        return antwoord;
     }
 
     @Override
@@ -64,6 +71,8 @@ public class VraagDaoSqlite implements VraagDao {
         String query;
 
         int count = res.getInt("rowcount");
+
+        res.close();
 
         if (count == 0) {
             query = "INSERT INTO MODULE_UITVOEREN_ANTWOORD (vraagid, tentamenid, gegevenAntwoord) VALUES (" +

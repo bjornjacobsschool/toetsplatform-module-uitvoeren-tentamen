@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.StorageSetupSqlite;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.tentamen.TentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.IUploadenTentamenDAO;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.UploadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Student;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
@@ -113,8 +112,7 @@ public class InteleverenTentamenController extends Controller {
 
         String result = null;
 
-        for (Tentamen tentamen :
-                tentamens) {
+        for (Tentamen tentamen : tentamens) {
             uploadenTentamenDAO.superUploadTentamen(tentamen, new Student());
             //TODO zet ingeleverd
 
