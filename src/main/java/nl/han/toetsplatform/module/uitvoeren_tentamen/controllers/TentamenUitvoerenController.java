@@ -130,15 +130,15 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void loadQuestionView() {
-        questionPane.getChildren().add(currentPlugin.getVraagView(currentTentamen.getVragen().get(currentQuestionIndex).getData()).getView());
+        questionPane.getChildren().add(currentPlugin.getVraagView(currentTentamen.getVragen().get(currentQuestionIndex).getMogelijkeAntwoorden()).getView());
     }
 
     public void loadAnswerView() {
         String localAnswer = loadLocalAnswer();
         if (localAnswer != null) {
-            answerPane.getChildren().add(currentPlugin.getAntwoordView(currentTentamen.getVragen().get(currentQuestionIndex).getData(), localAnswer).getView());
+            answerPane.getChildren().add(currentPlugin.getAntwoordView(currentTentamen.getVragen().get(currentQuestionIndex).getMogelijkeAntwoorden(), localAnswer).getView());
         } else {
-            answerPane.getChildren().add(currentPlugin.getAntwoordView(currentTentamen.getVragen().get(currentQuestionIndex).getData()).getView());
+            answerPane.getChildren().add(currentPlugin.getAntwoordView(currentTentamen.getVragen().get(currentQuestionIndex).getMogelijkeAntwoorden()).getView());
         }
     }
 
