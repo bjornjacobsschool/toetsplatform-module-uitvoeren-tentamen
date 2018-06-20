@@ -15,11 +15,14 @@ public class GsonUtil {
     private static Gson gson;
 
     public GsonUtil() {
+        init();
+    }
+
+    private static void init() {
         JsonSerializer<Date> serializer = (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.getTime());
         JsonDeserializer<Date> deserializer = (json, typeOfT, context) -> json == null ? null : new Date(json.getAsLong() * 1000);
 
         gson = new GsonBuilder().registerTypeAdapter(Date.class, serializer).registerTypeAdapter(Date.class, deserializer).create();
-
     }
 
     /**
@@ -33,7 +36,7 @@ public class GsonUtil {
         try {
             t = gson.fromJson(readFileToString(dir), Tentamen.class);
         } catch (Exception e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
         return t;
     }
@@ -43,7 +46,7 @@ public class GsonUtil {
         try {
             t = gson.fromJson(jsonString, Tentamen.class);
         } catch (Exception e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
         return t;
     }
@@ -55,32 +58,18 @@ public class GsonUtil {
      * @param dir de directory + file name
      */
     public void writeTentamen(Tentamen obj, String dir) throws IOException {
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
-        try {
-            fileWriter = new FileWriter(dir);
-            bufferedWriter = new BufferedWriter(fileWriter);
-        } catch (IOException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
-        } finally {
-            if (fileWriter != null && bufferedWriter != null) {
+        try (FileWriter fileWriter = new FileWriter(dir);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
 
-                String write = gson.toJson(obj);
-                try {
-                    bufferedWriter.write(write);
-                    bufferedWriter.close();
-                } catch (IOException e) {
-                    Utils.logger.log(Level.SEVERE, e.getMessage());
-                }
-            }
-
-            if (bufferedWriter != null) {
+            String write = gson.toJson(obj);
+            try {
+                bufferedWriter.write(write);
                 bufferedWriter.close();
+            } catch (IOException e) {
+                Utils.getLogger().log(Level.SEVERE, e.getMessage());
             }
-
-            if (fileWriter != null) {
-                fileWriter.close();
-            }
+        } catch (IOException e) {
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
     }
 
@@ -93,32 +82,19 @@ public class GsonUtil {
     public String readFileToString(String filePath) throws IOException {
         String returnString = "";
         StringBuilder contentBuilder = new StringBuilder();
-        FileReader fileReader = null;
-        BufferedReader bufferedReader = null;
 
-        try {
-            fileReader = new FileReader(filePath);
-            bufferedReader = new BufferedReader(fileReader);
+        try (FileReader fileReader = new FileReader(filePath);
+         BufferedReader bufferedReader = new BufferedReader(fileReader)){
+
+            String sCurrentLine;
+
+            while ((sCurrentLine = bufferedReader.readLine()) != null) {
+                contentBuilder.append(sCurrentLine).append("\n");
+            }
+
+            returnString = contentBuilder.toString();
         } catch (FileNotFoundException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
-        } finally {
-            if (fileReader != null && bufferedReader != null) {
-                String sCurrentLine;
-
-                while ((sCurrentLine = bufferedReader.readLine()) != null) {
-                    contentBuilder.append(sCurrentLine).append("\n");
-                }
-
-                returnString = contentBuilder.toString();
-            }
-
-            if (fileReader != null) {
-                fileReader.close();
-            }
-
-            if (bufferedReader != null) {
-                bufferedReader.close();
-            }
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
 
         return returnString;
@@ -130,7 +106,7 @@ public class GsonUtil {
             vragen = gson.fromJson(json, new TypeToken<List<Vraag>>() {
             }.getType());
         } catch (Exception e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
         return vragen;
     }
