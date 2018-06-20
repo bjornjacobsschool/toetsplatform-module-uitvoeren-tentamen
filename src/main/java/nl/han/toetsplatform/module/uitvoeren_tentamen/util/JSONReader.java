@@ -20,15 +20,16 @@ public class JSONReader {
         return sb.toString();
     }
 
-    public JSONArray JSONArrayFromURL(URL url) throws IOException, JSONException {
-        try (InputStream is = url.openStream()) {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+    public JSONArray getJSONArrayFromURL(URL url) throws IOException, JSONException {
+        try (InputStream is = url.openStream();
+             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));) {
+
             String jsonText = this.readAll(rd);
             return new JSONArray(jsonText);
         }
     }
 
-    public JSONArray JSONArrayFromFolder(File folder) throws IOException, JSONException {
+    public JSONArray getJSONArrayFromFolder(File folder) throws IOException, JSONException {
         File[] listOfFiles = folder.listFiles();
 
         JSONArray files = new JSONArray();
@@ -48,7 +49,7 @@ public class JSONReader {
         return files;
     }
 
-    public JSONObject JSONObjectFromURL(URL url) throws IOException, JSONException {
+    public JSONObject getJSONObjectFromURL(URL url) throws IOException, JSONException {
         try (InputStream is = url.openStream()) {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
             String jsonText = this.readAll(rd);

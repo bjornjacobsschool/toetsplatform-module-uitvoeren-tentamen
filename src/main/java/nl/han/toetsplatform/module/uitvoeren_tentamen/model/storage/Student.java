@@ -8,10 +8,6 @@ public class Student {
     private String studentNr;
     private String klas;
 
-    public Student() {
-
-    }
-
     public String getStudentNr() {
         return studentNr;
     }

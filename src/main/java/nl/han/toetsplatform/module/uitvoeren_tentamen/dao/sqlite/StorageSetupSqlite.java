@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 public class StorageSetupSqlite implements StorageSetupDao {
 
-    private static String TABLE_MODULE_UITVOEREN_ANTWOORD = "MODULE_UITVOEREN_ANTWOORD";
-    private static String TABLE_MODULE_UITVOEREN_TENTAMEN = "MODULE_UITVOEREN_TENTAMEN";
+    private static final String TABLE_MODULE_UITVOEREN_ANTWOORD = "MODULE_UITVOEREN_ANTWOORD";
+    private static final String TABLE_MODULE_UITVOEREN_TENTAMEN = "MODULE_UITVOEREN_TENTAMEN";
 
     @Inject
     public StorageDao storageDao;

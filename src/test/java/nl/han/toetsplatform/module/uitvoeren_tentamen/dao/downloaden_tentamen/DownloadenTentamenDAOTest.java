@@ -73,7 +73,7 @@ public class DownloadenTentamenDAOTest {
 
     @Test
     public void downloadTentamen() throws Exception {
-        when(JSONReaderMock.JSONObjectFromURL(any())).thenReturn(t1);
+        when(JSONReaderMock.getJSONObjectFromURL(any())).thenReturn(t1);
 
         boolean res = dt.downloadTentamen("asd123");
         assertTrue(res);
@@ -89,7 +89,7 @@ public class DownloadenTentamenDAOTest {
 
     @Test
     public void getKlaargezetteTentamens() throws IOException {
-        when(JSONReaderMock.JSONArrayFromURL(any())).thenReturn(jsonArray);
+        when(JSONReaderMock.getJSONArrayFromURL(any())).thenReturn(jsonArray);
 
         List<Tentamen> result = dt.getKlaargezetteTentamens();
 
@@ -118,7 +118,7 @@ public class DownloadenTentamenDAOTest {
 
     @Test
     public void getDownloadedTentamens() throws IOException {
-        when(JSONReaderMock.JSONArrayFromFolder(any())).thenReturn(jsonArray);
+        when(JSONReaderMock.getJSONArrayFromFolder(any())).thenReturn(jsonArray);
 
         List<Tentamen> result = dt.getDownloadedTentamens();
         assertEquals(result.size(), 2);

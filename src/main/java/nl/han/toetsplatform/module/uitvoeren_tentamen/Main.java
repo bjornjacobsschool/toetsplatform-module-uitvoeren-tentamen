@@ -47,8 +47,7 @@ public class Main extends GuiceApplication {
 
             primaryStage.getScene().setRoot(result.getRoot());
         } catch (IOException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage());
-            e.printStackTrace();
+            Utils.getLogger().log(Level.SEVERE, e.getMessage());
         }
     }
 
