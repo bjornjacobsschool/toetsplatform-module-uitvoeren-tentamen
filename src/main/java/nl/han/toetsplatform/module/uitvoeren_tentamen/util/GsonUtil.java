@@ -82,32 +82,19 @@ public class GsonUtil {
     public String readFileToString(String filePath) throws IOException {
         String returnString = "";
         StringBuilder contentBuilder = new StringBuilder();
-        FileReader fileReader = null;
-        BufferedReader bufferedReader = null;
 
-        try {
-            fileReader = new FileReader(filePath);
-            bufferedReader = new BufferedReader(fileReader);
+        try (FileReader fileReader = new FileReader(filePath);
+         BufferedReader bufferedReader = new BufferedReader(fileReader)){
+
+            String sCurrentLine;
+
+            while ((sCurrentLine = bufferedReader.readLine()) != null) {
+                contentBuilder.append(sCurrentLine).append("\n");
+            }
+
+            returnString = contentBuilder.toString();
         } catch (FileNotFoundException e) {
             Utils.getLogger().log(Level.SEVERE, e.getMessage());
-        } finally {
-            if (fileReader != null && bufferedReader != null) {
-                String sCurrentLine;
-
-                while ((sCurrentLine = bufferedReader.readLine()) != null) {
-                    contentBuilder.append(sCurrentLine).append("\n");
-                }
-
-                returnString = contentBuilder.toString();
-            }
-
-            if (fileReader != null) {
-                fileReader.close();
-            }
-
-            if (bufferedReader != null) {
-                bufferedReader.close();
-            }
         }
 
         return returnString;

@@ -34,7 +34,7 @@ public class Utils {
         File downloadsFolder = new File(pathname);
 
         if (!downloadsFolder.exists() || !downloadsFolder.mkdirs()) {
-            Utils.logger.log(Level.SEVERE, "{0} could not be created", pathname);
+            Utils.logger.log(Level.INFO, "{0} already exists", pathname);
         }
 
         return downloadsFolder;
