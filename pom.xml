@@ -50,7 +50,7 @@
         <dependency>
             <groupId>com.github.bjornjacobsschool</groupId>
             <artifactId>toetsplatform-module-shared</artifactId>
-            <version>master-SNAPSHOT</version>
+            <version>master</version>
         </dependency>
 
         <dependency>

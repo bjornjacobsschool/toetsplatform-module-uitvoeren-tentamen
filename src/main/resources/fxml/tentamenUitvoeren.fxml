@@ -22,8 +22,8 @@
                 <ColumnConstraints percentWidth="100.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints percentHeight="0.0"/>
-                <RowConstraints percentHeight="0.0"/>
+                <RowConstraints percentHeight="50.0"/>
+                <RowConstraints percentHeight="50.0"/>
             </rowConstraints>
         </GridPane>
 

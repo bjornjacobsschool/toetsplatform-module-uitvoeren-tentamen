@@ -53,6 +53,10 @@ public class TentamenUitvoerenController extends Controller {
     private Stage primaryStage;
 
     public void setUp(Stage primaryStage, Tentamen tentamen) {
+        // Lock min window to 640x480
+        primaryStage.setMinWidth(640);
+        primaryStage.setMinHeight(480);
+
         // Setup SQLite
         try {
             storageSetupDao.setup();
@@ -67,6 +71,14 @@ public class TentamenUitvoerenController extends Controller {
         currentTentamen = tentamen;
 
         // Update question index listview
+        buildQuestionMenu();
+
+        // Show exercise
+        showExercise();
+        intializeAutoSaver();
+    }
+
+    public void buildQuestionMenu() {
         for (int i = 1; i < currentTentamen.getVragen().size() + 1; i++) {
             lvQuestionIndexList.getItems().add(i);
         }
@@ -74,16 +86,11 @@ public class TentamenUitvoerenController extends Controller {
         lvQuestionIndexList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent click) {
-                if (click.getClickCount() == 2) {
-                    currentQuestionIndex = Integer.parseInt(lvQuestionIndexList.getSelectionModel().getSelectedItem().toString()) - 1;
-                    showExercise();
-                }
+                saveAnswerToLocal();
+                currentQuestionIndex = Integer.parseInt(lvQuestionIndexList.getSelectionModel().getSelectedItem().toString()) - 1;
+                showExercise();
             }
         });
-
-        // Show exercise
-        showExercise();
-        intializeAutoSaver();
     }
 
     private void intializeAutoSaver() {
@@ -141,9 +148,7 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void btnPreviousQuestionPressed(ActionEvent event) {
-
         saveAnswerToLocal();
-
         if (currentQuestionIndex > 0) {
             currentQuestionIndex -= 1;
             showExercise();
@@ -153,9 +158,7 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void btnNextQuestionPressed(ActionEvent event) {
-
         saveAnswerToLocal();
-
         if (currentQuestionIndex < (currentTentamen.getVragen().size() - 1)) {
             currentQuestionIndex += 1;
             showExercise();
@@ -164,17 +167,8 @@ public class TentamenUitvoerenController extends Controller {
         }
     }
 
-    public void btnLoadPressed(ActionEvent event) {
-        /*FileChooser directoryChooser = new FileChooser();
-        File selectedDirectory = directoryChooser.showOpenDialog(primaryStage);
-        currentTentamen = gsu.loadTentamen(selectedDirectory.toString());
-        showExercise();
-        AlertInfo("Test");*/
-
-        System.out.println(getGivenAntwoordFromPlugin());
-    }
-
     private void saveAnswerToLocal() {
+
 
         boolean saved = false;
         try {
