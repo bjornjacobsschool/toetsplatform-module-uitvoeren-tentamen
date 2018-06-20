@@ -27,8 +27,7 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
     @Override
     public boolean downloadTentamen(String tentamenId) throws IOException, JSONException {
 
-//        JSONObject jTentamen = this.reader.getJSONObjectFromURL(new URL("http://94.124.143.127/tentamens/klaargezet/" + tentamenId));
-        JSONObject jTentamen = this.reader.getJSONObjectFromURL(new URL("https://www.focusws.nl/exam1.json"));
+        JSONObject jTentamen = this.reader.getJSONObjectFromURL(new URL("http://94.124.143.127/tentamens/klaargezet/" + tentamenId));
 
         Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS).getAbsolutePath() + "/exam_" + tentamenId + ".json"), StandardCharsets.UTF_8));
         writer.write(jTentamen.toString());
@@ -41,8 +40,7 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
     public List<Tentamen> getKlaargezetteTentamens() throws IOException, JSONException {
         List<Tentamen> tentamens = new ArrayList<>();
 
-//        JSONArray jTentamens = this.reader.getJSONArrayFromURL(new URL("http://94.124.143.127/tentamens/klaargezet"));
-        JSONArray jTentamens = this.reader.getJSONArrayFromURL(new URL("https://www.focusws.nl/exam.json"));
+        JSONArray jTentamens = this.reader.getJSONArrayFromURL(new URL("http://94.124.143.127/tentamens/klaargezet"));
         parseTentamenModel(tentamens, jTentamens);
 
         return tentamens;
