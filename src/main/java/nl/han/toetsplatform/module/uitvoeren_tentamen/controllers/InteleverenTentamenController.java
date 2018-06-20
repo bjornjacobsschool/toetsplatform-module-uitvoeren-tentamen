@@ -9,9 +9,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.StorageSetupSqlite;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.TentamenDAOSQLite;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.tentamen.TentamenDAO;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.UitgevoerdTentamenDto;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.UploadenTentamenDAO;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Student;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 import org.json.JSONException;
@@ -103,13 +104,18 @@ public class InteleverenTentamenController extends Controller {
             return;
         }
 
-        List<Tentamen> result = null;
-        try {
-            result = dManager.getLocalTentamens();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        String result = null;
+
+        UploadenTentamenDAO uploadenTentamenDAO = new UploadenTentamenDAO();
+        for (Tentamen tentamen :
+                tentamens) {
+            uploadenTentamenDAO.superUploadTentamen(tentamen, new Student());
+            //TODO zet ingeleverd
+
         }
-        Tentamen inteleverenTentamen = result.get(tentamenIndex);
+
+
+        // Tentamen inteleverenTentamen = result.get(tentamenIndex);
 
        /* try {
             //TODO zorg dat het uploaden van een tentamen wordt aangeroepen.

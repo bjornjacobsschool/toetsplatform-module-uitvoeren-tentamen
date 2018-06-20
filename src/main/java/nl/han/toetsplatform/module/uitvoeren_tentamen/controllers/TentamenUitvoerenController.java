@@ -11,22 +11,16 @@ import nl.han.toetsplatform.module.shared.plugin.Plugin;
 import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.VraagDaoSqlite;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.IUploadenTentamenDAO;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.UitgevoerdTentamenDto;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Student;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Vraag;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.util.HashingUtil;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -192,22 +186,12 @@ public class TentamenUitvoerenController extends Controller {
         return null;
     }
 
-    public void btnInleverenPressed(ActionEvent event){
-        //TODO Tijdelijke initializatie voor de student
-        studentDieDezeTentamenUitvoerd.setKlas("ASD NIJM 17/18 P2");
-        studentDieDezeTentamenUitvoerd.setStudentNr("573612");
-
-        if(currentToets.getAntwoorden() == null){
+    public void btnInleverenPressed(ActionEvent event) {
+        if (currentTentamen.getAntwoorden() == null) {
             AlertInfo("Je hebt geen vragen beantwoord om in te kunnen leveren.");
         } else {
-            if(checkIfHanAvailableForUpload()) {
-                UitgevoerdTentamenDto uitgevoerdTentamenDto = new UitgevoerdTentamenDto(currentToets, studentDieDezeTentamenUitvoerd);
-                try {
-                    uitgevoerdTentamenDto.setHash(HashingUtil.generateHash(new GsonUtil().toJsonTentamen(uitgevoerdTentamenDto)));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                AlertInfo(uploadenTentamenDAO.uploadTentamen(uitgevoerdTentamenDto));
+            if (Utils.checkInternetConnection()) {
+                AlertInfo(uploadenTentamenDAO.superUploadTentamen(currentTentamen, studentDieDezeTentamenUitvoerd));
             }
         }
     }

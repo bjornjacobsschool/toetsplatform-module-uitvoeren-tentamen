@@ -7,11 +7,9 @@ import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.TentamenDAOSQLi
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.sqlite.VraagDaoSqlite;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.storage.StorageSetupDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.stub.CacheDaoStub;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.stub.ToetsDaoStub;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.toets.ToetsDao;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.tentamen.TentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.IUploadenTentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.uploaden_tentamen.UploadenTentamenDAO;
-import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.tentamen.TentamenDAO;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.vraag.VraagDao;
 
 public class GuiceModule extends AbstractModule {
