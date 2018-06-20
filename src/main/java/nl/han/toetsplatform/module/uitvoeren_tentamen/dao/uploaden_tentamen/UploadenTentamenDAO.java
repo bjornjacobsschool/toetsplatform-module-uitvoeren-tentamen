@@ -13,7 +13,6 @@ import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.HashingUtil;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -42,6 +41,8 @@ public class UploadenTentamenDAO implements IUploadenTentamenDAO {
         VersieDto versieDto = new VersieDto();
         StudentDto studentDto = new StudentDto();
 
+        versieDto.setNummer(1);
+
         studentDto.setStudentNummer(Integer.valueOf(studentDieDezeTentamenUitvoerd.getStudentNr()));
         studentDto.setKlas(studentDieDezeTentamenUitvoerd.getKlas());
 
@@ -69,12 +70,8 @@ public class UploadenTentamenDAO implements IUploadenTentamenDAO {
         uitgevoerdTentamenDto.setVragen(ingevuldeVraagDtos);
 
         String result = "";
-        try {
-            uitgevoerdTentamenDto.setHash(HashingUtil.generateHash(new GsonUtil().toJsonTentamen(uitgevoerdTentamenDto)));
-            result = uploadTentamen(uitgevoerdTentamenDto);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        uitgevoerdTentamenDto.setHash(HashingUtil.generateHash(new GsonUtil().toJsonTentamen(uitgevoerdTentamenDto)));
+        result = uploadTentamen(uitgevoerdTentamenDto);
 
         return result;
     }
