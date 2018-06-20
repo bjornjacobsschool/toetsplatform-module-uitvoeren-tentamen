@@ -2,10 +2,12 @@ package nl.han.toetsplatform.module.uitvoeren_tentamen.controllers;
 
 import com.google.inject.Inject;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import nl.han.toetsplatform.module.shared.plugin.Plugin;
 import nl.han.toetsplatform.module.shared.plugin.PluginLoader;
@@ -17,7 +19,6 @@ import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Vraag;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.GsonUtil;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.util.Utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Timer;
@@ -25,6 +26,10 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 
 public class TentamenUitvoerenController extends Controller {
+
+    @FXML
+    private ListView lvQuestionIndexList;
+
     @FXML
     private Pane questionPane;
 
@@ -48,6 +53,10 @@ public class TentamenUitvoerenController extends Controller {
     private Stage primaryStage;
 
     public void setUp(Stage primaryStage, Tentamen tentamen) {
+        // Lock min window to 640x480
+        primaryStage.setMinWidth(640);
+        primaryStage.setMinHeight(480);
+
         // Setup SQLite
         try {
             storageSetupDao.setup();
@@ -61,9 +70,27 @@ public class TentamenUitvoerenController extends Controller {
         // Assign loadedtoets to currentTentamen
         currentTentamen = tentamen;
 
+        // Update question index listview
+        buildQuestionMenu();
+
         // Show exercise
         showExercise();
         intializeAutoSaver();
+    }
+
+    public void buildQuestionMenu() {
+        for (int i = 1; i < currentTentamen.getVragen().size() + 1; i++) {
+            lvQuestionIndexList.getItems().add(i);
+        }
+        lvQuestionIndexList.getSelectionModel().select(currentQuestionIndex);
+        lvQuestionIndexList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent click) {
+                saveAnswerToLocal();
+                currentQuestionIndex = Integer.parseInt(lvQuestionIndexList.getSelectionModel().getSelectedItem().toString()) - 1;
+                showExercise();
+            }
+        });
     }
 
     private void intializeAutoSaver() {
@@ -95,6 +122,9 @@ public class TentamenUitvoerenController extends Controller {
             e.printStackTrace();
         }
 
+        // Update question index
+        lvQuestionIndexList.getSelectionModel().select(currentQuestionIndex);
+
         loadQuestionView();
         loadAnswerView();
     }
@@ -118,9 +148,7 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void btnPreviousQuestionPressed(ActionEvent event) {
-
         saveAnswerToLocal();
-
         if (currentQuestionIndex > 0) {
             currentQuestionIndex -= 1;
             showExercise();
@@ -130,9 +158,7 @@ public class TentamenUitvoerenController extends Controller {
     }
 
     public void btnNextQuestionPressed(ActionEvent event) {
-
         saveAnswerToLocal();
-
         if (currentQuestionIndex < (currentTentamen.getVragen().size() - 1)) {
             currentQuestionIndex += 1;
             showExercise();
@@ -141,15 +167,8 @@ public class TentamenUitvoerenController extends Controller {
         }
     }
 
-    public void btnLoadPressed(ActionEvent event) {
-        FileChooser directoryChooser = new FileChooser();
-        File selectedDirectory = directoryChooser.showOpenDialog(primaryStage);
-        currentTentamen = gsu.loadTentamen(selectedDirectory.toString());
-        showExercise();
-        AlertInfo("Test");
-    }
-
     private void saveAnswerToLocal() {
+
 
         boolean saved = false;
         try {
