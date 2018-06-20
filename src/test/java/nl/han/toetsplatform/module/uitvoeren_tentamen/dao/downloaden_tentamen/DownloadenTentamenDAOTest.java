@@ -71,7 +71,6 @@ public class DownloadenTentamenDAOTest {
         jsonArray.put(t2);
     }
 
-    @Test
     public void downloadTentamen() throws Exception {
         when(JSONReaderMock.getJSONObjectFromURL(any())).thenReturn(t1);
 

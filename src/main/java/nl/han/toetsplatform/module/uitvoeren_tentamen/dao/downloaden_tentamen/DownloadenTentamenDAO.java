@@ -29,7 +29,7 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
 
         JSONObject jTentamen = this.reader.getJSONObjectFromURL(new URL("http://94.124.143.127/tentamens/klaargezet/" + tentamenId));
 
-        Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS).getAbsolutePath() + "/exam_" + tentamenId + ".json"), StandardCharsets.UTF_8));
+        Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream( "./exam2_" + tentamenId + ".json"), StandardCharsets.UTF_8));
         writer.write(jTentamen.toString());
         writer.close();
 
@@ -50,7 +50,7 @@ public class DownloadenTentamenDAO implements IDownloadenTentamenDAO {
     public List<Tentamen> getDownloadedTentamens() throws IOException, JSONException {
         List<Tentamen> tentamens = new ArrayList<>();
 
-        JSONArray jTentamens = this.reader.getJSONArrayFromFolder(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS));
+        JSONArray jTentamens = this.reader.getJSONArrayFromFolder(new File("."));
         parseTentamenModel(tentamens, jTentamens);
 
         return tentamens;

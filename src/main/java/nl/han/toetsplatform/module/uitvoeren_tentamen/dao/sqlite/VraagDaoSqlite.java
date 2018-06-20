@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import nl.han.toetsplatform.module.shared.storage.StorageDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.dao.vraag.VraagDao;
 import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Antwoord;
+import nl.han.toetsplatform.module.uitvoeren_tentamen.model.storage.Tentamen;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +19,23 @@ public class VraagDaoSqlite implements VraagDao {
     @Inject
     public StorageDao storageDao;
 
+    public List<Antwoord> getAntwoordenVoorTentamen(String tentamenId) throws SQLException {
+        List<Antwoord> antwoorden = new ArrayList<>();
+
+        String query = "SELECT * FROM MODULE_UITVOEREN_ANTWOORD WHERE tentamenid = '" + tentamenId + "';";
+
+        ResultSet resultSet = storageDao.executeQuery(query);
+        while (resultSet.next()) {
+            Antwoord antwoord = new Antwoord();
+            antwoord.setTentamenId(resultSet.getString("tentamenid"));
+            antwoord.setVraagId(resultSet.getString("vraagid"));
+            antwoord.setGegevenAntwoord(resultSet.getString("gegevenAntwoord"));
+            antwoorden.add(antwoord);
+        }
+
+        return antwoorden;
+    }
+
     @Override
     public List<Antwoord> getAntwoorden() throws SQLException {
         List<Antwoord> antwoorden = new ArrayList<>();
@@ -26,7 +44,7 @@ public class VraagDaoSqlite implements VraagDao {
         while (resultSet.next()) {
             Antwoord antwoord = new Antwoord();
             antwoord.setTentamenId(resultSet.getString("tentamenid"));
-            antwoord.setTentamenId(resultSet.getString("vraagid"));
+            antwoord.setVraagId(resultSet.getString("vraagid"));
             antwoord.setGegevenAntwoord(resultSet.getString("gegevenAntwoord"));
             antwoorden.add(antwoord);
         }

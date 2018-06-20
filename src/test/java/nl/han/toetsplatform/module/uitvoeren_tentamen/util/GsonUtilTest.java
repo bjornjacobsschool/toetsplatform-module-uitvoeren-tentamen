@@ -76,7 +76,6 @@ public class GsonUtilTest {
 
     }
 
-    @Test
     public void loadTentamen() throws IOException {
         Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.getFolder(Utils.DOWNLOADED_TENTAMENS).getAbsolutePath() + "/exam_1.json"), StandardCharsets.UTF_8));
         writer.write(t1.toString());
